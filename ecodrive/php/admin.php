@@ -1,0 +1,535 @@
+<?php
+session_start();
+include 'configuration.php';
+
+// Vérifier que l'utilisateur est connecté et est admin
+if (!isset($_SESSION['user']['id'])) {
+    header('Location: connexion.php');
+    exit;
+}
+
+$idUtilisateur = (int) $_SESSION['user']['id'];
+
+$stmt = $conn->prepare("SELECT role FROM utilisateur WHERE id_utilisateur = ?");
+$stmt->bind_param("i", $idUtilisateur);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
+
+if (!$user || $user['role'] !== 'admin') {
+    die("Accès refusé. Vous devez être administrateur.");
+}
+
+$message = '';
+$uploadDir = '../images/';
+
+// === Upload d'image ===
+function handleUpload($file, $uploadDir) {
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, ['jpg','jpeg','png','webp','avif'], true)) {
+        return [false, 'Format non autorisé (jpg, png, webp, avif).'];
+    }
+    $name = uniqid('car_') . '.' . $ext;
+    $dest = $uploadDir . $name;
+    if (move_uploaded_file($file['tmp_name'], $dest)) {
+        return [true, 'images/' . $name];
+    }
+    return [false, 'Erreur lors de l\'upload.'];
+}
+
+// === Gestion des réservations (confirmer / annuler + envoi email) ===
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        $message = "Session invalide.";
+    } else {
+    $reservationId = (int) ($_POST['reservation_id'] ?? 0);
+    $action = $_POST['action'] ?? '';
+
+    if ($reservationId > 0 && in_array($action, ['confirmed', 'cancelled'], true)) {
+        $stmt = $conn->prepare("UPDATE reservation SET statut = ? WHERE id_reservation = ?");
+        $stmt->bind_param("si", $action, $reservationId);
+
+        if ($stmt->execute()) {
+            $message = "✅ Réservation mise à jour.";
+            $stmt->close();
+
+            // Récupérer les infos du client pour l'email
+            $stmt2 = $conn->prepare("SELECT u.email, u.nom, v.marque, v.modele, r.date_essai 
+                                     FROM reservation r
+                                     JOIN utilisateur u ON r.utilisateur_id = u.id_utilisateur
+                                     JOIN voiture v ON r.voiture_id = v.id_voiture
+                                     WHERE r.id_reservation = ?");
+            $stmt2->bind_param("i", $reservationId);
+            $stmt2->execute();
+            $info = $stmt2->get_result()->fetch_assoc();
+            $stmt2->close();
+
+            // Envoi de l'email uniquement si on a bien récupéré les infos
+            if ($info) {
+                $to = $info['email'];
+                $subject = "Mise à jour de votre réservation EcoDrive";
+
+                if ($action === 'confirmed') {
+                    $messageEmail = "Bonjour {$info['nom']},\n\nVotre réservation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a été CONFIRMÉE.\n\nMerci de votre confiance.\nEcoDrive Team";
+                } else {
+                    $messageEmail = "Bonjour {$info['nom']},\n\nVotre réservation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a été ANNULÉE.\n\nEcoDrive Team";
+                }
+
+                $headers = "From: admin@ecodrive.com\r\n" .
+                           "Reply-To: admin@ecodrive.com\r\n" .
+                           "X-Mailer: PHP/" . phpversion();
+
+                mail($to, $subject, $messageEmail, $headers);
+            }
+        } else {
+            $message = "❌ Erreur lors de la mise à jour.";
+            $stmt->close();
+        }
+    }
+    } // fin else CSRF
+}
+
+// === Gestion du catalogue voitures ===
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
+    $imgPath = $_POST['image'] ?? '';
+
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+        [$ok, $result] = handleUpload($_FILES['image_file'], $uploadDir);
+        if ($ok) {
+            $imgPath = $result;
+        } else {
+            $message = "⚠️ " . $result;
+        }
+    }
+
+    if ($_POST['car_action'] === 'add') {
+        $annee = (int) ($_POST['annee'] ?? 0);
+        $prix = (float) ($_POST['prix'] ?? 0);
+
+        $stmt = $conn->prepare("INSERT INTO voiture (marque, modele, annee, prix, description, image, details_page) VALUES (?,?,?,?,?,?,?)");
+        $stmt->bind_param(
+            "ssidsss",
+            $_POST['marque'],
+            $_POST['modele'],
+            $annee,
+            $prix,
+            $_POST['description'],
+            $imgPath,
+            $_POST['details_page']
+        );
+        $stmt->execute();
+        $stmt->close();
+        $message = "✅ Voiture ajoutée.";
+    }
+
+    if ($_POST['car_action'] === 'update') {
+        $annee = (int) ($_POST['annee'] ?? 0);
+        $prix = (float) ($_POST['prix'] ?? 0);
+        $idVoiture = (int) ($_POST['id_voiture'] ?? 0);
+
+        // Keep existing image if no new upload and no manual override
+        if ($imgPath === '' && $_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
+            $imgPath = $_POST['image_existing'] ?? '';
+        }
+
+        $stmt = $conn->prepare("UPDATE voiture SET marque=?, modele=?, annee=?, prix=?, description=?, image=?, details_page=? WHERE id_voiture=?");
+        $stmt->bind_param(
+            "ssidsssi",
+            $_POST['marque'],
+            $_POST['modele'],
+            $annee,
+            $prix,
+            $_POST['description'],
+            $imgPath,
+            $_POST['details_page'],
+            $idVoiture
+        );
+        $stmt->execute();
+        $stmt->close();
+        $message = "✅ Voiture mise à jour.";
+    }
+
+    if ($_POST['car_action'] === 'delete') {
+        $idVoiture = (int) ($_POST['id_voiture'] ?? 0);
+
+        // Delete associated image file
+        $stmt = $conn->prepare("SELECT image FROM voiture WHERE id_voiture=?");
+        $stmt->bind_param("i", $idVoiture);
+        $stmt->execute();
+        $old = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        if ($old && $old['image'] && file_exists('../' . $old['image'])) {
+            unlink('../' . $old['image']);
+        }
+
+        $stmt = $conn->prepare("DELETE FROM voiture WHERE id_voiture=?");
+        $stmt->bind_param("i", $idVoiture);
+        $stmt->execute();
+        $stmt->close();
+        $message = "✅ Voiture supprimée.";
+    }
+}
+
+// === Gestion du catalogue bornes ===
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
+    $imgPath = $_POST['image'] ?? '';
+
+    if (isset($_FILES['borne_image_file']) && $_FILES['borne_image_file']['error'] === UPLOAD_ERR_OK) {
+        [$ok, $result] = handleUpload($_FILES['borne_image_file'], $uploadDir);
+        if ($ok) {
+            $imgPath = $result;
+        } else {
+            $message = "⚠️ " . $result;
+        }
+    }
+
+    if ($_POST['borne_action'] === 'add') {
+        $prix = (float) ($_POST['prix'] ?? 0);
+
+        $stmt = $conn->prepare("INSERT INTO borne (nom, modele, puissance, prix, description, image, details_page) VALUES (?,?,?,?,?,?,?)");
+        $stmt->bind_param(
+            "sssdsss",
+            $_POST['nom'],
+            $_POST['modele'],
+            $_POST['puissance'],
+            $prix,
+            $_POST['description'],
+            $imgPath,
+            $_POST['details_page']
+        );
+        $stmt->execute();
+        $stmt->close();
+        $message = "✅ Borne ajoutée.";
+    }
+
+    if ($_POST['borne_action'] === 'update') {
+        $prix = (float) ($_POST['prix'] ?? 0);
+        $idBorne = (int) ($_POST['id_borne'] ?? 0);
+
+        if ($imgPath === '' && $_FILES['borne_image_file']['error'] !== UPLOAD_ERR_OK) {
+            $imgPath = $_POST['image_existing'] ?? '';
+        }
+
+        $stmt = $conn->prepare("UPDATE borne SET nom=?, modele=?, puissance=?, prix=?, description=?, image=?, details_page=? WHERE id_borne=?");
+        $stmt->bind_param(
+            "sssdsssi",
+            $_POST['nom'],
+            $_POST['modele'],
+            $_POST['puissance'],
+            $prix,
+            $_POST['description'],
+            $imgPath,
+            $_POST['details_page'],
+            $idBorne
+        );
+        $stmt->execute();
+        $stmt->close();
+        $message = "✅ Borne mise à jour.";
+    }
+
+    if ($_POST['borne_action'] === 'delete') {
+        $idBorne = (int) ($_POST['id_borne'] ?? 0);
+
+        $stmt = $conn->prepare("SELECT image FROM borne WHERE id_borne=?");
+        $stmt->bind_param("i", $idBorne);
+        $stmt->execute();
+        $old = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        if ($old && $old['image'] && file_exists('../' . $old['image'])) {
+            unlink('../' . $old['image']);
+        }
+
+        $stmt = $conn->prepare("DELETE FROM borne WHERE id_borne=?");
+        $stmt->bind_param("i", $idBorne);
+        $stmt->execute();
+        $stmt->close();
+        $message = "✅ Borne supprimée.";
+    }
+}
+
+// Récupérer données
+$reservations = $conn->query("SELECT r.id_reservation, u.nom AS client, u.email, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut, r.notes 
+                              FROM reservation r 
+                              JOIN utilisateur u ON r.utilisateur_id=u.id_utilisateur 
+                              JOIN voiture v ON r.voiture_id=v.id_voiture 
+                              ORDER BY r.date_essai ASC")->fetch_all(MYSQLI_ASSOC);
+
+$pendingCount = $conn->query("SELECT COUNT(*) AS cnt FROM reservation WHERE statut='pending'")->fetch_assoc()['cnt'] ?? 0;
+
+// Données pour les graphiques admin
+$res_stats = $conn->query("SELECT DATE_FORMAT(date_essai, '%Y-%m') AS mois, COUNT(*) AS total FROM reservation GROUP BY mois ORDER BY mois ASC")->fetch_all(MYSQLI_ASSOC);
+$res_monthly_labels = array_column($res_stats, 'mois');
+$res_monthly_data   = array_map('intval', array_column($res_stats, 'total'));
+
+$res_voitures = $conn->query("SELECT v.marque, v.modele, COUNT(r.id_reservation) AS total FROM reservation r JOIN voiture v ON r.voiture_id = v.id_voiture GROUP BY v.id_voiture ORDER BY total DESC LIMIT 5")->fetch_all(MYSQLI_ASSOC);
+$top_cars_labels = array_map(fn($v) => $v['marque'] . ' ' . $v['modele'], $res_voitures);
+$top_cars_data   = array_map(fn($v) => (int)$v['total'], $res_voitures);
+
+// Stats status (pour le pie)
+$status_stats = $conn->query("SELECT statut, COUNT(*) AS total FROM reservation GROUP BY statut")->fetch_all(MYSQLI_ASSOC);
+$status_labels = ['pending' => 'En attente', 'confirmed' => 'Confirmées', 'cancelled' => 'Annulées'];
+$status_colors = ['pending' => '#f59e0b', 'confirmed' => '#22c55e', 'cancelled' => '#ef4444'];
+$pie_labels = [];
+$pie_data   = [];
+$pie_colors = [];
+foreach ($status_stats as $s) {
+    $pie_labels[] = $status_labels[$s['statut']] ?? $s['statut'];
+    $pie_data[]   = (int)$s['total'];
+    $pie_colors[] = $status_colors[$s['statut']] ?? '#888';
+}
+
+$res_clients = $conn->query("SELECT u.nom, u.email, COUNT(r.id_reservation) AS total FROM reservation r JOIN utilisateur u ON r.utilisateur_id = u.id_utilisateur GROUP BY u.id_utilisateur ORDER BY total DESC LIMIT 5")->fetch_all(MYSQLI_ASSOC);
+
+$voitures = $conn->query("SELECT * FROM voiture ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
+$bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin — EcoDrive</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
+    <nav>
+      <a href="../index.php">Accueil</a>
+      <a href="deconnexion.php">Déconnexion</a>
+    </nav>
+  </header>
+
+  <main class="main-wrap">
+
+  <?php if (!empty($message)): ?>
+    <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
+  <?php endif; ?>
+
+  <div class="export-bar">
+    <a href="export.php?type=backup" class="btn btn-ghost btn-sm">💾 Backup SQL</a>
+    <a href="export.php?type=reservations" class="btn btn-ghost btn-sm">📄 Export réservations CSV</a>
+    <a href="export.php?type=voitures" class="btn btn-ghost btn-sm">📄 Export voitures CSV</a>
+    <a href="export.php?type=bornes" class="btn btn-ghost btn-sm">📄 Export bornes CSV</a>
+  </div>
+
+  <h2>📌 Gestion des réservations</h2>
+  <table>
+    <tr><th>ID</th><th>Client</th><th>Email</th><th>Voiture</th><th>Date</th><th>Début</th><th>Fin</th><th>Notes</th><th>Statut</th><th>Actions</th></tr>
+    <?php foreach ($reservations as $r): ?>
+    <tr>
+      <td><?= (int)$r['id_reservation'] ?></td>
+      <td><?= htmlspecialchars($r['client']) ?></td>
+      <td><?= htmlspecialchars($r['email']) ?></td>
+      <td><?= htmlspecialchars($r['marque'] . ' ' . $r['modele']) ?></td>
+      <td><?= htmlspecialchars($r['date_essai']) ?></td>
+      <td><?= htmlspecialchars($r['heure_debut']) ?></td>
+      <td><?= htmlspecialchars($r['heure_fin']) ?></td>
+      <td><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
+      <td><span class="statut-<?= htmlspecialchars($r['statut']) ?>"><?= htmlspecialchars($r['statut']) ?></span></td>
+      <td>
+        <form method="POST" style="display:inline">
+          <?php $token = csrf_token(); ?>
+          <input type="hidden" name="csrf_token" value="<?= $token ?>">
+          <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
+          <input type="hidden" name="action" value="confirmed">
+          <button type="submit" class="btn btn-sm btn-primary">Confirmer</button>
+        </form>
+        <form method="POST" style="display:inline">
+          <input type="hidden" name="csrf_token" value="<?= $token ?>">
+          <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
+          <input type="hidden" name="action" value="cancelled">
+          <button type="submit" class="btn btn-sm btn-danger">Annuler</button>
+        </form>
+      </td>
+    </tr>
+    <?php endforeach; ?>
+  </table>
+
+  <!-- 📊 Statistiques -->
+  <h2>📊 Statistiques</h2>
+
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>Réservations par mois</h3>
+      <canvas id="chartMonthly" width="350" height="180"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Répartition par statut</h3>
+      <canvas id="chartStatus" width="200" height="180"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>Voitures les plus demandées</h3>
+      <canvas id="chartTopCars" width="350" height="180"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Clients les plus actifs</h3>
+      <table>
+        <tr><th>Nom</th><th>Email</th><th>Réservations</th></tr>
+        <?php foreach ($res_clients as $c): ?>
+          <tr><td><?= htmlspecialchars($c['nom']) ?></td><td><?= htmlspecialchars($c['email']) ?></td><td><?= (int)$c['total'] ?></td></tr>
+        <?php endforeach; ?>
+      </table>
+    </div>
+  </div>
+
+  <script>
+  new Chart(document.getElementById('chartMonthly'), {
+    type: 'bar',
+    data: {
+      labels: <?= json_encode($res_monthly_labels) ?>,
+      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+    },
+    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+  new Chart(document.getElementById('chartStatus'), {
+    type: 'doughnut',
+    data: {
+      labels: <?= json_encode($pie_labels) ?>,
+      datasets: [{ data: <?= json_encode($pie_data) ?>, backgroundColor: <?= json_encode($pie_colors) ?>, borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+  });
+  new Chart(document.getElementById('chartTopCars'), {
+    type: 'bar',
+    data: {
+      labels: <?= json_encode($top_cars_labels) ?>,
+      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+    },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+  </script>
+
+  <!-- 🚗 Gestion du catalogue voitures -->
+  <h2>🚗 Gestion des voitures</h2>
+  <div class="admin-layout">
+    <div class="admin-section">
+      <h3>Ajouter une voiture</h3>
+      <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="car_action" value="add">
+        <input type="text" name="marque" placeholder="Marque" required>
+        <input type="text" name="modele" placeholder="Modèle" required>
+        <input type="number" name="annee" placeholder="Année" required>
+        <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
+        <textarea name="description" placeholder="Description" rows="2"></textarea>
+        <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
+        <input type="text" name="image" placeholder="Ou chemin direct (ex: images/voiture.jpg)">
+        <input type="text" name="details_page" placeholder="Page détails (ex: voitures/Modele.php)">
+        <button type="submit">Ajouter</button>
+      </form>
+    </div>
+    <div class="admin-section">
+      <h3>Voitures existantes</h3>
+      <table>
+        <tr><th>ID</th><th>Marque</th><th>Modèle</th><th>Prix</th><th>Actions</th></tr>
+        <?php foreach ($voitures as $v): ?>
+        <tr>
+          <td><?= (int)$v['id_voiture'] ?></td>
+          <td><?= htmlspecialchars($v['marque']) ?></td>
+          <td><?= htmlspecialchars($v['modele']) ?></td>
+          <td><?= number_format((float)$v['prix'], 0, ',', ' ') ?> DT</td>
+          <td>
+            <details class="edit-inline">
+              <summary class="btn-edit">✏️ Modifier</summary>
+              <form method="POST" class="edit-form" enctype="multipart/form-data">
+                <input type="hidden" name="car_action" value="update">
+                <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
+                <input type="hidden" name="image_existing" value="<?= htmlspecialchars($v['image'] ?? '') ?>">
+                <?php if ($v['image'] && file_exists('../' . $v['image'])): ?>
+                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($v['image']) ?>" alt="" class="img-preview"></div>
+                <?php endif; ?>
+                <input type="text" name="marque" value="<?= htmlspecialchars($v['marque']) ?>" required>
+                <input type="text" name="modele" value="<?= htmlspecialchars($v['modele']) ?>" required>
+                <input type="number" name="annee" value="<?= (int)$v['annee'] ?>" required>
+                <input type="number" step="0.01" name="prix" value="<?= (float)$v['prix'] ?>" required>
+                <textarea name="description" rows="2"><?= htmlspecialchars($v['description'] ?? '') ?></textarea>
+                <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
+                <input type="text" name="image" value="<?= htmlspecialchars($v['image'] ?? '') ?>" placeholder="Ou chemin direct">
+                <input type="text" name="details_page" value="<?= htmlspecialchars($v['details_page'] ?? '') ?>">
+                <button type="submit">💾 Enregistrer</button>
+              </form>
+            </details>
+            <form method="POST" style="display:inline-block;">
+              <input type="hidden" name="car_action" value="delete">
+              <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
+              <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?> ?')">🗑 Supprimer</button>
+            </form>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+      </table>
+    </div>
+  </div>
+
+  <!-- 🔌 Gestion des bornes -->
+  <h2>🔌 Gestion des bornes</h2>
+  <div class="admin-layout">
+    <div class="admin-section">
+      <h3>Ajouter une borne</h3>
+      <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="borne_action" value="add">
+        <input type="text" name="nom" placeholder="Nom" required>
+        <input type="text" name="modele" placeholder="Modèle" required>
+        <input type="text" name="puissance" placeholder="Puissance (ex: 7 kW)" required>
+        <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
+        <textarea name="description" placeholder="Description" rows="2"></textarea>
+        <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
+        <input type="text" name="image" placeholder="Ou chemin direct (ex: images/borne.png)">
+        <input type="text" name="details_page" placeholder="Page détails (ex: bornes/Modèle.php)">
+        <button type="submit">Ajouter</button>
+      </form>
+    </div>
+    <div class="admin-section">
+      <h3>Bornes existantes</h3>
+      <table>
+        <tr><th>ID</th><th>Nom</th><th>Modèle</th><th>Puissance</th><th>Prix</th><th>Actions</th></tr>
+        <?php foreach ($bornes as $b): ?>
+        <tr>
+          <td><?= (int)$b['id_borne'] ?></td>
+          <td><?= htmlspecialchars($b['nom']) ?></td>
+          <td><?= htmlspecialchars($b['modele']) ?></td>
+          <td><?= htmlspecialchars($b['puissance']) ?></td>
+          <td><?= number_format((float)$b['prix'], 0, ',', ' ') ?> DT</td>
+          <td>
+            <details class="edit-inline">
+              <summary class="btn-edit">✏️ Modifier</summary>
+              <form method="POST" class="edit-form" enctype="multipart/form-data">
+                <input type="hidden" name="borne_action" value="update">
+                <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
+                <input type="hidden" name="image_existing" value="<?= htmlspecialchars($b['image'] ?? '') ?>">
+                <?php if ($b['image'] && file_exists('../' . $b['image'])): ?>
+                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($b['image']) ?>" alt="" class="img-preview"></div>
+                <?php endif; ?>
+                <input type="text" name="nom" value="<?= htmlspecialchars($b['nom']) ?>" required>
+                <input type="text" name="modele" value="<?= htmlspecialchars($b['modele']) ?>" required>
+                <input type="text" name="puissance" value="<?= htmlspecialchars($b['puissance']) ?>" required>
+                <input type="number" step="0.01" name="prix" value="<?= (float)$b['prix'] ?>" required>
+                <textarea name="description" rows="2"><?= htmlspecialchars($b['description'] ?? '') ?></textarea>
+                <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
+                <input type="text" name="image" value="<?= htmlspecialchars($b['image'] ?? '') ?>" placeholder="Ou chemin direct">
+                <input type="text" name="details_page" value="<?= htmlspecialchars($b['details_page'] ?? '') ?>">
+                <button type="submit">💾 Enregistrer</button>
+              </form>
+            </details>
+            <form method="POST" style="display:inline-block;">
+              <input type="hidden" name="borne_action" value="delete">
+              <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
+              <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?> ?')">🗑 Supprimer</button>
+            </form>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+      </table>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
+</body>
+</html>

@@ -1,0 +1,217 @@
+/* ============================================================
+   dashboard.css — EcoDrive · Pages admin & espace client
+   ============================================================ */
+
+/* ── Reset & Variables ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green: #3B6D11;  --green-light: #639922;  --green-pale: #EAF3DE;
+  --green-mid: #97C459;  --dark: #111410;  --gray: #5F5E5A;
+  --gray-light: #F1EFE8;  --gray-mid: #B4B2A9;  --white: #FAFAF8;
+  --font: 'DM Sans', sans-serif;  --font-display: 'Cormorant Garamond', serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);  background: var(--gray-light);
+  color: var(--dark);  line-height: 1.5;  min-height: 100vh;
+  display: flex;  flex-direction: column;
+}
+
+a { color: inherit; }
+.text-muted { color: var(--gray); font-size: 0.8rem; }
+
+/* ── Header ───────────────────────────────────────────────── */
+.site-header {
+  background: var(--white);  border-bottom: 1px solid rgba(59,109,17,0.12);
+  padding: 0 2rem;  height: 64px;
+  display: flex;  align-items: center;  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(17,20,16,0.04);
+}
+
+.logo-text {
+  font-family: var(--font-display);  font-size: 1.5rem;  font-weight: 600;
+  letter-spacing: 0.04em;  color: var(--dark);  text-decoration: none;
+}
+.logo-text span { color: var(--green-light); }
+
+.site-header nav { display: flex; align-items: center; gap: 1.5rem; }
+.site-header nav a {
+  text-decoration: none;  font-size: 0.8rem;  font-weight: 500;
+  letter-spacing: 0.06em;  text-transform: uppercase;  color: var(--gray);
+  transition: color 0.2s;
+}
+.site-header nav a:hover { color: var(--green); }
+
+/* ── Main content ─────────────────────────────────────────── */
+.main-wrap {
+  flex: 1;  max-width: 1100px;  width: 100%;  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+h1 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; }
+h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; margin: 2rem 0 1rem; }
+h3 { font-size: 0.9rem; font-weight: 600; color: var(--gray); margin-bottom: 0.75rem; }
+
+/* ── Charts ────────────────────────────────────────────────── */
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.chart-card {
+  background: var(--white);
+  border: 1px solid rgba(17,20,16,0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(17,20,16,0.04);
+}
+.chart-card h3 { margin-bottom: 0.75rem; }
+.chart-card canvas { max-height: 200px; max-width: 100%; }
+
+/* ── Export bar ────────────────────────────────────────────── */
+.export-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+/* ── Dashboards summary cards ──────────────────────────────── */
+.dashboard-summary {
+  display: grid;  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;  margin-bottom: 2rem;
+}
+.summary-card {
+  background: var(--white);  border: 1px solid rgba(17,20,16,0.08);
+  border-radius: 12px;  padding: 1.25rem;  box-shadow: 0 4px 12px rgba(17,20,16,0.04);
+}
+.summary-card strong {
+  display: block;  font-size: 0.75rem;  letter-spacing: 0.08em;
+  text-transform: uppercase;  color: var(--gray);  margin-bottom: 0.5rem;
+}
+.summary-card span {
+  display: block;  font-size: 1.8rem;  font-weight: 700;  color: var(--dark);
+}
+
+/* ── Tables ───────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(17,20,16,0.04); }
+table th { background: var(--green-pale); text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.75rem 1rem; }
+table td { padding: 0.7rem 1rem; border-bottom: 1px solid rgba(17,20,16,0.06); font-size: 0.88rem; }
+table tr:last-child td { border-bottom: none; }
+
+/* ── Forms ────────────────────────────────────────────────── */
+.form-card {
+  background: var(--white);  border: 1px solid rgba(17,20,16,0.08);
+  border-radius: 12px;  padding: 1.5rem;  box-shadow: 0 4px 12px rgba(17,20,16,0.04);
+}
+.form-card form { display: grid; gap: 0.75rem; max-width: 500px; }
+.form-card label { font-size: 0.82rem; font-weight: 500; color: var(--gray); }
+.form-card input, .form-card select, .form-card textarea {
+  padding: 0.65rem 0.8rem;  border: 1px solid rgba(17,20,16,0.15);
+  border-radius: 6px;  font: inherit;  font-size: 0.9rem;  outline: none;
+  transition: border-color 0.2s;  width: 100%;
+}
+.form-card input:focus, .form-card select:focus, .form-card textarea:focus {
+  border-color: var(--green-light);
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn { display: inline-block; padding: 0.55rem 1.2rem; font-size: 0.82rem; font-weight: 500; border-radius: 6px; text-decoration: none; cursor: pointer; border: none; transition: background 0.2s, transform 0.15s; }
+.btn-primary { background: var(--green); color: var(--white); }
+.btn-primary:hover { background: var(--green-light); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--dark); border: 1px solid rgba(17,20,16,0.25); }
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+.btn-danger { background: transparent; color: #b91c1c; border: 1px solid #b91c1c; }
+.btn-danger:hover { background: #fef2f2; }
+.btn-sm { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
+.btn-edit { background: transparent; border: 1px solid var(--green-light); color: var(--green); padding: 0.3rem 0.6rem; border-radius: 3px; cursor: pointer; font-size: 0.75rem; }
+.btn-edit:hover { background: var(--green-pale); }
+.btn-delete { background: transparent; border: 1px solid #b91c1c; color: #b91c1c; padding: 0.3rem 0.6rem; border-radius: 3px; cursor: pointer; font-size: 0.75rem; }
+.btn-delete:hover { background: #fef2f2; }
+
+/* ── Alerts ───────────────────────────────────────────────── */
+.alert { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.88rem; }
+.alert-success { background: #e8f5e0; border: 1px solid rgba(99,153,34,0.3); color: #2f6d26; }
+.alert-error { background: #fef2f2; border: 1px solid rgba(185,28,28,0.2); color: #991b1b; }
+
+/* ── Admin layout ─────────────────────────────────────────── */
+.admin-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+.admin-section { background: var(--white); border: 1px solid rgba(17,20,16,0.08); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(17,20,16,0.04); }
+.admin-section h3 { margin-bottom: 1rem; }
+.admin-section form { display: grid; gap: 0.75rem; max-width: 500px; }
+.admin-section input, .admin-section select, .admin-section textarea {
+  padding: 0.6rem; border: 1px solid rgba(17,20,16,0.15);
+  border-radius: 4px; font: inherit; width: 100%;
+}
+.admin-section form button[type="submit"] {
+  padding: 0.55rem 1rem; background: var(--green); color: var(--white);
+  border: none; border-radius: 4px; cursor: pointer; font: inherit; font-size: 0.85rem;
+  justify-self: start;
+}
+.admin-section form button[type="submit"]:hover { background: var(--green-light); }
+.admin-section table { box-shadow: none; }
+.admin-section table th { background: var(--green-pale); text-align: left; }
+.admin-section table th, .admin-section table td { padding: 0.6rem; border: 1px solid rgba(17,20,16,0.1); }
+
+/* ── Statuts ──────────────────────────────────────────────── */
+.statut-pending { color: #b06a00; font-weight: 500; }
+.statut-confirmed { color: #2f6d26; font-weight: 500; }
+.statut-cancelled { color: #a11; font-weight: 500; }
+
+/* ── Image preview in admin ──────────────────────────────── */
+.preview-wrap { text-align: center; margin-bottom: 0.4rem; }
+.img-preview { max-width: 80px; max-height: 60px; border-radius: 4px; border: 1px solid rgba(17,20,16,0.1); }
+
+/* ── Inline edit details ──────────────────────────────────── */
+details.edit-inline { display: inline-block; vertical-align: top; position: relative; }
+details.edit-inline summary { cursor: pointer; }
+details.edit-inline .edit-form {
+  position: absolute;  z-index: 10;  width: 340px;
+  background: var(--white);  border: 1px solid rgba(17,20,16,0.15);
+  padding: 1rem;  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);  display: grid;  gap: 0.4rem;
+}
+details.edit-inline .edit-form input,
+details.edit-inline .edit-form textarea {
+  padding: 0.4rem; border: 1px solid rgba(17,20,16,0.15);
+  border-radius: 4px; font-size: 0.8rem;
+}
+details.edit-inline .edit-form button {
+  padding: 0.4rem 0.8rem; font-size: 0.8rem;
+  background: var(--green); color: white;
+  border: none; border-radius: 3px; cursor: pointer;
+}
+
+/* ── Admin pending badge ──────────────────────────────────── */
+.badge-pending {
+  display: inline-block;
+  background: #f59e0b;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.site-footer {
+  background: var(--dark);  color: rgba(255,255,255,0.35);
+  padding: 1.5rem 2rem;  text-align: center;  font-size: 0.78rem;
+  margin-top: auto;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .site-header { padding: 0 1rem; flex-direction: column; height: auto; gap: 0.5rem; padding: 0.75rem 1rem; }
+  .site-header nav { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .site-header nav a { font-size: 0.72rem; }
+  .main-wrap { padding: 1.5rem 1rem; }
+  .admin-layout { grid-template-columns: 1fr; }
+  details.edit-inline .edit-form { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 90%; }
+}

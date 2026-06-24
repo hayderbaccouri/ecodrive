@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<?php
+session_start();
+include '../php/configuration.php';
+$loggedIn = isset($_SESSION['user']);
+?>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exicom Spin Air 22 kW — EcoDrive</title>
+  
+  <link rel="stylesheet" href="../css/bornes.css">
+
+</head>
+
+<body>
+
+  <div class="topbar">✦ Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
+
+  <header>
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
+    <nav>
+      <a href="../index.php">Accueil</a>
+      <a href="../php/catalogue.php">Catalogue</a>
+      <a href="../index.php#bornes">Bornes</a>
+      <a href="../pages/contact.php">Contact</a>
+      <?php if ($loggedIn): ?>
+        <a href="../php/<?= ($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php' ?>">Mon espace</a>
+        <a href="../php/deconnexion.php">Déconnexion</a>
+      <?php else: ?>
+        <a href="../php/connexion.php">Connexion / Inscription</a>
+      <?php endif; ?>
+    </nav>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="../index.php">Accueil</a>
+    <span>›</span>
+    <a href="../index.php#bornes">Bornes de recharge</a>
+    <span>›</span>
+    <span class="breadcrumb-current">Exicom Spin Air 22 kW</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="borne-hero">
+
+    <div class="borne-visual">
+      <div class="borne-visual-bg"></div>
+      <div class="borne-visual-grid"></div>
+      <div class="borne-img-frame">
+        <div class="borne-img-box">
+          <img src="../images/SPIN-AIR-11.png" alt="Exicom Spin Air 22 kW"
+            onerror="this.style.display='none'; this.parentNode.innerHTML += '<div class=\'borne-fallback-icon\'>⚡</div>'">
+        </div>
+        <span class="borne-badge-portable">⚡ Professionnel · Haute Puissance</span>
+      </div>
+      <div class="borne-glow-dot"></div>
+    </div>
+
+    <div class="borne-info">
+      <div class="borne-eyebrow">Chargeur professionnel · Exicom</div>
+
+      <div class="borne-power-display">
+        <span class="power-num">22</span>
+        <span class="power-unit">kW</span>
+      </div>
+
+      <div class="borne-title">Exicom Spin Air</div>
+
+      <div class="borne-divider"></div>
+
+      <p class="borne-desc-text">
+        Chargeur haute puissance AC triphasé pensé pour les flottes d'entreprise, les parkings multi-utilisateurs et les
+        sites à fort trafic. La Spin Air 22 kW offre la recharge la plus rapide disponible en courant alternatif, avec
+        une gestion avancée compatible OCPP.
+      </p>
+
+      <div class="specs-list">
+        <div class="spec-row">
+          <div class="spec-icon">⚡</div>
+          <div class="spec-label">Puissance</div>
+          <div class="spec-value">22 kW (triphasé)</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">🔌</div>
+          <div class="spec-label">Connecteur</div>
+          <div class="spec-value">Type 2 (IEC 62196)</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">🏭</div>
+          <div class="spec-label">Usage</div>
+          <div class="spec-value">Flottes · Entreprises · Parkings</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">🌐</div>
+          <div class="spec-label">Protocole</div>
+          <div class="spec-value">OCPP 1.6 / 2.0 · Gestion centralisée</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">👥</div>
+          <div class="spec-label">Multi-utilisateurs</div>
+          <div class="spec-value">Contrôle d'accès · Badge RFID</div>
+        </div>
+      </div>
+
+      <div class="borne-price-bar">
+      <span class="borne-price-label">À partir de</span>
+      <span class="borne-price-value">4 490 DT</span>
+      <span class="borne-price-tax">HT · Installation non incluse</span>
+    </div>
+    <div class="borne-cta">
+      <a href="../pages/contact.php" class="btn-primary">Commander</a>
+      <a href="../pages/contact.php" class="btn-ghost">Demander un devis</a>
+    </div>
+    </div>
+  </section>
+
+  <!-- COMMENT ÇA MARCHE -->
+  <section class="how-section">
+    <div class="section-eyebrow">Mode d'emploi</div>
+    <h2 class="section-title">Déployez votre infrastructure en 3 étapes</h2>
+    <div class="section-rule"></div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Installation professionnelle</div>
+        <p class="step-text">Raccordement au tableau triphasé du site par un installateur certifié. La borne est conçue
+          pour une installation murale ou sur colonne, en intérieur comme en extérieur.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Configuration du réseau</div>
+        <p class="step-text">Connectez la borne à votre système de gestion via OCPP 1.6 ou 2.0. Définissez les accès par
+          badge RFID, surveillez chaque session et pilotez la charge à distance.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Recharge maximale</div>
+        <p class="step-text">À 22 kW, la plupart des véhicules atteignent leur charge maximale AC en 1 à 2 h. Le débit
+          le plus élevé disponible sans infrastructure DC.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS COMPLÈTES -->
+  <section class="specs-section">
+    <div class="section-eyebrow">Fiche technique</div>
+    <h2 class="section-title">Spécifications complètes</h2>
+    <div class="section-rule"></div>
+    <table class="specs-table">
+      <thead>
+        <tr>
+          <th>Paramètre</th>
+          <th>Valeur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Marque / Modèle</td>
+          <td>Exicom Spin Air 22 kW</td>
+        </tr>
+        <tr>
+          <td>Puissance de sortie</td>
+          <td>22 kW</td>
+        </tr>
+        <tr>
+          <td>Type de courant</td>
+          <td>AC triphasé</td>
+        </tr>
+        <tr>
+          <td>Tension d'entrée</td>
+          <td>400 V / 50 Hz (3 phases)</td>
+        </tr>
+        <tr>
+          <td>Courant maximum</td>
+          <td>32 A par phase</td>
+        </tr>
+        <tr>
+          <td>Connecteur côté véhicule</td>
+          <td>Type 2 (IEC 62196-2)</td>
+        </tr>
+        <tr>
+          <td>Protocole réseau</td>
+          <td>OCPP 1.6 / OCPP 2.0</td>
+        </tr>
+        <tr>
+          <td>Contrôle d'accès</td>
+          <td>Badge RFID, application mobile</td>
+        </tr>
+        <tr>
+          <td>Connectivité</td>
+          <td>Ethernet, Wi-Fi, 4G/LTE</td>
+        </tr>
+        <tr>
+          <td>Installation</td>
+          <td>Intérieure ou extérieure (mural / colonne)</td>
+        </tr>
+        <tr>
+          <td>Indice de protection</td>
+          <td>IP55</td>
+        </tr>
+        <tr>
+          <td>Température de fonctionnement</td>
+          <td>-25 °C à +55 °C</td>
+        </tr>
+        <tr>
+          <td>Certifications</td>
+          <td>CE, RoHS, IEC 61851, OCPP</td>
+        </tr>
+        <tr>
+          <td>Garantie</td>
+          <td>2 ans constructeur</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- COMPATIBILITÉ -->
+  <section class="compat-section">
+    <div class="section-eyebrow">Compatibilité universelle</div>
+    <h2 class="section-title">Compatible avec tous les VE Type 2</h2>
+    <div class="section-rule"></div>
+    <div class="compat-grid">
+      <div class="compat-card">
+        <div class="compat-icon">🔵</div>
+        <div class="compat-name">Renault Megane E-Tech</div>
+        <div class="compat-sub">Type 2 · 22 kW AC</div>
+      </div>
+      <div class="compat-card">
+        <div class="compat-icon">🟢</div>
+        <div class="compat-name">Volkswagen ID.4</div>
+        <div class="compat-sub">Type 2 · 11 kW AC max</div>
+      </div>
+      <div class="compat-card">
+        <div class="compat-icon">⚪</div>
+        <div class="compat-name">Porsche Panamera</div>
+        <div class="compat-sub">Type 2 · 22 kW AC</div>
+      </div>
+      <div class="compat-card">
+        <div class="compat-icon">🔴</div>
+        <div class="compat-name">Audi A6 e-tron</div>
+        <div class="compat-sub">Type 2 · 22 kW AC</div>
+      </div>
+    </div>
+    <p class="compat-note">
+      La puissance de recharge effective dépend de la capacité maximale AC acceptée par le véhicule.
+    </p>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div>
+      <div class="cta-banner-title">Équipez votre site ou votre flotte.</div>
+      <div class="cta-banner-sub">Obtenez un devis sur-mesure pour votre déploiement multi-bornes.</div>
+    </div>
+    <a href="../pages/contact.php" class="btn-white">Contacter EcoDrive</a>
+  </section>
+
+  <footer>
+    <div class="footer-logo">eco<span>drive</span></div>
+    <span>© 2026 EcoDrive. Tous droits réservés.</span>
+    <nav>
+      <a href="../pages/mentions-legales.php">Mentions légales</a>
+      <a href="../pages/confidentialite.php">Confidentialité</a>
+      <a href="../pages/contact.php">Contact</a>
+    </nav>
+  </footer>
+
+</body>
+
+</html>

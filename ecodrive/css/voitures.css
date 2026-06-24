@@ -1,0 +1,297 @@
+/* ============================================================
+   voitures.css — EcoDrive · Pages détails véhicules
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0b0c0e;  --off-black: #111316;  --surface: #181b20;
+  --border: rgba(255,255,255,0.07);  --border-mid: rgba(255,255,255,0.13);
+  --accent: #00e5a0;  --accent-dim: rgba(0,229,160,0.10);
+  --accent-glow: rgba(0,229,160,0.25);
+  --white: #ffffff;  --grey-1: #c4c9d4;  --grey-2: #767d8a;  --grey-3: #363b44;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --max: 1100px;  --wrap: clamp(1.25rem, 5vw, 4.5rem);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);  background: var(--black);
+  color: var(--grey-1);  font-size: 16px;  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;  display: flex;  flex-direction: column;
+}
+
+a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+a:hover { opacity: 0.75; }
+
+img { max-width: 100%; height: auto; }
+
+/* ── Header ───────────────────────────────────────────────── */
+header {
+  display: flex;  align-items: center;  justify-content: space-between;
+  padding: 0.85rem var(--wrap);  max-width: var(--max);  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-text {
+  font-family: var(--font-display);  font-size: 1.5rem;  font-weight: 600;
+  letter-spacing: 0.04em;  color: var(--white);
+}
+.logo-text span { color: var(--accent); }
+
+nav { display: flex; align-items: center; gap: 1.8rem; }
+nav a {
+  font-size: 0.82rem;  font-weight: 400;  color: var(--grey-2);
+  letter-spacing: 0.03em;
+}
+nav a:hover { color: var(--white); opacity: 1; }
+
+/* ── Main ─────────────────────────────────────────────────── */
+main {
+  flex: 1;  width: 100%;  margin: 0 auto;
+}
+
+/* ── Hero image ───────────────────────────────────────────── */
+.car-hero {
+  position: relative;  width: 100%;  max-width: var(--max);
+  margin: 0 auto;  padding: 0 var(--wrap);  padding-top: 2rem;
+}
+
+.hero-image-wrap {
+  position: relative;  width: 100%;
+  border-radius: 16px;  overflow: hidden;
+  border: 1px solid var(--border-mid);
+  background: var(--off-black);
+}
+
+.hero-image-wrap img {
+  width: 100%;  height: 460px;  object-fit: cover;
+  display: block;  transition: transform 0.6s ease;
+}
+
+.hero-image-wrap:hover img { transform: scale(1.02); }
+
+.hero-overlay {
+  position: absolute;  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
+  display: flex;  flex-direction: column;  justify-content: flex-end;
+  padding: 2.5rem;
+}
+
+.hero-overlay h1 {
+  font-family: var(--font-display);  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 600;  color: var(--white);  letter-spacing: 0.02em;
+  line-height: 1.1;  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+}
+
+.hero-tagline {
+  font-size: 0.95rem;  color: rgba(255,255,255,0.7);
+  max-width: 600px;  line-height: 1.6;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+}
+
+/* ── Actions bar ──────────────────────────────────────────── */
+.car-actions-bar {
+  max-width: var(--max);  margin: 1.5rem auto 0;
+  padding: 0 var(--wrap);
+  display: flex;  align-items: center;  justify-content: space-between;
+  gap: 1rem;
+}
+
+.price-block { display: flex; flex-direction: column; }
+.price-label {
+  font-size: 0.75rem;  color: var(--grey-2);  letter-spacing: 0.06em;
+  text-transform: uppercase;  font-weight: 500;
+}
+.price-value {
+  font-family: var(--font-display);  font-size: 2.2rem;  font-weight: 600;
+  color: var(--accent);  line-height: 1.1;  letter-spacing: 0.01em;
+}
+.price-value small {
+  font-family: var(--font-body);  font-size: 1rem;  font-weight: 400;
+  color: var(--grey-2);
+}
+
+.btn-reserve {
+  display: inline-flex;  align-items: center;  gap: 0.5rem;
+  padding: 0.75rem 2rem;  background: var(--accent);  color: var(--black) !important;
+  font-weight: 600;  font-size: 0.9rem;  border-radius: 8px;
+  text-decoration: none;  transition: all 0.25s;
+  white-space: nowrap;
+}
+.btn-reserve:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 25px var(--accent-glow); }
+
+/* ── Specs highlight cards ────────────────────────────────── */
+.specs-highlight {
+  max-width: var(--max);  margin: 2rem auto 0;
+  padding: 0 var(--wrap);
+  display: grid;  grid-template-columns: repeat(5, 1fr);  gap: 0.75rem;
+}
+
+.spec-card {
+  background: var(--surface);  border: 1px solid var(--border-mid);
+  border-radius: 12px;  padding: 1rem 0.75rem;  text-align: center;
+  transition: border-color 0.3s, transform 0.2s;
+}
+.spec-card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+
+.spec-card .spec-label {
+  font-size: 0.68rem;  color: var(--grey-2);  text-transform: uppercase;
+  letter-spacing: 0.07em;  font-weight: 500;  margin-bottom: 0.35rem;
+}
+
+.spec-card .spec-value {
+  font-family: var(--font-display);  font-size: 1.35rem;  font-weight: 600;
+  color: var(--white);  line-height: 1.2;
+}
+.spec-card .spec-value small {
+  font-family: var(--font-body);  font-size: 0.7rem;  font-weight: 400;
+  color: var(--grey-2);  display: block;  margin-top: 0.1rem;
+}
+
+/* ── Section title ────────────────────────────────────────── */
+.section-title-wrap {
+  max-width: var(--max);  margin: 3rem auto 1.25rem;
+  padding: 0 var(--wrap);
+  display: flex;  align-items: center;  gap: 1rem;
+}
+.section-title-wrap h2 {
+  font-family: var(--font-display);  font-size: 1.6rem;  font-weight: 500;
+  color: var(--white);  white-space: nowrap;
+}
+.section-title-wrap::after {
+  content: '';  flex: 1;  height: 1px;
+  background: linear-gradient(90deg, var(--border-mid), transparent);
+}
+
+/* ── Detailed specs grid ──────────────────────────────────── */
+.specs-detail {
+  max-width: var(--max);  margin: 0 auto;
+  padding: 0 var(--wrap);
+}
+
+.specs-grid {
+  display: grid;  grid-template-columns: 1fr 1fr;  gap: 1rem;
+}
+
+.spec-group {
+  background: var(--surface);  border: 1px solid var(--border-mid);
+  border-radius: 12px;  padding: 1.5rem 1.75rem;
+  transition: border-color 0.3s;
+}
+.spec-group:hover { border-color: rgba(0,229,160,0.15); }
+
+.spec-group h3 {
+  font-family: var(--font-display);  font-size: 1.1rem;  font-weight: 500;
+  color: var(--accent);  margin-bottom: 1.1rem;
+  padding-bottom: 0.6rem;  border-bottom: 1px solid var(--border);
+  display: flex;  align-items: center;  gap: 0.5rem;
+}
+
+.spec-group dl { display: grid; gap: 0.6rem; }
+
+.spec-row {
+  display: flex;  justify-content: space-between;  align-items: center;
+  padding: 0.3rem 0;  border-bottom: 1px solid var(--border);
+}
+.spec-row:last-child { border-bottom: none; }
+
+.spec-row dt {
+  font-size: 0.85rem;  color: var(--grey-2);  font-weight: 400;
+}
+.spec-row dd {
+  font-size: 0.9rem;  color: var(--white);  font-weight: 500;  text-align: right;
+}
+
+/* ── Description section ──────────────────────────────────── */
+.car-description {
+  max-width: var(--max);  margin: 2rem auto;
+  padding: 0 var(--wrap);
+}
+
+.car-description p {
+  background: var(--surface);  border: 1px solid var(--border-mid);
+  border-radius: 12px;  padding: 1.75rem 2rem;
+  font-size: 0.95rem;  line-height: 1.75;  color: var(--grey-1);
+}
+
+/* ── Reservation CTA section ──────────────────────────────── */
+.reservation-cta {
+  max-width: var(--max);  margin: 0 auto 2.5rem;
+  padding: 0 var(--wrap);
+}
+
+.reservation-cta .cta-box {
+  background: linear-gradient(135deg, var(--off-black), var(--surface));
+  border: 1px solid var(--accent-dim);  border-radius: 16px;
+  padding: 2.5rem;  text-align: center;
+  display: flex;  flex-direction: column;  align-items: center;  gap: 1.25rem;
+}
+
+.reservation-cta h2 {
+  font-family: var(--font-display);  font-size: 1.4rem;  font-weight: 500;
+  color: var(--white);
+}
+
+.reservation-cta p {
+  font-size: 0.88rem;  color: var(--grey-2);  max-width: 480px;
+}
+
+.cta-btn {
+  display: inline-flex;  align-items: center;  gap: 0.5rem;
+  padding: 0.85rem 2.5rem;  background: var(--accent);  color: var(--black) !important;
+  font-weight: 600;  font-size: 1rem;  border-radius: 8px;
+  transition: all 0.25s;
+}
+.cta-btn:hover {
+  opacity: 0.9;  transform: translateY(-2px);
+  box-shadow: 0 6px 30px var(--accent-glow);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer {
+  margin-top: auto;  padding: 1.75rem var(--wrap);
+  max-width: var(--max);  margin-left: auto;  margin-right: auto;
+  border-top: 1px solid var(--border);  width: 100%;
+  font-size: 0.78rem;  color: var(--grey-3);  text-align: center;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .specs-highlight { grid-template-columns: repeat(3, 1fr); }
+  .specs-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  header { flex-direction: column; gap: 0.75rem; padding: 0.75rem var(--wrap); }
+  nav { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  nav a { font-size: 0.78rem; }
+
+  .hero-image-wrap img { height: 300px; }
+  .hero-overlay { padding: 1.5rem; }
+
+  .car-actions-bar { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .price-value { font-size: 1.8rem; }
+  .btn-reserve { width: 100%; justify-content: center; }
+
+  .specs-highlight { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .spec-card { padding: 0.8rem 0.5rem; }
+  .spec-card .spec-value { font-size: 1.1rem; }
+
+  .specs-grid { grid-template-columns: 1fr; }
+  .spec-group { padding: 1.25rem; }
+
+  .car-description p { padding: 1.25rem; }
+  .reservation-cta .cta-box { padding: 1.5rem; }
+}
+
+@media (max-width: 420px) {
+  .specs-highlight { grid-template-columns: repeat(2, 1fr); }
+  .hero-image-wrap img { height: 220px; }
+}
