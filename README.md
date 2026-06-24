@@ -1,8 +1,5 @@
 #EcoDrive
 A car showroom...un site web d'un showroom pour vente de voitures electrique.
-
-Parfait Hayder 👌 Tu as déjà toutes les briques essentielles de ton projet. Pour que tu avances de manière claire et organisée, voici une **roadmap finale** (plan de projet en étapes) :
-
 ---
 
 ## 🛠️ Étape 1 : Base utilisateur
