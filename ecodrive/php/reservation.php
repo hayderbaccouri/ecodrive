@@ -113,14 +113,30 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
     </nav>
   </header>
 
-  <main class="main-wrap">
+  <main class="main-wrap page-fade-in">
+    <div class="progress-steps">
+      <div class="progress-step active">
+        <span class="step-number">1</span>
+        <span class="step-label">Voiture</span>
+      </div>
+      <div class="progress-connector"><div class="connector-fill"></div></div>
+      <div class="progress-step active">
+        <span class="step-number">2</span>
+        <span class="step-label">Date &amp; Heure</span>
+      </div>
+      <div class="progress-connector"><div class="connector-fill"></div></div>
+      <div class="progress-step active">
+        <span class="step-number">3</span>
+        <span class="step-label">Confirmation</span>
+      </div>
+    </div>
     <h1>Réservation d'essai</h1>
 
     <?php if (!empty($message)): ?>
       <div class="alert alert-<?= htmlspecialchars($messageType) ?>"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
-    <div class="form-card">
+    <div class="form-card reveal reveal-up">
       <form method="POST" action="reservation.php">
         <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <label for="voiture_id">Voiture</label>
@@ -153,5 +169,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
   </main>
 
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 </html>

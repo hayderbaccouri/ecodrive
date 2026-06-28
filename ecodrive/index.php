@@ -1,4 +1,4 @@
-﻿
+
 <?php
 session_start();
 include 'php/configuration.php';
@@ -139,7 +139,7 @@ $conn->close();
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value">0</div>
-            <div class="hero-stat-label">Émissions CO₂</div>
+            <div class="hero-stat-label">Émissions CO<sub>2</sub></div>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value">+<?= $totalModeles ?></div>
@@ -160,7 +160,7 @@ $conn->close();
     </div>
 
     <div class="showroom">
-      <div class="cars-grid">
+      <div class="cars-grid reveal reveal-up reveal-delay-1">
 
         <?php foreach ($voitures as $v):
           $img = htmlspecialchars(ltrim($v['image'] ?? 'images/placeholder.png', '/'), ENT_QUOTES, 'UTF-8');
@@ -211,7 +211,7 @@ $conn->close();
 
     <div class="bornes-grid">
       <a class="borne-card" href="bornes/ExicomSpinFree3kW.php">
-        <img src="images/SPIN-FREE-3.png" alt="Borne 3 kW" class="borne-image" loading="lazy" />
+        <img src="images/bornes/SPIN-FREE-3.png" alt="Borne 3 kW" class="borne-image" loading="lazy" />
         <div><span class="borne-power">3</span><span class="borne-unit"> kW</span></div>
         <div class="borne-name">Exicom Spin Free</div>
         <p class="borne-desc">Chargeur portable compact pour recharge d'appoint et déplacements. Câble 5 m, compatible Type 2.</p>
@@ -220,7 +220,7 @@ $conn->close();
       </a>
 
       <a class="borne-card" href="bornes/ExicomSpinAir7kW.php">
-        <img src="images/SPIN-AIR-11 (2).png" alt="Borne 7.4 kW" class="borne-image" loading="lazy" />
+        <img src="images/bornes/SPIN-AIR-11 (2).png" alt="Borne 7.4 kW" class="borne-image" loading="lazy" />
         <div><span class="borne-power">7.4</span><span class="borne-unit"> kW</span></div>
         <div class="borne-name">Exicom Spin Air</div>
         <p class="borne-desc">Chargeur monophasé pour recharge résidentielle quotidienne avec contrôle intelligent.</p>
@@ -229,7 +229,7 @@ $conn->close();
       </a>
 
       <a class="borne-card" href="bornes/ExicomSpinAir11kW.php">
-        <img src="images/SPIN-AIR-11.png" alt="Borne 11 kW" class="borne-image" loading="lazy" />
+        <img src="images/bornes/SPIN-AIR-11.png" alt="Borne 11 kW" class="borne-image" loading="lazy" />
         <div><span class="borne-power">11</span><span class="borne-unit"> kW</span></div>
         <div class="borne-name">Exicom Spin Air</div>
         <p class="borne-desc">Solution triphasée pour maisons, bureaux et parkings privés avec usage régulier.</p>
@@ -238,7 +238,7 @@ $conn->close();
       </a>
 
       <a class="borne-card" href="bornes/ExicomSpinAir22kW.php">
-        <img src="images/SPIN-AIR-11 (2).png" alt="Borne 22 kW" class="borne-image" loading="lazy" />
+        <img src="images/bornes/SPIN-AIR-11 (2).png" alt="Borne 22 kW" class="borne-image" loading="lazy" />
         <div><span class="borne-power">22</span><span class="borne-unit"> kW</span></div>
         <div class="borne-name">Exicom Spin Air</div>
         <p class="borne-desc">Chargeur haute puissance pour flottes, entreprises et sites à plusieurs utilisateurs.</p>
@@ -319,5 +319,7 @@ $conn->close();
     </nav>
   </footer>
 
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="js/app.js"></script>
 </body>
 </html>

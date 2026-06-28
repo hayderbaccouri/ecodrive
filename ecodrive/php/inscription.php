@@ -1,8 +1,6 @@
-﻿<?php
+<?php
 session_start();
 include 'configuration.php';
-
-$loggedIn = isset($_SESSION['user']);
 
 if (isset($_SESSION['user'])) {
   header('Location: ../index.php');
@@ -69,44 +67,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription - EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/header.css">
 </head>
-
 <body>
-  <header>
+  <header class="site-header">
     <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="catalogue.php">Catalogue</a>
       <a href="../pages/contact.php">Contact</a>
-      <?php if ($loggedIn): ?>
-        <a href="<?= ($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php' ?>">Mon espace</a>
-        <a href="deconnexion.php">Déconnexion</a>
-      <?php else: ?>
-        <a href="connexion.php">Connexion / Inscription</a>
-      <?php endif; ?>
+      <a href="connexion.php">Connexion</a>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
     </nav>
   </header>
 
-  <h2>Creer un compte EcoDrive</h2>
+<div class="login-page">
 
-  <?php if ($error): ?>
-    <div class="alert alert-error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
-  <?php endif; ?>
+  <div class="login-visual">
+    <div class="login-visual-grid"></div>
+    <div class="login-visual-glow"></div>
+    <div class="login-visual-content">
+      <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
+      <div class="login-visual-quote">
+        Rejoignez<br><strong>la révolution électrique.</strong>
+      </div>
+      <div class="login-visual-sub">Premier showroom électrique · Tunisie</div>
+    </div>
+  </div>
 
-  <form method="POST" action="inscription.php">
-    <input type="text" name="fullname" placeholder="Nom complet" value="<?= htmlspecialchars($fullname, ENT_QUOTES, 'UTF-8') ?>" required>
-    <input type="email" name="email" placeholder="Email" value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>" required>
-    <input type="password" name="password" placeholder="Mot de passe" required>
-    <button type="submit">S'inscrire</button>
-  </form>
+  <div class="login-form-col">
+    <div class="login-form-wrap">
 
-  <p>Deja inscrit ? <a href="connexion.php">Se connecter</a></p>
+      <div class="login-eyebrow">Espace client</div>
+      <h2>Créer un compte.</h2>
+      <p class="login-sub">Rejoignez EcoDrive pour réserver vos essais et suivre vos demandes.</p>
+
+      <?php if ($error): ?>
+        <div class="login-error">&#9888; <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+      <?php endif; ?>
+
+      <form method="post" action="inscription.php">
+        <div>
+          <label class="field-label" for="fullname">Nom complet</label>
+          <input type="text" id="fullname" name="fullname"
+                 placeholder="Votre nom"
+                 value="<?= htmlspecialchars($fullname, ENT_QUOTES, 'UTF-8') ?>"
+                 autocomplete="name" required />
+        </div>
+
+        <div>
+          <label class="field-label" for="email">Adresse e-mail</label>
+          <input type="email" id="email" name="email"
+                 placeholder="votre@email.com"
+                 value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>"
+                 autocomplete="email" required />
+        </div>
+
+        <div>
+          <label class="field-label" for="password">Mot de passe</label>
+          <input type="password" id="password" name="password"
+                 placeholder="••••••••"
+                 autocomplete="new-password" required />
+        </div>
+
+        <button type="submit" class="auth-btn">Créer mon compte</button>
+      </form>
+
+      <p class="login-switch">Déjà inscrit ? <a href="connexion.php">Se connecter</a></p>
+    </div>
+  </div>
+
+</div>
+
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
-
 </html>

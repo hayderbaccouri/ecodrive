@@ -96,10 +96,10 @@ $specs = [
   'BYD Atto 3'                    => ['ch' => 204,  'kWh' => 60.5, 'km' => 420],
   'BYD Dolphin Surf'              => ['ch' => 95,   'kWh' => 44.9, 'km' => 340],
   'Citroën C3'                    => ['ch' => 113,  'kWh' => 44,   'km' => 320],
-  'Kia EV3'                       => ['ch' => 204,  'kWh' => 58.3, 'km' => 420],
+  'Kia EV-3'                     => ['ch' => 204,  'kWh' => 58.3, 'km' => 420],
   'Mercedes-Benz CLK'             => ['ch' => 1150, 'kWh' => '-',  'km' => '-'],
   'Mercedes-Benz EQC 400 4MATIC'  => ['ch' => 408,  'kWh' => 80,   'km' => 400],
-  'MG4 Urban'                     => ['ch' => 204,  'kWh' => 61.7, 'km' => 420],
+  'MG 4 Urban'                    => ['ch' => 204,  'kWh' => 61.7, 'km' => 420],
   'Peugeot e-208'                 => ['ch' => 136,  'kWh' => 50,   'km' => 340],
   'Porsche Panamera'              => ['ch' => 600,  'kWh' => '-',  'km' => '-'],
   'Renault Megane E-Tech'         => ['ch' => 220,  'kWh' => 60,   'km' => 450],
@@ -119,25 +119,38 @@ $specs = [
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/catalogue.css">
+  <link rel="stylesheet" href="../css/header.css">
 </head>
 
-<body>
+  <body class="has-topbar">
 
   <div class="topbar">✦ Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
 
-  <header>
-    <a href="../index.php">
-      <div class="logo-text">eco<span>drive</span></div>
-    </a>
+  <header class="site-header">
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
+      <a href="../index.php#bornes">Bornes</a>
       <a href="../pages/contact.php">Contact</a>
       <?php if ($loggedIn): ?>
-        <a href="<?= ($user['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php' ?>">Mon espace</a>
-        <a href="deconnexion.php">Déconnexion</a>
+        <?php $prenom = explode(' ', $user['nom'] ?? 'Client')[0]; $initial = mb_strtoupper(mb_substr($prenom, 0, 1)); $dashPage = ($user['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php'; ?>
+        <div class="user-menu">
+          <div class="user-badge">
+            <div class="avatar"><?= $initial ?></div>
+            <span class="user-name"><?= htmlspecialchars($prenom) ?></span>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="user-dropdown">
+            <a href="<?= $dashPage ?>">Mon espace</a>
+            <hr>
+            <a href="deconnexion.php" class="logout">Déconnexion</a>
+          </div>
+        </div>
       <?php else: ?>
-        <a href="connexion.php">Connexion / Inscription</a>
+        <a href="connexion.php">Se connecter</a>
+        <a href="inscription.php" class="nav-cta">S'inscrire</a>
       <?php endif; ?>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
     </nav>
   </header>
 
@@ -185,17 +198,16 @@ $specs = [
       </div>
     </form>
 
-    <div class="grid">
+    <div class="grid" class="reveal reveal-up reveal-delay-2">
       <?php if (count($voitures) === 0): ?>
         <div class="empty-state">Aucune voiture trouvée pour votre recherche.</div>
       <?php else: ?>
         <?php foreach ($voitures as $voiture): ?>
           <div class="card">
-            <img loading="lazy" src="<?= htmlspecialchars('../' . ltrim($voiture['image'] ?: 'images/placeholder.png', '/'), ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($voiture['marque'] . ' ' . $voiture['modele'], ENT_QUOTES, 'UTF-8') ?>">
+            <img loading="lazy" src="<?= empty($voiture['image']) ? 'data:image/svg+xml,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect fill="#1a1d20" width="400" height="250"/><text x="200" y="125" text-anchor="middle" dy=".35em" fill="#475569" font-family="sans-serif" font-size="18">Aucune image</text></svg>') : htmlspecialchars('../' . ltrim($voiture['image'], '/'), ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($voiture['marque'] . ' ' . $voiture['modele'], ENT_QUOTES, 'UTF-8') ?>">
             <h3><?= htmlspecialchars($voiture['marque'] . ' ' . $voiture['modele'], ENT_QUOTES, 'UTF-8') ?></h3>
             <p>Année : <?= htmlspecialchars($voiture['annee'] ?: '2026', ENT_QUOTES, 'UTF-8') ?></p>
             <p class="price"><?= htmlspecialchars(number_format((float)$voiture['prix'], 0, ',', ' '), ENT_QUOTES, 'UTF-8') ?> DN</p>
-            <p class="car-description"><?= htmlspecialchars($voiture['description'] ?? 'Description non disponible.', ENT_QUOTES, 'UTF-8') ?></p>
             <div class="card-specs">
               <?php
               $key = $voiture['marque'] . ' ' . $voiture['modele'];
@@ -243,6 +255,8 @@ $specs = [
     </nav>
   </footer>
 
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 
 </html>

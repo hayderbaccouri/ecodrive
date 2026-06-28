@@ -67,28 +67,33 @@ for ($i = 5; $i >= 0; $i--) {
   <title>Tableau de bord client — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/header.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="catalogue.php">Catalogue</a>
       <a href="reservation.php">Réserver un essai</a>
       <a href="profil.php">Mon profil</a>
       <a href="deconnexion.php">Déconnexion</a>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </header>
 
   <main class="main-wrap">
+    <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
 
     <?php if (!empty($message)): ?>
       <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
     <!-- Cartes résumé -->
-    <div class="dashboard-summary">
+    <div class="dashboard-summary reveal reveal-up">
       <div class="summary-card">
         <strong>En attente</strong>
         <span><?= $counts['pending'] ?></span>
@@ -108,7 +113,7 @@ for ($i = 5; $i >= 0; $i--) {
     </div>
 
     <!-- Graphiques -->
-    <div class="chart-row">
+    <div class="chart-row reveal reveal-up reveal-delay-1">
       <div class="chart-card">
         <h3>Réservations par mois</h3>
         <canvas id="chartMonthly" width="300" height="180"></canvas>
@@ -188,5 +193,7 @@ for ($i = 5; $i >= 0; $i--) {
   </main>
 
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@
    dashboard.css — EcoDrive · Pages admin & espace client
    ============================================================ */
 
+@import url('animations.css');
+
 /* ── Reset & Variables ────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -204,6 +206,131 @@ details.edit-inline .edit-form button {
   background: var(--dark);  color: rgba(255,255,255,0.35);
   padding: 1.5rem 2rem;  text-align: center;  font-size: 0.78rem;
   margin-top: auto;
+}
+
+/* ── Pagination ──────────────────────────────────────────── */
+.pagination { display:flex; gap:0.35rem; align-items:center; flex-wrap:wrap }
+.pagination-link {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:32px; height:32px; border-radius:6px;
+  font-size:0.8rem; text-decoration:none;
+  color:var(--dark); background:var(--bg);
+  border:1px solid var(--border);
+  transition:background 0.15s;
+}
+.pagination-link:hover { background:var(--primary-light) }
+.pagination-link.active { background:var(--primary); color:#fff; border-color:var(--primary) }
+
+/* ── Mobile burger ────────────────────────────────────────── */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--dark);
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+}
+.burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  .burger { display: flex; }
+  .site-header nav.open { display: flex !important; }
+  .site-header nav {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    background: rgba(250,250,248,0.98);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    padding: 1.5rem 2rem 2rem;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(17,20,16,0.06);
+    box-shadow: 0 12px 36px rgba(17,20,16,0.08);
+    z-index: 150;
+  }
+}
+
+/* ── Progress stepper (light theme) ──────────────────────── */
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.progress-step .step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: #e8e6df;
+  color: #999;
+  border: 2px solid #ddd;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.progress-step .step-label {
+  font-size: 0.8rem;
+  color: #999;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.progress-step.active .step-number {
+  background: #2a6e1a;
+  color: #fff;
+  border-color: #2a6e1a;
+  box-shadow: 0 0 12px rgba(42,110,26,0.3);
+}
+.progress-step.active .step-label {
+  color: #2a6e1a;
+  font-weight: 600;
+}
+.progress-step.done .step-number {
+  background: #2a6e1a;
+  color: #fff;
+  border-color: #2a6e1a;
+}
+.progress-step.done .step-label {
+  color: #555;
+}
+.progress-connector {
+  width: 60px;
+  height: 2px;
+  background: #ddd;
+  margin: 0 8px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.progress-connector .connector-fill {
+  height: 100%;
+  background: #2a6e1a;
+  width: 0;
+  transition: width 0.6s;
+}
+.progress-connector.done .connector-fill {
+  width: 100%;
 }
 
 /* ── Responsive ───────────────────────────────────────────── */

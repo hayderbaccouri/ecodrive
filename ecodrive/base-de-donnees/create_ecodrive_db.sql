@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `email` VARCHAR(255) NOT NULL,
   `mot_de_passe` VARCHAR(255) NOT NULL,
   `role` ENUM('client','admin') NOT NULL DEFAULT 'client',
+  `reset_token` VARCHAR(64) DEFAULT NULL,
+  `reset_expires` DATETIME DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_utilisateur`),
   UNIQUE KEY `uniq_email` (`email`)
@@ -73,26 +75,25 @@ VALUES ('Client Test', 'client@ecodrive.com',
 -- Voitures de test (15 modèles)
 INSERT INTO `voiture` (`marque`, `modele`, `annee`, `prix`, `description`, `image`, `details_page`)
 VALUES
-('Audi', 'A6 Sportback e-tron', 2026, 239000, 'Berline premium allemande, élégante et technologique. Confort routier exceptionnel, double écran tactile MMI, autonomie élevée.', 'images/audi-a6-sportback-e-tron.avif', 'voitures/Audi-A6-Sportback-e-tron.php'),
-('BMW', 'iX3', 2026, 239000, 'SUV électrique premium alliant performances et respect de l\'environnement. Design dynamique, technologies de pointe, autonomie généreuse.', 'images/bmw-ix3.jpg', 'voitures/BMW-iX3.php'),
-('BYD', 'Atto 3', 2026, 95000, 'SUV compact électrique, autonomie ~420 km. Bien équipé, confortable et abordable, idéal pour la ville et les trajets quotidiens.', 'images/byd-atto-3.jpg', 'voitures/BYD-Ato3.php'),
-('BYD', 'Dolphin Surf', 2026, 70000, 'Compacte électrique chinoise, autonomie ~340 km. Design moderne, bon rapport qualité/prix.', 'images/byd-dolphin.jpg', 'voitures/BYD-Dolphin.php'),
-('Citroën', 'C3', 2026, 70000, 'Compacte électrique française, autonomie ~340 km. Design moderne, bon rapport qualité/prix.', 'images/C3_1.jpg', 'voitures/citroene-c3.php'),
-('Kia', 'EV-3', 2026, 70000, 'Compacte électrique coréenne, autonomie ~340 km. Design moderne, bon rapport qualité/prix.', 'images/kia-ev3.png', 'voitures/kia-ev-3.php'),
-('Mercedes-Benz', 'CLK', 2026, 450000, 'Coupé sportif de luxe, hybride V12 bi-turbo de 1 150 ch. Édition limitée à 50 exemplaires dans le monde.', 'images/Mercedes-Benz-Classe-C-2026.jpg', 'voitures/mercedesCLK2026.php'),
-('Mercedes-Benz', 'EQC 400 4MATIC', 2026, 280000, 'SUV électrique premium, 408 ch, autonomie ~400 km. Intérieur luxueux avec MBUX et aides à la conduite avancées.', 'images/mercedes-eqc.jpg', 'voitures/mercedes-EQC.php'),
-('MG', '4 Urban', 2026, 70000, 'Compacte électrique chinoise, autonomie ~340 km. Design moderne, bon rapport qualité/prix.', 'images/mg-4-urban.jpg', 'voitures/mg4-urban.php'),
-('Peugeot', 'e-208', 2026, 95000, 'Citadine électrique, autonomie ~340 km. Compacte, économique et adaptée à la conduite urbaine.', 'images/peugeot-e208.jpg', 'voitures/Peugeot-e-208.php'),
-('Porsche', 'Panamera', 2026, 400000, 'Limousine de luxe, hybride V8 bi-turbo de 600 ch. Édition limitée à 100 exemplaires dans le monde.', 'images/porsche-panamera.jpg', 'voitures/PorschePanamera.php'),
-('Renault', 'Megane E-Tech', 2026, 120000, 'Compacte électrique française, autonomie ~450 km. Design moderne, intérieur connecté, idéale pour la ville et les trajets longue distance.', 'images/renault-megane-e-tech.jpg', 'voitures/Renault-Megane-E-Tech.php'),
-('Tesla', 'Model 3', 2026, 160000, 'Berline compacte électrique, autonomie ~452 km, recharge rapide. Référence mondiale en mobilité électrique.', 'images/tesla-model3.jpg', 'voitures/Tesla-Model3.php'),
-('Tesla', 'Model S Plaid', 2026, 350000, 'Berline haut de gamme, 1 020 ch, autonomie ~600 km. Accélération fulgurante de 0 à 100 km/h en 2,1 secondes.', 'images/tesla-model-s-plaid.jpg', 'voitures/Tesla-Model-S-Plaid.php'),
-('Toyota', 'Yaris', 2026, 70000, 'Compacte électrique japonaise, autonomie ~340 km. Design moderne, bon rapport qualité/prix.', 'images/toyota-yaris.jpg', 'voitures/toyota-yaris.php');
+('Audi', 'A6 Sportback e-tron', 2026, 239000, 'Berline premium allemande 100% électrique. Confort routier exceptionnel, double écran tactile MMI, autonomie élevée, design élégant et technologique.', 'images/audi-a6-sportback-e-tron-electrique/essai-audi-a6-sportback-e-tron-la-grande-routiere-allemande-passe-au-tout-electrique-107381.webp', 'voitures/Audi-A6-Sportback-e-tron.php'),
+('BMW', 'iX3', 2026, 249900, 'SUV électrique premium BMW sur la plateforme Neue Klasse. 469 ch, transmission intégrale xDrive, autonomie jusqu à 805 km, recharge ultra-rapide 400 kW.', 'images/bmw-ix3/BMW-iX3.jpg', 'voitures/BMW-iX3.php'),
+('BYD', 'Atto 3', 2026, 123990, 'SUV compact 100% électrique avec batterie Blade LFP. Autonomie 420 km, design moderne, équipements de série complets, excellent rapport qualité-prix.', 'images/byd-atto-3/byd-atto-3.jpg', 'voitures/BYD-Atto-3.php'),
+('BYD', 'Dolphin Surf', 2026, 55000, 'Citadine électrique compacte BYD avec batterie Blade LFP 38,8 kWh. Autonomie jusqu à 300 km, parfaite pour la ville, recharge rapide 60 kW.', 'images/byd-dolphin/byd-dolphin.jpg', 'voitures/BYD-Dolphin.php'),
+('Kia', 'EV-3', 2026, 104980, 'SUV compact coréen 100% électrique. Grande autonomie jusqu à 605 km WLTP, garantie 7 ans, interface utilisateur intuitive, design moderne.', 'images/kia-ev3/kia-ev3.png', 'voitures/kia-ev3.php'),
+('Mercedes-Benz', 'Classe C 2026', 2026, 320000, 'Berline premium Mercedes 100% électrique. Design futuriste, luxe intérieur, technologies embarquées de pointe, performances exceptionnelles.', 'images/mercedes-classe-c-2026/Mercedes-Benz-Classe-C-2026.jpg', 'voitures/mercedes-classe-c-2026.php'),
+('Mercedes-Benz', 'EQC 400 4MATIC', 2026, 280000, 'SUV premium 100% électrique Mercedes. 408 ch, transmission intégrale 4MATIC, confort absolu, système d infodivertissement MBUX, autonomie 450 km.', 'images/mercedes-eqc/mercedes-eqc.jpg', 'voitures/mercedes-EQC.php'),
+('MG', '4 Urban', 2026, 54950, 'Berline électrique compacte MG. Autonomie jusqu à 420 km, design moderne, connectivité avancée, prix attractif à partir de 54 950 DT.', 'images/mg4/mg-4-urban.jpg', 'voitures/mg4.php'),
+('Peugeot', 'e-208', 2026, 80000, 'Citadine électrique française au design affirmé. Autonomie 400 km, agrément de conduite, recharge rapide 100 kW, finitions soignées.', 'images/peugeot-e-208/peugeot-e208.jpg', 'voitures/Peugeot-e-208.php'),
+('Porsche', 'Taycan', 2026, 450000, 'Berline sportive de luxe 100% électrique Porsche. 680 ch, 0-100 km/h en 3,2 s, design iconique, habitacle raffiné, technologies de pointe.', 'images/porsche-taycan/porsche-taycan-taycan-91005.webp', 'voitures/Porsche-Taycan.php'),
+('Tesla', 'Model 3', 2026, 147000, 'Berline électrique la plus vendue au monde. Autonomie jusqu à 702 km, accès au réseau Superchargeur, mises à jour OTA, performances exceptionnelles.', 'images/tesla-model-3/tesla-model3.jpg', 'voitures/Tesla-Model-3.php'),
+('Tesla', 'Model S Plaid', 2026, 359400, 'Berline électrique la plus rapide du monde : 1 020 ch, 0-100 km/h en 2,1 s. Autonomie 600 km, volant yoke, autonomie record.', 'images/tesla-model-s-plaid/tesla-model-s-plaid.jpg', 'voitures/Tesla-Model-S-Plaid.php'),
+('Toyota', 'bZ4X 73.1 kWh', 2026, 84900, 'SUV 100% électrique Toyota. Autonomie jusqu à 500 km, design audacieux, habitacle spacieux, fiabilité légendaire.', 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp', 'voitures/toyota-bz4x.php'),
+('Geely', 'EX2', 2026, 89900, 'SUV compact 100% électrique Geely. Autonomie jusqu à 320 km, design robuste, habitacle spacieux, idéal pour la ville et les trajets quotidiens.', 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp', 'voitures/Geely-EX2.php');
 
 -- Bornes de recharge
 INSERT INTO `borne` (`nom`, `modele`, `puissance`, `prix`, `description`, `image`, `details_page`)
 VALUES
-('Exicom', 'Spin Air 7kW', '7 kW', 2490, 'Borne AC monophasée intelligente pour maison — 7.4 kW, Wi-Fi/Bluetooth/4G, Type 2, IP55.', 'images/SPIN-AIR-11 (2).png', 'bornes/ExicomSpinAir7kW.php'),
-('Exicom', 'Spin Air 11kW', '11 kW', 3290, 'Borne AC triphasée haute performance — 11 kW, OCPP 1.6, Wi-Fi/4G, pour maisons et bureaux.', 'images/SPIN-AIR-11 (1).png', 'bornes/ExicomSpinAir11kW.php'),
-('Exicom', 'Spin Air 22kW', '22 kW', 4490, 'Borne AC professionnelle — 22 kW triphasé, OCPP 1.6/2.0, RFID, pour flottes et parkings.', 'images/SPIN-AIR-11.png', 'bornes/ExicomSpinAir22kW.php'),
-('Exicom', 'Spin Free 3kW', '3 kW', 1290, 'Chargeur portable compact — 3 kW monophasé, Type 2, câble 5 m, prise Schuko, IP54.', 'images/SPIN-FREE-3.png', 'bornes/ExicomSpinFree3kW.php');
+('Exicom', 'Spin Air 7kW', '7 kW', 2490, 'Borne AC monophasée intelligente pour maison — 7.4 kW, Wi-Fi/Bluetooth/4G, Type 2, IP55.', 'images/bornes/SPIN-AIR-11 (2).png', 'bornes/ExicomSpinAir7kW.php'),
+('Exicom', 'Spin Air 11kW', '11 kW', 3290, 'Borne AC triphasée haute performance — 11 kW, OCPP 1.6, Wi-Fi/4G, pour maisons et bureaux.', 'images/bornes/SPIN-AIR-11 (1).png', 'bornes/ExicomSpinAir11kW.php'),
+('Exicom', 'Spin Air 22kW', '22 kW', 4490, 'Borne AC professionnelle — 22 kW triphasé, OCPP 1.6/2.0, RFID, pour flottes et parkings.', 'images/bornes/SPIN-AIR-11.png', 'bornes/ExicomSpinAir22kW.php'),
+('Exicom', 'Spin Free 3kW', '3 kW', 1290, 'Chargeur portable compact — 3 kW monophasé, Type 2, câble 5 m, prise Schuko, IP54.', 'images/bornes/SPIN-FREE-3.png', 'bornes/ExicomSpinFree3kW.php');

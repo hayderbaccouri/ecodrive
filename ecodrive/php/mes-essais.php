@@ -37,20 +37,23 @@ $stmt->close();
   <title>Mes essais — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/header.css">
 </head>
 <body>
   <header class="site-header">
-    <h1>Mes essais — <?= htmlspecialchars($user['nom']) ?></h1>
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="catalogue.php">Catalogue</a>
       <a href="tableau-de-bord.php">Tableau de bord</a>
       <a href="profil.php">Profil</a>
       <a href="deconnexion.php">Déconnexion</a>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
     </nav>
   </header>
 
   <main class="main-wrap">
+    <h1>Mes essais</h1>
 
   <section>
     <h2>📌 Historique de mes essais</h2>
@@ -90,5 +93,7 @@ $stmt->close();
   </main>
 
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 </html>

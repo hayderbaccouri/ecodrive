@@ -13,14 +13,15 @@ $loggedIn = isset($_SESSION['user']);
   <title>Exicom Spin Air 11 kW — EcoDrive</title>
   
   <link rel="stylesheet" href="../css/bornes.css">
+  <link rel="stylesheet" href="../css/header.css" />
 
 </head>
 
-<body>
+<body class="has-topbar">
 
   <div class="topbar">✦ Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
 
-  <header>
+  <header class="site-header">
     <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
@@ -28,11 +29,24 @@ $loggedIn = isset($_SESSION['user']);
       <a href="../index.php#bornes">Bornes</a>
       <a href="../pages/contact.php">Contact</a>
       <?php if ($loggedIn): ?>
-        <a href="../php/<?= ($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php' ?>">Mon espace</a>
-        <a href="../php/deconnexion.php">Déconnexion</a>
+        <?php $prenom = explode(' ', $_SESSION['user']['nom'] ?? 'Client')[0]; $initial = mb_strtoupper(mb_substr($prenom, 0, 1)); $dashPage = '../php/' . (($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php'); ?>
+        <div class="user-menu">
+          <div class="user-badge">
+            <div class="avatar"><?= $initial ?></div>
+            <span class="user-name"><?= htmlspecialchars($prenom) ?></span>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="user-dropdown">
+            <a href="<?= $dashPage ?>">Mon espace</a>
+            <hr>
+            <a href="../php/deconnexion.php" class="logout">Déconnexion</a>
+          </div>
+        </div>
       <?php else: ?>
-        <a href="../php/connexion.php">Connexion / Inscription</a>
+        <a href="../php/connexion.php">Se connecter</a>
+        <a href="../php/inscription.php" class="nav-cta">S'inscrire</a>
       <?php endif; ?>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
     </nav>
   </header>
 
@@ -52,7 +66,7 @@ $loggedIn = isset($_SESSION['user']);
       <div class="borne-visual-grid"></div>
       <div class="borne-img-frame">
         <div class="borne-img-box">
-          <img src="../images/SPIN-AIR-11 (1).png" alt="Exicom Spin Air 11 kW"
+          <img src="../images/bornes/SPIN-AIR-11 (1).png" alt="Exicom Spin Air 11 kW"
             onerror="this.style.display='none'; this.parentNode.innerHTML += '<div class=\'borne-fallback-icon\'>⚡</div>'">
         </div>
         <span class="borne-badge-portable">⚡ Triphasé · Semi-professionnel</span>
@@ -265,6 +279,8 @@ $loggedIn = isset($_SESSION['user']);
     </nav>
   </footer>
 
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 
 </html>

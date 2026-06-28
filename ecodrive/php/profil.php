@@ -2,46 +2,66 @@
 session_start();
 include 'configuration.php';
 
-// Vérifier que l'utilisateur est connecté et est client
-if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
+if (!isset($_SESSION['user']['id'])) {
     header('Location: connexion.php');
     exit;
 }
 
 $userId = $_SESSION['user']['id'];
 $message = '';
+$messageType = '';
 
-// Annulation d'une réservation
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel'])) {
-    $reservationId = (int)$_POST['reservation_id'];
-    $stmt = $conn->prepare("UPDATE reservation SET statut='cancelled' WHERE id_reservation=? AND utilisateur_id=?");
-    $stmt->bind_param("ii", $reservationId, $userId);
-    if ($stmt->execute()) {
-        $message = "❌ Réservation annulée avec succès.";
+// Mise à jour du profil
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        $message = 'Session invalide.';
+        $messageType = 'error';
     } else {
-        $message = "Erreur lors de l'annulation.";
+        $nom = trim($_POST['nom'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+
+        if ($nom === '' || $email === '') {
+            $message = 'Le nom et l\'email sont obligatoires.';
+            $messageType = 'error';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $message = 'Email invalide.';
+            $messageType = 'error';
+        } else {
+            $stmt = $conn->prepare("SELECT id_utilisateur FROM utilisateur WHERE email = ? AND id_utilisateur != ? LIMIT 1");
+            $stmt->bind_param("si", $email, $userId);
+            $stmt->execute();
+            if ($stmt->get_result()->num_rows > 0) {
+                $message = 'Cet email est déjà utilisé par un autre compte.';
+                $messageType = 'error';
+            } else {
+                if ($password !== '') {
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+                    $stmt = $conn->prepare("UPDATE utilisateur SET nom = ?, email = ?, mot_de_passe = ? WHERE id_utilisateur = ?");
+                    $stmt->bind_param("sssi", $nom, $email, $hash, $userId);
+                } else {
+                    $stmt = $conn->prepare("UPDATE utilisateur SET nom = ?, email = ? WHERE id_utilisateur = ?");
+                    $stmt->bind_param("ssi", $nom, $email, $userId);
+                }
+                $stmt->execute();
+                $stmt->close();
+
+                $names = preg_split('/\s+/', $nom, 2, PREG_SPLIT_NO_EMPTY);
+                $_SESSION['user']['prenom'] = $names[0] ?? 'Utilisateur';
+                $_SESSION['user']['nom'] = $names[1] ?? '';
+                $_SESSION['user']['email'] = $email;
+
+                $message = 'Profil mis à jour avec succès.';
+                $messageType = 'success';
+            }
+        }
     }
-    $stmt->close();
 }
 
-// Récupérer les infos utilisateur
 $stmt = $conn->prepare("SELECT nom, email FROM utilisateur WHERE id_utilisateur = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-$stmt->close();
-
-// Récupérer les réservations du client
-$sql = "SELECT r.id_reservation, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut
-        FROM reservation r
-        JOIN voiture v ON r.voiture_id = v.id_voiture
-        WHERE r.utilisateur_id = ?
-        ORDER BY r.date_essai DESC";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$reservations = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$user = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 ?>
 <!DOCTYPE html>
@@ -51,72 +71,50 @@ $stmt->close();
   <title>Mon profil — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/header.css">
 </head>
 <body>
   <header class="site-header">
-    <h1>Mon profil — <?= htmlspecialchars($user['nom']) ?></h1>
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="catalogue.php">Catalogue</a>
-      <a href="tableau-de-bord.php">Tableau de bord</a>
+      <a href="tableau-de-bord.php">Mon espace</a>
       <a href="deconnexion.php">Déconnexion</a>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
     </nav>
   </header>
 
   <main class="main-wrap">
+    <h1>Mon profil</h1>
 
-  <?php if (!empty($message)): ?>
-    <div class="alert alert-error"><?= htmlspecialchars($message) ?></div>
-  <?php endif; ?>
-
-  <section>
-    <h2>📌 Mes réservations</h2>
-    <?php if (count($reservations) === 0): ?>
-      <p>Vous n’avez pas encore réservé d’essai.</p>
-    <?php else: ?>
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Voiture</th>
-          <th>Date</th>
-          <th>Heure début</th>
-          <th>Heure fin</th>
-          <th>Statut</th>
-          <th>Action</th>
-        </tr>
-        <?php foreach ($reservations as $r): ?>
-        <tr>
-          <td><?= (int)$r['id_reservation'] ?></td>
-          <td><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
-          <td><?= htmlspecialchars($r['date_essai']) ?></td>
-          <td><?= htmlspecialchars($r['heure_debut']) ?></td>
-          <td><?= htmlspecialchars($r['heure_fin']) ?></td>
-          <td>
-            <?php if ($r['statut'] === 'pending'): ?>
-              ⏳ En attente
-            <?php elseif ($r['statut'] === 'confirmed'): ?>
-              ✅ Confirmée
-            <?php else: ?>
-              ❌ Annulée
-            <?php endif; ?>
-          </td>
-          <td>
-            <?php if ($r['statut'] === 'pending'): ?>
-              <form method="POST">
-                <input type="hidden" name="reservation_id" value="<?= (int)$r['id_reservation'] ?>">
-                <button type="submit" name="cancel" class="btn btn-sm btn-danger">Annuler</button>
-              </form>
-            <?php else: ?>
-              <em>Non modifiable</em>
-            <?php endif; ?>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </table>
+    <?php if ($message): ?>
+      <div class="alert alert-<?= $messageType === 'success' ? 'success' : 'error' ?>"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
-  </section>
+
+    <div class="form-card" style="max-width:500px">
+      <form method="POST" action="profil.php">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+        <input type="hidden" name="update_profile" value="1">
+
+        <label for="nom">Nom complet</label>
+        <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" required>
+
+        <label for="email">Adresse e-mail</label>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+
+        <label for="password">Nouveau mot de passe <em style="font-size:0.75rem;color:var(--gray)">(laisser vide pour conserver)</em></label>
+        <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password">
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+      </form>
+    </div>
+
+    <p style="margin-top:1rem"><a href="tableau-de-bord.php" class="btn-ghost">← Retour au tableau de bord</a></p>
   </main>
 
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 </html>

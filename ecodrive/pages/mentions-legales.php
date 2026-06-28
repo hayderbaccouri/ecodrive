@@ -10,10 +10,6 @@ $loggedIn = isset($_SESSION['user']);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentions Légales - EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet">
   <style>
     *,
     *::before,
@@ -63,65 +59,6 @@ $loggedIn = isset($_SESSION['user']);
     img {
       display: block;
       max-width: 100%;
-    }
-
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem var(--wrap);
-      background: rgba(11, 12, 14, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo-text {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      font-weight: 300;
-      color: var(--white);
-      letter-spacing: 0.02em;
-    }
-
-    .logo-text span {
-      color: var(--accent);
-    }
-
-    header nav {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    header nav a {
-      font-size: 0.84rem;
-      font-weight: 400;
-      color: var(--grey-2);
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-
-    header nav a:hover {
-      color: var(--white);
-    }
-
-    .nav-cta {
-      background: var(--accent) !important;
-      color: var(--black) !important;
-      font-weight: 600 !important;
-      padding: 0.42rem 1.1rem;
-      border-radius: 5px;
-      transition: opacity 0.2s !important;
-    }
-
-    .nav-cta:hover {
-      opacity: 0.85;
-      color: var(--black) !important;
     }
 
     /* Main content */
@@ -231,17 +168,6 @@ $loggedIn = isset($_SESSION['user']);
     }
 
     @media (max-width: 700px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-      }
-
-      header nav {
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
       .container {
         padding: 2rem 1.5rem;
       }
@@ -256,25 +182,39 @@ $loggedIn = isset($_SESSION['user']);
       }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/header.css" />
 </head>
 
 <body>
 
-  <!-- Header -->
-  <header>
-    <a href="../index.php" style="text-decoration:none">
-      <div class="logo-text">eco<span>drive</span></div>
-    </a>
+  <header class="site-header">
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="../php/catalogue.php">Catalogue</a>
-      <?php if ($loggedIn): ?>
-        <a href="../php/<?= ($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php' ?>">Mon espace</a>
-        <a href="../php/deconnexion.php">Déconnexion</a>
-      <?php else: ?>
-        <a href="../php/connexion.php">Connexion / Inscription</a>
-      <?php endif; ?>
+      <a href="../index.php#bornes">Bornes</a>
       <a href="contact.php">Contact</a>
+      <?php if ($loggedIn): ?>
+        <?php $prenom = explode(' ', $_SESSION['user']['nom'] ?? 'Client')[0]; $initial = mb_strtoupper(mb_substr($prenom, 0, 1)); $dashPage = '../php/' . (($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php'); ?>
+        <div class="user-menu">
+          <div class="user-badge">
+            <div class="avatar"><?= $initial ?></div>
+            <span class="user-name"><?= htmlspecialchars($prenom) ?></span>
+            <span class="chevron">▾</span>
+          </div>
+          <div class="user-dropdown">
+            <a href="<?= $dashPage ?>">Mon espace</a>
+            <hr>
+            <a href="../php/deconnexion.php" class="logout">Déconnexion</a>
+          </div>
+        </div>
+      <?php else: ?>
+        <a href="../php/connexion.php">Se connecter</a>
+        <a href="../php/inscription.php" class="nav-cta">S'inscrire</a>
+      <?php endif; ?>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
     </nav>
   </header>
 
@@ -440,6 +380,8 @@ $loggedIn = isset($_SESSION['user']);
     </nav>
   </footer>
 
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 
 </html>

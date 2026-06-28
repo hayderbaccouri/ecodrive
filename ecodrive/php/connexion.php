@@ -60,16 +60,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/header.css" />
 </head>
 <body>
 
-  <header>
+  <header class="site-header">
     <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="catalogue.php">Catalogue</a>
       <a href="../pages/contact.php">Contact</a>
       <a href="inscription.php">S'inscrire</a>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </header>
 
@@ -124,6 +128,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn-primary">Se connecter →</button>
       </form>
 
+      <div class="login-footer-links" style="margin-top:0.5rem">
+        <span><a href="mot-de-passe-oublie.php" style="font-weight:400;font-size:0.8rem">Mot de passe oublié ?</a></span>
+      </div>
+
       <div class="login-divider"></div>
 
       <div class="login-footer-links">
@@ -135,5 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </div>
 
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 </html>

@@ -22,7 +22,7 @@ if (!$user || $user['role'] !== 'admin') {
 }
 
 $message = '';
-$uploadDir = '../images/';
+$uploadDir = '../images/';  // Note: les images uploadées vont dans le dossier marque correspondant via le formulaire
 
 // === Upload d'image ===
 function handleUpload($file, $uploadDir) {
@@ -248,12 +248,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
     }
 }
 
-// Récupérer données
+// Pagination réservations
+$pageRes = max(1, (int)($_GET['page_reservations'] ?? 1));
+$limitRes = 10;
+$offsetRes = ($pageRes - 1) * $limitRes;
+$totalRes = $conn->query("SELECT COUNT(*) AS cnt FROM reservation")->fetch_assoc()['cnt'] ?? 0;
+$totalPagesRes = max(1, (int)ceil($totalRes / $limitRes));
+
 $reservations = $conn->query("SELECT r.id_reservation, u.nom AS client, u.email, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut, r.notes 
                               FROM reservation r 
                               JOIN utilisateur u ON r.utilisateur_id=u.id_utilisateur 
                               JOIN voiture v ON r.voiture_id=v.id_voiture 
-                              ORDER BY r.date_essai ASC")->fetch_all(MYSQLI_ASSOC);
+                              ORDER BY r.date_essai ASC 
+                              LIMIT $limitRes OFFSET $offsetRes")->fetch_all(MYSQLI_ASSOC);
 
 $pendingCount = $conn->query("SELECT COUNT(*) AS cnt FROM reservation WHERE statut='pending'")->fetch_assoc()['cnt'] ?? 0;
 
@@ -291,18 +298,23 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
   <title>Admin — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/header.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
+    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
       <a href="deconnexion.php">Déconnexion</a>
+      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </header>
 
   <main class="main-wrap">
+    <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
 
   <?php if (!empty($message)): ?>
     <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
@@ -348,10 +360,18 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
     <?php endforeach; ?>
   </table>
 
+  <?php if ($totalPagesRes > 1): ?>
+  <div class="pagination" style="margin-bottom:1rem">
+    <?php for ($i = 1; $i <= $totalPagesRes; $i++): ?>
+      <a href="?page_reservations=<?= $i ?>" class="pagination-link <?= $i === $pageRes ? 'active' : '' ?>"><?= $i ?></a>
+    <?php endfor; ?>
+  </div>
+  <?php endif; ?>
+
   <!-- 📊 Statistiques -->
   <h2>📊 Statistiques</h2>
 
-  <div class="chart-row">
+  <div class="chart-row reveal reveal-up reveal-delay-1">
     <div class="chart-card">
       <h3>Réservations par mois</h3>
       <canvas id="chartMonthly" width="350" height="180"></canvas>
@@ -362,7 +382,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
     </div>
   </div>
 
-  <div class="chart-row">
+  <div class="chart-row reveal reveal-up reveal-delay-1">
     <div class="chart-card">
       <h3>Voitures les plus demandées</h3>
       <canvas id="chartTopCars" width="350" height="180"></canvas>
@@ -418,7 +438,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
         <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
         <textarea name="description" placeholder="Description" rows="2"></textarea>
         <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
-        <input type="text" name="image" placeholder="Ou chemin direct (ex: images/voiture.jpg)">
+        <input type="text" name="image" placeholder="Ou chemin direct (ex: images/marque/voiture.jpg)">
         <input type="text" name="details_page" placeholder="Page détails (ex: voitures/Modele.php)">
         <button type="submit">Ajouter</button>
       </form>
@@ -441,7 +461,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
                 <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
                 <input type="hidden" name="image_existing" value="<?= htmlspecialchars($v['image'] ?? '') ?>">
                 <?php if ($v['image'] && file_exists('../' . $v['image'])): ?>
-                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($v['image']) ?>" alt="" class="img-preview"></div>
+                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($v['image']) ?>" alt="Aperçu <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?>" class="img-preview"></div>
                 <?php endif; ?>
                 <input type="text" name="marque" value="<?= htmlspecialchars($v['marque']) ?>" required>
                 <input type="text" name="modele" value="<?= htmlspecialchars($v['modele']) ?>" required>
@@ -479,7 +499,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
         <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
         <textarea name="description" placeholder="Description" rows="2"></textarea>
         <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
-        <input type="text" name="image" placeholder="Ou chemin direct (ex: images/borne.png)">
+        <input type="text" name="image" placeholder="Ou chemin direct (ex: images/bornes/borne.png)">
         <input type="text" name="details_page" placeholder="Page détails (ex: bornes/Modèle.php)">
         <button type="submit">Ajouter</button>
       </form>
@@ -503,7 +523,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
                 <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
                 <input type="hidden" name="image_existing" value="<?= htmlspecialchars($b['image'] ?? '') ?>">
                 <?php if ($b['image'] && file_exists('../' . $b['image'])): ?>
-                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($b['image']) ?>" alt="" class="img-preview"></div>
+                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($b['image']) ?>" alt="Aperçu <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?>" class="img-preview"></div>
                 <?php endif; ?>
                 <input type="text" name="nom" value="<?= htmlspecialchars($b['nom']) ?>" required>
                 <input type="text" name="modele" value="<?= htmlspecialchars($b['modele']) ?>" required>
@@ -531,5 +551,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
   </main>
 
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
+<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
+<script src="../js/app.js"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+@import url('animations.css');
+
 /* ============================================================
    bornes.css — EcoDrive · Bornes de recharge
    Fichier partagé pour les 4 pages de bornes
@@ -795,9 +797,7 @@ footer nav a:hover {
     padding: 0.85rem 1.25rem;
   }
 
-  header nav a:not(.nav-cta) {
-    display: none;
-  }
+  header.site-header nav a { font-size: 0.8rem; }
 
   .compat-grid {
     grid-template-columns: 1fr 1fr;
