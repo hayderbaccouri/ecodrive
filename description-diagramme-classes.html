@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Description du diagramme de classes — EcoDrive</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #fff; color: #222; padding: 0; line-height: 1.65;
+  }
+  .page { max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+
+  .cover {
+    page-break-after: always; display: flex; flex-direction: column;
+    justify-content: center; min-height: 100vh; text-align: center;
+    padding: 40mm 25mm;
+  }
+  .cover h1 {
+    font-size: 36px; color: #005e80; margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  .cover .subtitle {
+    font-size: 18px; color: #555; margin-bottom: 30px;
+  }
+  .cover .meta { font-size: 13px; color: #888; line-height: 2; }
+  .cover .line { width: 60px; height: 3px; background: #005e80; margin: 20px auto; }
+
+  h2 {
+    font-size: 22px; color: #005e80; margin: 40px 0 18px;
+    padding-bottom: 8px; border-bottom: 2px solid #d0e8f0;
+  }
+  h3 {
+    font-size: 16px; color: #1a4a5a; margin: 25px 0 10px;
+  }
+  p { margin: 0 0 12px; text-align: justify; }
+  ul, ol { margin: 0 0 14px 22px; }
+  li { margin-bottom: 4px; }
+  strong { color: #005e80; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 16px 0 20px;
+    font-size: 13px;
+  }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+  th { background: #d0e8f0; color: #1a4a5a; font-weight: 600; }
+  tr:nth-child(even) td { background: #f5fafc; }
+
+  .note {
+    background: #f5fafc; border-left: 4px solid #005e80;
+    padding: 12px 16px; margin: 10px 0 18px; font-size: 13px; color: #444;
+  }
+  code {
+    font-family: Consolas, monospace; font-size: 12px;
+    background: #f0f4f6; padding: 1px 5px; border-radius: 3px;
+  }
+
+  @media print {
+    @page { margin: 0; size: A4; }
+    body { font-size: 11pt; }
+    .cover { min-height: 100vh; }
+    h2, h3 { page-break-after: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE DE GARDE -->
+<div class="cover">
+  <h1>EcoDrive</h1>
+  <div class="line"></div>
+  <div class="subtitle">Description du diagramme de classes</div>
+  <div class="meta">
+    Modèle de données — Base MySQL<br>
+    Projet de fin d'études &bull; Juin 2026
+  </div>
+</div>
+
+<!-- CONTENU -->
+<div class="page">
+
+<h2>1. Présentation</h2>
+<p>
+Le diagramme de classes ci-dessous modélise la <strong>structure persistante</strong> de la plateforme EcoDrive. Il représente les quatre entités stockées en base de données MySQL, leurs attributs, leurs clés et les relations qui les lient. Le projet étant développé en PHP procédural (sans framework ORM), ce diagramme correspond directement au <strong>schéma relationnel</strong> implémenté via les instructions <code>CREATE TABLE</code>.
+</p>
+
+<h2>2. Les quatre entités</h2>
+
+<h3>2.1 utilisateur</h3>
+<p>
+Stocke les comptes de la plateforme avec deux rôles possibles : <strong>client</strong> (visiteur inscrit) et <strong>admin</strong> (gestionnaire). Le mot de passe est haché avec <strong>bcrypt</strong>. L'email est unique pour éviter les doublons. Des champs optionnels (<code>reset_token</code>, <code>reset_expires</code>) gèrent la réinitialisation du mot de passe avec un lien à durée limitée (1 heure).
+</p>
+
+<h3>2.2 voiture</h3>
+<p>
+Catalogue des véhicules électriques proposés. Chaque voiture est identifiée par sa <strong>marque</strong>, son <strong>modèle</strong>, son <strong>année</strong> et son <strong>prix</strong>. Les données détaillées (spécifications techniques : puissance moteur, capacité batterie, autonomie) sont stockées <strong>côté PHP</strong> dans un tableau associatif, et non en base — ce choix a été fait pour éviter de sur-normaliser des données rarement modifiées.
+</p>
+
+<h3>2.3 réservation</h3>
+<p>
+Entité <strong>association</strong> qui matérialise la <strong>relation many-to-many</strong> entre <code>utilisateur</code> et <code>voiture</code>. Elle porte les attributs de la réservation d'essai : date, créneaux horaires (<code>heure_debut</code>, <code>heure_fin</code>), <strong>statut</strong> (pending / confirmed / cancelled), et notes optionnelles.
+</p>
+<p>
+Un <strong>trigramme de validation</strong> empêche le double-book : pour une même voiture, un même jour, et des créneaux qui se chevauchent, la réservation est refusée si une réservation non-annulée existe déjà.
+</p>
+
+<h3>2.4 borne</h3>
+<p>
+Catalogue des bornes de recharge Exicom. Cette table est <strong>indépendante</strong> (sans clé étrangère) — elle n'est liée à aucune réservation dans la version actuelle. Elle référence 4 modèles de 3 à 22 kW.
+</p>
+
+<h2>3. Relations</h2>
+
+<table>
+  <tr><th>Relation</th><th>Type</th><th>Description</th></tr>
+  <tr>
+    <td>utilisateur → réservation</td>
+    <td>1...*</td>
+    <td>Un utilisateur peut effectuer plusieurs réservations d'essai</td>
+  </tr>
+  <tr>
+    <td>voiture → réservation</td>
+    <td>1...*</td>
+    <td>Une voiture peut être réservée plusieurs fois (à des créneaux différents)</td>
+  </tr>
+  <tr>
+    <td>utilisateur → voiture (via réservation)</td>
+    <td>*...*</td>
+    <td>Relation many-to-many : un utilisateur peut essayer plusieurs voitures, une voiture peut être essayée par plusieurs utilisateurs</td>
+  </tr>
+</table>
+
+<p>Ces relations sont implémentées physiquement par deux <strong>clés étrangères</strong> dans la table <code>reservation</code> :</p>
+<ul>
+  <li><code>fk_reservation_utilisateur</code> : <code>utilisateur_id</code> → <code>utilisateur(id_utilisateur)</code> <strong>ON DELETE CASCADE</strong></li>
+  <li><code>fk_reservation_voiture</code> : <code>voiture_id</code> → <code>voiture(id_voiture)</code> <strong>ON DELETE CASCADE</strong></li>
+</ul>
+
+<p>
+Le <code>CASCADE</code> garantit que si un utilisateur ou une voiture est supprimé, les réservations associées le sont automatiquement — maintenant l'intégrité référentielle sans action manuelle.
+</p>
+
+<h2>4. Contraintes d'intégrité</h2>
+
+<ul>
+  <li><strong>Domaine</strong> : les champs <code>role</code> (utilisateur) et <code>statut</code> (réservation) sont des <code>ENUM</code> — les valeurs sont contraintes à un ensemble défini.</li>
+  <li><strong>Référentielle</strong> : les clés étrangères avec CASCADE préservent la cohérence des données liées.</li>
+  <li><strong>Unicité</strong> : l'email est unique — pas de doublon de compte.</li>
+  <li><strong>Temporelle</strong> : la requête de détection de conflit horaire empêche les chevauchements de réservation (même voiture, même jour, même plage horaire).</li>
+</ul>
+
+<h2>5. Moteur de stockage</h2>
+<p>
+Toutes les tables utilisent le moteur <strong>InnoDB</strong> avec le jeu de caractères <code>utf8mb4_unicode_ci</code>. InnoDB est choisi pour sa gestion des transactions, l'intégrité référentielle (clés étrangères) et sa robustesse en production.
+</p>
+
+<h2>6. Synthèse</h2>
+<p>
+Le diagramme de classes reflète un schéma relationnel <strong>simple, cohérent et fonctionnel</strong> : 4 tables, des clés étrangères assurant l'intégrité, et des contraintes ENUM limitant les valeurs autorisées. L'absence de normalisation excessive dans <code>voiture</code> (les specs sont en PHP) constitue un choix pragmatique adapté à un catalogue de taille modeste (14 entrées). La table <code>borne</code>, bien qu'indépendante aujourd'hui, pourrait être reliée à future version via une table de réservation de borne.
+</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Description de la carte conceptuelle — EcoDrive</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #fff; color: #222;
+    padding: 0; line-height: 1.65;
+  }
+  .page {
+    max-width: 210mm; margin: 0 auto; padding: 20mm 25mm;
+  }
+
+  /* Couverture */
+  .cover {
+    page-break-after: always;
+    display: flex; flex-direction: column; justify-content: center;
+    min-height: 100vh; text-align: center;
+    padding: 40mm 25mm;
+  }
+  .cover h1 {
+    font-size: 36px; color: #00a67a; margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  .cover .subtitle {
+    font-size: 18px; color: #555; margin-bottom: 30px;
+  }
+  .cover .meta {
+    font-size: 13px; color: #888; line-height: 2;
+  }
+  .cover .line { width: 60px; height: 3px; background: #00a67a; margin: 20px auto; }
+
+  h2 {
+    font-size: 22px; color: #00a67a; margin: 40px 0 18px;
+    padding-bottom: 8px; border-bottom: 2px solid #e0f5ec;
+  }
+  h3 {
+    font-size: 16px; color: #1a5340; margin: 25px 0 10px;
+  }
+  h4 {
+    font-size: 14px; color: #333; margin: 18px 0 8px;
+  }
+  p { margin: 0 0 12px; text-align: justify; }
+  ul, ol { margin: 0 0 14px 22px; }
+  li { margin-bottom: 4px; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 16px 0 20px;
+    font-size: 13px;
+  }
+  th, td {
+    border: 1px solid #ddd; padding: 8px 12px; text-align: left;
+  }
+  th { background: #e0f5ec; color: #1a5340; font-weight: 600; }
+  tr:nth-child(even) td { background: #f9fdfb; }
+
+  strong { color: #1a5340; }
+  .numero { font-weight: 700; color: #00a67a; margin-right: 6px; }
+
+  .section-desc {
+    background: #f5fcf9; border-left: 4px solid #00a67a;
+    padding: 12px 16px; margin: 10px 0 18px; font-size: 13px; color: #444;
+  }
+
+  @media print {
+    @page { margin: 0; size: A4; }
+    body { font-size: 11pt; }
+    .cover { min-height: 100vh; }
+    h2 { page-break-after: avoid; }
+    h3 { page-break-after: avoid; }
+    ul, ol { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE DE GARDE -->
+<div class="cover">
+  <h1>EcoDrive</h1>
+  <div class="line"></div>
+  <div class="subtitle">Description de la carte conceptuelle</div>
+  <div class="meta">
+    Showroom &amp; réservation de véhicules électriques<br>
+    Projet de fin d'études<br>
+    Juin 2026
+  </div>
+</div>
+
+<!-- CONTENU -->
+<div class="page">
+
+<h2>1. Présentation générale</h2>
+
+<p>
+La carte conceptuelle ci-dessous modélise l'architecture fonctionnelle et technique du projet <strong>EcoDrive</strong>, plateforme de showroom et réservation de véhicules électriques en Tunisie. Elle adopte une structure <strong>arborescente à 4 niveaux</strong> : un nœud central, cinq modules principaux, leurs sous-fonctionnalités, une couche transverse, et enfin les technologies qui soutiennent l'ensemble.
+</p>
+
+<h2>2. Nœud central — EcoDrive</h2>
+
+<p>
+Le point d'entrée de la carte est <strong>EcoDrive</strong>, le nom du projet. Il représente la plateforme dans sa globalité : un site web vitrine + application métier permettant la découverte, la comparaison et la réservation de véhicules électriques et de bornes de recharge.
+</p>
+<p>
+De ce nœud central partent <strong>5 branches principales</strong>, chacune correspondant à un module fonctionnel du site.
+</p>
+
+<h2>3. Modules principaux</h2>
+
+<h3>3.1 Accueil (page d'entrée)</h3>
+<p>La page d'accueil joue le rôle de <strong>vitrine</strong>. Elle contient :</p>
+<ul>
+  <li>Un <strong>hero</strong> avec des statistiques clés (nombre de voitures, bornes, essais effectués) pour capter l'attention et crédibiliser la plateforme.</li>
+  <li>Un <strong>showroom</strong> présentant 3 voitures vedettes sélectionnées, donnant un aperçu direct du catalogue.</li>
+  <li>Une <strong>section bornes</strong> avec 4 cartes des chargeurs Exicom, pour sensibiliser dès l'entrée à l'écosystème de recharge.</li>
+  <li>Les sections <strong>À propos</strong> (présentation de la société) et <strong>Contact</strong> (formulaire + coordonnées).</li>
+</ul>
+
+<h3>3.2 Catalogue</h3>
+<p>Le catalogue est le <strong>moteur de recherche</strong> du site. Il permet à l'utilisateur de :</p>
+<ul>
+  <li><strong>Filtrer</strong> les véhicules par marque, prix, année et type de moteur.</li>
+  <li><strong>Trier</strong> les résultats par popularité, prix croissant/décroissant ou année.</li>
+  <li>Naviguer avec une <strong>pagination</strong> (12 éléments par page).</li>
+  <li>Visualiser rapidement les caractéristiques sous forme de <strong>chips</strong> (puissance, batterie, autonomie).</li>
+</ul>
+
+<h3>3.3 Fiches voitures (pages détail)</h3>
+<p>Chaque véhicule dispose d'une <strong>page dédiée</strong> organisée en deux colonnes :</p>
+<ul>
+  <li>Un <strong>slider</strong> classant automatiquement les photos (extérieur → intérieur → autres) avec un ordre déterministe.</li>
+  <li>Une <strong>lightbox</strong> plein écran avec navigation clavier (flèches ← →, Échap) et compteur d'images.</li>
+  <li>Une <strong>description</strong> commerciale accompagnée des <strong>specs mises en avant</strong> (autonomie, prix, puissance).</li>
+  <li>Une <strong>fiche technique</strong> complète répartie en 4 groupes : moteur &amp; performances, batterie &amp; recharge, dimensions &amp; poids, équipements &amp; confort.</li>
+</ul>
+
+<h3>3.4 Bornes de recharge</h3>
+<p>Ce module présente les <strong>4 chargeurs Exicom</strong> (3 à 22 kW) avec pour chacun :</p>
+<ul>
+  <li>Une fiche détaillée : puissance, type de courant, connecteurs, applications recommandées.</li>
+  <li>Des catégories d'usage : domicile, bureau, flotte professionnelle.</li>
+  <li>Un bouton d'appel à l'action menant vers la <strong>réservation</strong>.</li>
+</ul>
+
+<h3>3.5 Authentification</h3>
+<p>Système de gestion des utilisateurs avec :</p>
+<ul>
+  <li><strong>Inscription</strong> et <strong>connexion</strong> sécurisées (bcrypt, prepared statements, CSRF).</li>
+  <li><strong>Profil modifiable</strong> (nom, email, mot de passe).</li>
+  <li><strong>Mot de passe oublié</strong> avec token de réinitialisation valable 1 heure.</li>
+  <li>Deux <strong>rôles distincts</strong> : client et administrateur, chacun avec ses permissions.</li>
+</ul>
+
+<h2>4. Couche transverse</h2>
+<p>Trois fonctionnalités traversent l'ensemble des modules :</p>
+
+<h3>4.1 Administration</h3>
+<p>Interface réservée aux administrateurs permettant :</p>
+<ul>
+  <li>La gestion complète des voitures et bornes <strong>(CRUD)</strong> : ajout, modification, suppression.</li>
+  <li>La <strong>gestion des réservations</strong> : consultation, validation, annulation.</li>
+  <li>Des <strong>statistiques</strong> dynamiques via Chart.js (réservations par mois, répartition par marque, évolution).</li>
+  <li>L'<strong>export</strong> des données en CSV et SQL pour sauvegarde ou analyse externe.</li>
+</ul>
+
+<h3>4.2 Espace client</h3>
+<p>Dashboard personnel où le client peut :</p>
+<ul>
+  <li>Consulter ses <strong>réservations en cours et passées</strong>.</li>
+  <li><strong>Annuler</strong> une réservation (avec confirmation).</li>
+  <li><strong>Réserver un essai</strong> routier pour un véhicule ou une borne.</li>
+  <li>Modifier ses <strong>informations personnelles</strong>.</li>
+</ul>
+
+<h3>4.3 Pages légales</h3>
+<p>Pages informatives obligatoires : <strong>Contact</strong>, <strong>Mentions légales</strong>, <strong>Politique de confidentialité</strong>, et une page <strong>404</strong> personnalisée.</p>
+
+<h2>5. Technologies utilisées</h2>
+
+<table>
+  <tr><th>Technologie</th><th>Rôle</th></tr>
+  <tr><td><strong>PHP 8</strong></td><td>Langage back-end, logique métier, sessions, sécurité</td></tr>
+  <tr><td><strong>MySQL 8</strong></td><td>Base de données relationnelle (tables : voiture, borne, utilisateur, réservation)</td></tr>
+  <tr><td><strong>HTML5</strong></td><td>Structure sémantique des pages</td></tr>
+  <tr><td><strong>CSS3</strong></td><td>Design dark theme, animations, responsive (grid, flexbox)</td></tr>
+  <tr><td><strong>JavaScript</strong></td><td>Lightbox, slider, burger menu, scroll reveal, back-to-top, toasts</td></tr>
+  <tr><td><strong>Chart.js</strong></td><td>Graphiques statistiques dans le panneau d'administration</td></tr>
+</table>
+
+<p>L'architecture suit le modèle <strong>3-tiers</strong> :</p>
+<ol>
+  <li><strong>Présentation</strong> (HTML/CSS/JS) — interface utilisateur</li>
+  <li><strong>Traitement</strong> (PHP) — logique métier et sécurité</li>
+  <li><strong>Données</strong> (MySQL) — persistance et requêtes</li>
+</ol>
+<p>
+Toutes les communications entre la couche présentation et la couche données passent par PHP avec <strong>requêtes préparées</strong> pour prévenir les injections SQL, et un <strong>token CSRF</strong> pour protéger les formulaires.
+</p>
+
+<h2>6. Flux de navigation</h2>
+
+<ol>
+  <li>Un visiteur arrive sur <strong>l'accueil</strong> → découvre le concept via le showroom et les statistiques.</li>
+  <li>Il explore le <strong>catalogue</strong> → filtre, trie, trouve un véhicule qui l'intéresse.</li>
+  <li>Il clique sur la <strong>fiche détail</strong> → consulte le slider, la lightbox, la fiche technique.</li>
+  <li>Il <strong>s'inscrit / se connecte</strong> → accède à son espace client.</li>
+  <li>Il <strong>réserve un essai</strong> pour le véhicule choisi.</li>
+  <li>L'<strong>administrateur</strong> reçoit la réservation et la gère depuis son panneau.</li>
+  <li>Le <strong>client</strong> suit l'état de sa réservation depuis son dashboard.</li>
+</ol>
+
+<h2>7. Synthèse</h2>
+
+<p>
+La carte conceptuelle illustre un projet <strong>complet et autonome</strong>, développé sans framework PHP, qui couvre l'ensemble du cycle de vie d'une plateforme e-mobilité : de la <strong>découverte</strong> (catalogue, fiches) à l'<strong>action</strong> (réservation, essai), en passant par la <strong>gestion</strong> (administration, espace client) et la <strong>conformité</strong> (pages légales, sécurité).
+</p>
+<p>
+Elle montre également la <strong>séparation claire des responsabilités</strong> entre les modules et la <strong>cohérence technologique</strong> de la solution.
+</p>
+
+</div>
+</body>
+</html>

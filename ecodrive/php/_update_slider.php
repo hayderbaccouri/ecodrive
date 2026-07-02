@@ -1,4 +1,13 @@
 <?php
+// Sécuriser l'accès : autoriser uniquement l'exécution CLI ou un administrateur connecté
+if (PHP_SAPI !== 'cli') {
+  session_start();
+  include __DIR__ . '/configuration.php';
+  if (empty($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'admin') {
+    die('Accès refusé.');
+  }
+}
+
 $cars = [
     ['Audi-A6-Sportback-e-tron.php', 'images/audi-a6/', 'audi-a6-01.jpg', 'Audi A6 Sportback e-tron'],
     ['BMW-iX3.php', 'images/bmw-ix3/', 'BMW-iX3.jpg', 'BMW iX3'],

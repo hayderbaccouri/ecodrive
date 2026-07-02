@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagramme de classes — EcoDrive</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0c0e; display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 30px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  .canvas {
+    max-width: 1100px; width: 100%;
+    background: #0f1215; border-radius: 24px; padding: 35px 30px 40px;
+    border: 1px solid #1e2a2a;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+    position: relative; overflow: hidden;
+  }
+  .canvas-title {
+    text-align: center; margin-bottom: 30px;
+    font-size: 13px; letter-spacing: 3px; color: #445;
+    text-transform: uppercase;
+  }
+  .diagram { display: flex; flex-direction: column; align-items: center; }
+
+  /* SVG zone */
+  .svg-wrap { width: 100%; overflow: visible; }
+  .svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Classes UML */
+  .uml-box {
+    fill: #111617; stroke: #1e2a2a; stroke-width: 1.5;
+    rx: 10; ry: 10;
+  }
+  .uml-box-primary { stroke: #00e5a0; }
+  .uml-box-fk { stroke: #e5a000; }
+  .uml-box-standalone { stroke: #4488aa; }
+
+  .header-bg { fill: #1a2225; }
+  .header-bg-primary { fill: #0d2a22; }
+  .header-bg-fk { fill: #2a2415; }
+  .header-bg-standalone { fill: #15222a; }
+
+  .uml-text-title {
+    font-family: 'Segoe UI', sans-serif; font-size: 14px; font-weight: 700;
+    dominant-baseline: middle; text-anchor: middle;
+  }
+  .uml-text-primary { fill: #00e5a0; }
+  .uml-text-fk { fill: #e5a000; }
+  .uml-text-standalone { fill: #66b0d0; }
+
+  .uml-text-field {
+    font-family: 'Consolas', 'Courier New', monospace; font-size: 11px;
+    dominant-baseline: middle;
+  }
+  .uml-text-key { fill: #00e5a0; }
+  .uml-text-fk-field { fill: #e5a000; }
+  .uml-text-normal { fill: #99aabb; }
+
+  .relation-line { stroke: #445; stroke-width: 1.5; fill: none; }
+  .relation-label {
+    font-family: 'Segoe UI', sans-serif; font-size: 9px; fill: #778; text-anchor: middle;
+  }
+  .relation-card {
+    font-family: 'Segoe UI', sans-serif; font-size: 10px; font-weight: 600;
+    fill: #00e5a0; text-anchor: middle;
+  }
+
+  /* Légende */
+  .legend {
+    display: flex; justify-content: center; gap: 28px; margin-top: 25px; flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: #667;
+  }
+  .legend-item .swatch {
+    width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid;
+  }
+  .legend-item .swatch.pk { border-color: #00e5a0; background: #0d2a22; }
+  .legend-item .swatch.fk { border-color: #e5a000; background: #2a2415; }
+  .legend-item .swatch.normal { border-color: #4488aa; background: #15222a; }
+
+  /* Print */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .canvas { box-shadow: none; border: 1px solid #ccc; background: #fff; }
+    .uml-box { fill: #fafafa; stroke: #999; }
+    .header-bg-primary { fill: #d4f0e6; }
+    .header-bg-fk { fill: #f0e8d4; }
+    .header-bg-standalone { fill: #d4e6f0; }
+    .header-bg { fill: #eee; }
+    .uml-text-primary { fill: #00664a; }
+    .uml-text-fk { fill: #8a6a00; }
+    .uml-text-standalone { fill: #2a6a8a; }
+    .uml-text-key { fill: #00664a; }
+    .uml-text-fk-field { fill: #8a6a00; }
+    .uml-text-normal { fill: #444; }
+    .relation-line { stroke: #888; }
+    .relation-card { fill: #00664a; }
+    .legend-item .swatch.pk { border-color: #00664a; background: #d4f0e6; }
+    .legend-item .swatch.fk { border-color: #8a6a00; background: #f0e8d4; }
+    .legend-item .swatch.normal { border-color: #2a6a8a; background: #d4e6f0; }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="canvas-title">Diagramme de classes — Modèle de données</div>
+
+  <div class="svg-wrap">
+    <svg viewBox="0 0 1050 580" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ============================================ -->
+      <!-- ENTITÉ : utilisateur                         -->
+      <!-- ============================================ -->
+      <g transform="translate(50, 30)">
+        <rect class="uml-box uml-box-primary" width="240" height="150" stroke="#00e5a0"/>
+        <rect class="header-bg header-bg-primary" width="240" height="28" rx="10" ry="10"/>
+        <rect class="header-bg header-bg-primary" y="14" width="240" height="14"/>
+        <text class="uml-text-title uml-text-primary" x="120" y="17">« entity » utilisateur</text>
+
+        <line x1="0" y1="28" x2="240" y2="28" stroke="#1e2a2a" stroke-width="1"/>
+
+        <!-- Champs -->
+        <text class="uml-text-field uml-text-key" x="10" y="48">  PK  id_utilisateur : INT UNSIGNED</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="68">      nom : VARCHAR(255)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="88">      email : VARCHAR(255) [UNIQUE]</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="108">     mot_de_passe : VARCHAR(255)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="128">     role : ENUM('client','admin')</text>
+        <!-- note: reset_token, reset_expires, created_at omis pour lisibilité -->
+      </g>
+
+      <!-- ============================================ -->
+      <!-- ENTITÉ : voiture                             -->
+      <!-- ============================================ -->
+      <g transform="translate(400, 30)">
+        <rect class="uml-box uml-box-primary" width="240" height="150" stroke="#00e5a0"/>
+        <rect class="header-bg header-bg-primary" width="240" height="28" rx="10" ry="10"/>
+        <rect class="header-bg header-bg-primary" y="14" width="240" height="14"/>
+        <text class="uml-text-title uml-text-primary" x="120" y="17">« entity » voiture</text>
+
+        <line x1="0" y1="28" x2="240" y2="28" stroke="#1e2a2a" stroke-width="1"/>
+
+        <text class="uml-text-field uml-text-key" x="10" y="48">  PK  id_voiture : INT UNSIGNED</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="68">      marque : VARCHAR(100)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="88">      modele : VARCHAR(100)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="108">     annee : YEAR</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="128">     prix : DOUBLE</text>
+      </g>
+
+      <!-- ============================================ -->
+      <!-- ENTITÉ : reservation (association)           -->
+      <!-- ============================================ -->
+      <g transform="translate(225, 260)">
+        <rect class="uml-box uml-box-fk" width="240" height="170" stroke="#e5a000"/>
+        <rect class="header-bg header-bg-fk" width="240" height="28" rx="10" ry="10"/>
+        <rect class="header-bg header-bg-fk" y="14" width="240" height="14"/>
+        <text class="uml-text-title uml-text-fk" x="120" y="17">« association » réservation</text>
+
+        <line x1="0" y1="28" x2="240" y2="28" stroke="#1e2a2a" stroke-width="1"/>
+
+        <text class="uml-text-field uml-text-key" x="10" y="48">  PK  id_reservation : INT UNSIGNED</text>
+        <text class="uml-text-field uml-text-fk-field" x="10" y="70">  FK  utilisateur_id : INT UNSIGNED</text>
+        <text class="uml-text-field uml-text-fk-field" x="10" y="92">  FK  voiture_id : INT UNSIGNED</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="114">     date_essai : DATE</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="134">     heure_debut : TIME</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="154">     statut : ENUM('pending','confirmed','cancelled')</text>
+      </g>
+
+      <!-- ============================================ -->
+      <!-- ENTITÉ : borne (indépendante)                -->
+      <!-- ============================================ -->
+      <g transform="translate(740, 260)">
+        <rect class="uml-box uml-box-standalone" width="240" height="150" stroke="#4488aa"/>
+        <rect class="header-bg header-bg-standalone" width="240" height="28" rx="10" ry="10"/>
+        <rect class="header-bg header-bg-standalone" y="14" width="240" height="14"/>
+        <text class="uml-text-title uml-text-standalone" x="120" y="17">« entity » borne</text>
+
+        <line x1="0" y1="28" x2="240" y2="28" stroke="#1e2a2a" stroke-width="1"/>
+
+        <text class="uml-text-field uml-text-key" x="10" y="48">  PK  id_borne : INT UNSIGNED</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="68">      nom : VARCHAR(100)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="88">      modele : VARCHAR(100)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="108">     puissance : VARCHAR(50)</text>
+        <text class="uml-text-field uml-text-normal" x="10" y="128">     prix : DOUBLE</text>
+      </g>
+
+      <!-- ============================================ -->
+      <!-- RELATIONS                                    -->
+      <!-- ============================================ -->
+
+      <!-- utilisateur 1 ---→ * réservation -->
+      <line class="relation-line" x1="170" y1="180" x2="170" y2="220"/>
+      <line class="relation-line" x1="170" y1="220" x2="300" y2="260"/>
+      <!-- cardinalité côté utilisateur -->
+      <text class="relation-card" x="155" y="215">1</text>
+      <text class="relation-label" x="155" y="202">possède</text>
+      <!-- cardinalité côté réservation -->
+      <text class="relation-card" x="255" y="260">*</text>
+
+      <!-- voiture 1 ---→ * réservation -->
+      <line class="relation-line" x1="520" y1="180" x2="520" y2="220"/>
+      <line class="relation-line" x1="520" y1="220" x2="420" y2="260"/>
+      <text class="relation-card" x="505" y="215">1</text>
+      <text class="relation-label" x="505" y="202">concerne</text>
+      <text class="relation-card" x="440" y="260">*</text>
+
+      <!-- borne : standalone, pas de relation -->
+
+      <!-- NOTE : Many-to-many via réservation -->
+      <text class="relation-label" x="345" y="240" fill="#555" font-size="9">
+        ⇐ liaison many-to-many
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Légende -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="swatch pk"></div> PK — Clé primaire
+    </div>
+    <div class="legend-item">
+      <div class="swatch fk"></div> FK — Clé étrangère
+    </div>
+    <div class="legend-item">
+      <div class="swatch normal"></div> Attribut standard
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
