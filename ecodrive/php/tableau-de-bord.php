@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
     header('Location: connexion.php');

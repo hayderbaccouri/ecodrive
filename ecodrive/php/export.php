@@ -1,6 +1,5 @@
 <?php
-session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 // Accès réservé à l'admin
 if (!isset($_SESSION['user']['id'])) {

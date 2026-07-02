@@ -1,6 +1,5 @@
 <?php
-session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 $loggedIn = isset($_SESSION['user']);
 
