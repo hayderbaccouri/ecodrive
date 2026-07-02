@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 // Vérifier que l'utilisateur est connecté et est client
 if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {

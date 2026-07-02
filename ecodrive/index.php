@@ -1,9 +1,8 @@
 
 <?php
 session_start();
-include 'php/configuration.php';
-
 $user = $_SESSION['user'] ?? null;
+include 'php/bootstrap.php';
 $prenom = htmlspecialchars($user['prenom'] ?? 'Visiteur', ENT_QUOTES, 'UTF-8');
 $email = htmlspecialchars($user['email'] ?? '', ENT_QUOTES, 'UTF-8');
 $loggedIn = $user !== null;

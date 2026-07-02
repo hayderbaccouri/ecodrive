@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id'])) {
     header('Location: connexion.php');

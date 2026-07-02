@@ -1,6 +1,5 @@
 <?php
-session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 if (isset($_SESSION['user'])) {
   header('Location: ../index.php');

@@ -1,6 +1,5 @@
 <?php
-session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 // Vérifier que l'utilisateur est connecté et est admin
 if (!isset($_SESSION['user']['id'])) {

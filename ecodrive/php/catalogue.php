@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'configuration.php';
+include 'bootstrap.php';
 
 $user = $_SESSION['user'] ?? null;
 $loggedIn = $user !== null;
