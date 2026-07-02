@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
 
             $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-            $resetLink = "$scheme://{$_SERVER['HTTP_HOST']}/ecodrive/php/reinitialiser-mot-de-passe.php?token=$token";
+            $resetLink = "$scheme://{$_SERVER['HTTP_HOST']}/php/reinitialiser-mot-de-passe.php?token=$token";
             $subject = "Réinitialisation mot de passe - EcoDrive";
             $body = "Bonjour,\n\nCliquez sur ce lien pour réinitialiser votre mot de passe :\n$resetLink\n\nCe lien expire dans 1 heure.\n\nEcoDrive Team";
             $headers = "From: contact@ecodrive.tn\r\nReply-To: contact@ecodrive.tn\r\nX-Mailer: PHP/" . phpversion();
