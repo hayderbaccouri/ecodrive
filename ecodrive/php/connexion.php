@@ -31,7 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
 
             if ($user && password_verify($password, $user['mot_de_passe'])) {
-                $names = preg_split('/\s+/', $user['nom'] ?? '', 2, PREG_SPLIT_NO_EMPTY);
+              // Regenerate session id to prevent session fixation
+              session_regenerate_id(true);
+              $names = preg_split('/\s+/', $user['nom'] ?? '', 2, PREG_SPLIT_NO_EMPTY);
                 $_SESSION['user'] = [
                     'id'     => $user['id_utilisateur'],
                     'prenom' => $names[0] ?? 'Utilisateur',

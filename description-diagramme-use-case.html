@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Description du diagramme de cas d'utilisation — EcoDrive</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #fff; color: #222; padding: 0; line-height: 1.65; }
+  .page { max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+  .cover { page-break-after: always; display: flex; flex-direction: column; justify-content: center; min-height: 100vh; text-align: center; padding: 40mm 25mm; }
+  .cover h1 { font-size: 36px; color: #005e80; margin-bottom: 10px; letter-spacing: 2px; }
+  .cover .subtitle { font-size: 18px; color: #555; margin-bottom: 30px; }
+  .cover .meta { font-size: 13px; color: #888; line-height: 2; }
+  .cover .line { width: 60px; height: 3px; background: #005e80; margin: 20px auto; }
+  h2 { font-size: 22px; color: #005e80; margin: 40px 0 18px; padding-bottom: 8px; border-bottom: 2px solid #d0e8f0; }
+  h3 { font-size: 16px; color: #1a4a5a; margin: 25px 0 10px; }
+  h4 { font-size: 14px; color: #333; margin: 18px 0 8px; }
+  p { margin: 0 0 12px; text-align: justify; }
+  ul, ol { margin: 0 0 14px 22px; }
+  li { margin-bottom: 4px; }
+  strong { color: #005e80; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13px; }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+  th { background: #d0e8f0; color: #1a4a5a; font-weight: 600; }
+  tr:nth-child(even) td { background: #f5fafc; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; margin-right: 4px; }
+  .tag-visitor { background: #e0f0f6; color: #1a5a7a; }
+  .tag-client { background: #f6f0d0; color: #7a6a10; }
+  .tag-admin { background: #d0f0e6; color: #0a5a3a; }
+  @media print { @page { margin: 0; size: A4; } body { font-size: 11pt; } .cover { min-height: 100vh; } h2, h3 { page-break-after: avoid; } table { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <h1>EcoDrive</h1>
+  <div class="line"></div>
+  <div class="subtitle">Description du diagramme de cas d'utilisation</div>
+  <div class="meta">Projet de fin d'études &bull; Juin 2026</div>
+</div>
+<div class="page">
+
+<h2>1. Présentation</h2>
+<p>Le diagramme de cas d'utilisation modélise les <strong>interactions fonctionnelles</strong> entre les trois types d'acteurs et le système EcoDrive. Il permet de visualiser l'ensemble des fonctionnalités offertes par la plateforme, organisées par périmètre d'accès.</p>
+
+<h2>2. Acteurs</h2>
+
+<table>
+  <tr><th>Acteur</th><th>Symbole</th><th>Description</th><th>Périmètre</th></tr>
+  <tr>
+    <td><strong>Visiteur</strong></td>
+    <td><span class="tag tag-visitor">bleu</span></td>
+    <td>Utilisateur non connecté naviguant sur le site</td>
+    <td>Consultation uniquement (lecture seule)</td>
+  </tr>
+  <tr>
+    <td><strong>Client</strong></td>
+    <td><span class="tag tag-client">orange</span></td>
+    <td>Utilisateur inscrit et connecté</td>
+    <td>Hérite du visiteur + actions personnelles (réservation, profil)</td>
+  </tr>
+  <tr>
+    <td><strong>Administrateur</strong></td>
+    <td><span class="tag tag-admin">vert</span></td>
+    <td>Gestionnaire de la plateforme</td>
+    <td>Hérite du client + back-office complet</td>
+  </tr>
+</table>
+
+<p>Les flèches d'<strong>héritage</strong> entre acteurs (visiteur → client → administrateur) indiquent que chaque acteur hérite des cas d'utilisation du précédent : un administrateur peut tout faire, un client peut tout ce que fait un visiteur, etc.</p>
+
+<h2>3. Cas d'utilisation par acteur</h2>
+
+<h3>3.1 Visiteur <span class="tag tag-visitor">7 cas</span></h3>
+<table>
+  <tr><th>#</th><th>Cas d'utilisation</th><th>Description</th></tr>
+  <tr><td>1</td><td>Consulter l'accueil</td><td>Page d'entrée avec hero, statistiques, showroom vedettes, section bornes, à propos, contact</td></tr>
+  <tr><td>2</td><td>Parcourir le catalogue</td><td>Navigation dans la liste complète des 14 véhicules électriques</td></tr>
+  <tr><td>3</td><td>Filtrer / Trier les voitures</td><td>Filtres par marque, prix, année ; tri par popularité, prix, année</td></tr>
+  <tr><td>4</td><td>Voir la fiche détail d'une voiture</td><td>Page dédiée avec slider photos, lightbox, description, specs, fiche technique complète</td></tr>
+  <tr><td>5</td><td>Consulter les bornes de recharge</td><td>Présentation des 4 modèles Exicom avec leurs caractéristiques</td></tr>
+  <tr><td>6</td><td>S'inscrire (créer un compte)</td><td>Formulaire d'inscription avec validation et hachage bcrypt</td></tr>
+  <tr><td>7</td><td>Nous contacter</td><td>Formulaire de contact avec nom, email, message</td></tr>
+</table>
+
+<h3>3.2 Client <span class="tag tag-client">6 cas</span></h3>
+<table>
+  <tr><th>#</th><th>Cas d'utilisation</th><th>Description</th></tr>
+  <tr><td>8</td><td>Se connecter</td><td>Authentification par email + mot de passe, session sécurisée</td></tr>
+  <tr><td>9</td><td>Réserver un essai routier</td><td>Choix du véhicule, date, créneau horaire ; détection des conflits de double réservation</td></tr>
+  <tr><td>10</td><td>Consulter mes réservations</td><td>Dashboard listant les réservations passées, en cours, annulées</td></tr>
+  <tr><td>11</td><td>Annuler une réservation</td><td>Annulation avec confirmation et mise à jour du statut</td></tr>
+  <tr><td>12</td><td>Modifier mon profil</td><td>Mise à jour du nom, email, mot de passe</td></tr>
+  <tr><td>13</td><td>Mot de passe oublié</td><td>Réinitialisation via token envoyé par email (valable 1 heure)</td></tr>
+</table>
+
+<h3>3.3 Administrateur <span class="tag tag-admin">6 cas</span></h3>
+<table>
+  <tr><th>#</th><th>Cas d'utilisation</th><th>Description</th></tr>
+  <tr><td>14</td><td>CRUD voitures</td><td>Ajouter, modifier, supprimer un véhicule du catalogue (avec upload d'image)</td></tr>
+  <tr><td>15</td><td>CRUD bornes</td><td>Ajouter, modifier, supprimer une borne de recharge</td></tr>
+  <tr><td>16</td><td>Gérer les réservations</td><td>Consulter, valider ou annuler les réservations des clients</td></tr>
+  <tr><td>17</td><td>Voir les statistiques</td><td>Graphiques Chart.js : réservations par mois, répartition par marque, top 5 clients/voitures</td></tr>
+  <tr><td>18</td><td>Exporter les données</td><td>Export en CSV ou SQL (dump complet de la base)</td></tr>
+  <tr><td>19</td><td>Gérer les utilisateurs</td><td>Vue d'ensemble des comptes clients (consultation)</td></tr>
+</table>
+
+<h2>4. Relations « include »</h2>
+<p>Deux relations d'inclusion relient les cas d'utilisation :</p>
+<ul>
+  <li><strong>Réserver un essai → « include » → Se connecter</strong> : un client doit être authentifié pour pouvoir réserver. Le système redirige vers la connexion si l'utilisateur n'est pas connecté.</li>
+  <li><strong>Consulter mes réservations → « include » → Réserver un essai</strong> : le dashboard affiche les réservations existantes et permet d'en créer une nouvelle.</li>
+</ul>
+
+<h2>5. Synthèse</h2>
+<p>Le diagramme présente <strong>19 cas d'utilisation</strong> répartis sur <strong>3 acteurs</strong> avec une hiérarchie d'héritage. Il couvre l'intégralité du périmètre fonctionnel du projet :</p>
+<ul>
+  <li><strong>Consultation</strong> (visiteur) : navigation, découverte, inscription</li>
+  <li><strong>Action</strong> (client) : réservation, suivi, gestion de compte</li>
+  <li><strong>Gestion</strong> (administrateur) : administration complète, statistiques, export</li>
+</ul>
+<p>Cette organisation illustre une <strong>séparation claire des responsabilités</strong> et un <strong>gradient de privilèges</strong> progressif, adapté aux besoins de chaque profil d'utilisateur.</p>
+
+</div>
+</body>
+</html>

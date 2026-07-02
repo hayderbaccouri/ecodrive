@@ -18,12 +18,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
     $model   = trim($_POST['model'] ?? '');
     $message = trim($_POST['message'] ?? '');
     if ($name && $email && $message) {
-        $subject = "Contact EcoDrive - $name";
-        $body = "Nom: $name\nEmail: $email\nModèle: $model\n\nMessage:\n$message";
-        $headers = "From: $email\r\nReply-To: $email\r\nX-Mailer: PHP/" . phpversion();
-        $sent = @mail('contact@ecodrive.tn', $subject, $body, $headers);
-        $contactSuccess = true;
-        $contactMessage = $sent ? 'Message envoyé. Notre équipe vous répondra rapidement.' : 'Merci ! Votre message a bien été transmis.';
+      // Sanitize and prevent header injection
+      $safeName = substr(preg_replace('/[\r\n]+/', ' ', $name), 0, 100);
+      $subject = "Contact EcoDrive - " . $safeName;
+      $body = "Nom: $safeName\nEmail: $email\nModèle: $model\n\nMessage:\n$message";
+
+      // Use a fixed From header and set Reply-To only if the user email is valid
+      $from = 'noreply@ecodrive.tn';
+      $replyTo = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : 'contact@ecodrive.tn';
+      $headers = "From: EcoDrive <{$from}>\r\nReply-To: {$replyTo}\r\nX-Mailer: PHP/" . phpversion();
+
+      $sent = @mail('contact@ecodrive.tn', $subject, $body, $headers);
+      $contactSuccess = true;
+      $contactMessage = $sent ? 'Message envoyé. Notre équipe vous répondra rapidement.' : 'Merci ! Votre message a bien été transmis.';
     } else {
         $contactMessage = 'Veuillez remplir tous les champs obligatoires.';
     }

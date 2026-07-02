@@ -22,20 +22,49 @@ if (!$user || $user['role'] !== 'admin') {
 }
 
 $message = '';
-$uploadDir = '../images/';  // Note: les images uploadées vont dans le dossier marque correspondant via le formulaire
+$uploadDir = realpath(__DIR__ . '/../images') ?: __DIR__ . '/../images';
+if (substr($uploadDir, -1) !== DIRECTORY_SEPARATOR) $uploadDir .= DIRECTORY_SEPARATOR;
 
-// === Upload d'image ===
+// === Upload d'image sécurisé ===
 function handleUpload($file, $uploadDir) {
-    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, ['jpg','jpeg','png','webp','avif'], true)) {
-        return [false, 'Format non autorisé (jpg, png, webp, avif).'];
-    }
-    $name = uniqid('car_') . '.' . $ext;
-    $dest = $uploadDir . $name;
-    if (move_uploaded_file($file['tmp_name'], $dest)) {
-        return [true, 'images/' . $name];
-    }
+  // limits
+  $maxBytes = 5 * 1024 * 1024; // 5MB
+  if ($file['size'] > $maxBytes) return [false, 'Fichier trop volumineux (max 5MB).'];
+
+  // basic image checks
+  $info = @getimagesize($file['tmp_name']);
+  if ($info === false) return [false, 'Le fichier n\'est pas une image valide.'];
+
+  $mime = $info['mime'] ?? '';
+  $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/avif' => 'avif'];
+  if (!isset($allowed[$mime])) return [false, 'Format d\'image non autorisé.'];
+
+  $ext = $allowed[$mime];
+  $name = uniqid('img_') . '.' . $ext;
+  $dest = rtrim($uploadDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $name;
+
+  if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+    return [false, 'Impossible de créer le dossier de destination.'];
+  }
+
+  if (!move_uploaded_file($file['tmp_name'], $dest)) {
     return [false, 'Erreur lors de l\'upload.'];
+  }
+
+  // return web-relative path
+  $webPath = 'images/' . $name;
+  return [true, $webPath];
+}
+
+function safe_unlink($relPath, $imagesDir) {
+  // Normalize and ensure deletion happens only inside images directory
+  $target = realpath(__DIR__ . '/../' . ltrim($relPath, '/'));
+  $imagesBase = realpath($imagesDir);
+  if ($target && $imagesBase && strpos($target, $imagesBase) === 0 && is_file($target)) {
+    @unlink($target);
+    return true;
+  }
+  return false;
 }
 
 // === Gestion des réservations (confirmer / annuler + envoi email) ===
@@ -92,7 +121,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // === Gestion du catalogue voitures ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
-    $imgPath = $_POST['image'] ?? '';
+  if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+    $message = 'Session invalide.';
+  } else {
+  $imgPath = $_POST['image'] ?? '';
 
     if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
         [$ok, $result] = handleUpload($_FILES['image_file'], $uploadDir);
@@ -159,8 +191,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         $stmt->execute();
         $old = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        if ($old && $old['image'] && file_exists('../' . $old['image'])) {
-            unlink('../' . $old['image']);
+        if ($old && $old['image']) {
+          safe_unlink($old['image'], $uploadDir);
         }
 
         $stmt = $conn->prepare("DELETE FROM voiture WHERE id_voiture=?");
@@ -173,7 +205,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
 
 // === Gestion du catalogue bornes ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
-    $imgPath = $_POST['image'] ?? '';
+  if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+    $message = 'Session invalide.';
+  } else {
+  $imgPath = $_POST['image'] ?? '';
 
     if (isset($_FILES['borne_image_file']) && $_FILES['borne_image_file']['error'] === UPLOAD_ERR_OK) {
         [$ok, $result] = handleUpload($_FILES['borne_image_file'], $uploadDir);
@@ -236,8 +271,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
         $stmt->execute();
         $old = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        if ($old && $old['image'] && file_exists('../' . $old['image'])) {
-            unlink('../' . $old['image']);
+        if ($old && $old['image']) {
+          safe_unlink($old['image'], $uploadDir);
         }
 
         $stmt = $conn->prepare("DELETE FROM borne WHERE id_borne=?");
@@ -290,6 +325,8 @@ $res_clients = $conn->query("SELECT u.nom, u.email, COUNT(r.id_reservation) AS t
 
 $voitures = $conn->query("SELECT * FROM voiture ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
 $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
+// Token CSRF pour les formulaires
+$token = csrf_token();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -432,6 +469,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
       <h3>Ajouter une voiture</h3>
       <form method="POST" enctype="multipart/form-data">
         <input type="hidden" name="car_action" value="add">
+        <input type="hidden" name="csrf_token" value="<?= $token ?>">
         <input type="text" name="marque" placeholder="Marque" required>
         <input type="text" name="modele" placeholder="Modèle" required>
         <input type="number" name="annee" placeholder="Année" required>
@@ -458,6 +496,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
               <summary class="btn-edit">✏️ Modifier</summary>
               <form method="POST" class="edit-form" enctype="multipart/form-data">
                 <input type="hidden" name="car_action" value="update">
+                <input type="hidden" name="csrf_token" value="<?= $token ?>">
                 <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
                 <input type="hidden" name="image_existing" value="<?= htmlspecialchars($v['image'] ?? '') ?>">
                 <?php if ($v['image'] && file_exists('../' . $v['image'])): ?>
@@ -476,6 +515,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
             </details>
             <form method="POST" style="display:inline-block;">
               <input type="hidden" name="car_action" value="delete">
+              <input type="hidden" name="csrf_token" value="<?= $token ?>">
               <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
               <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?> ?')">🗑 Supprimer</button>
             </form>
@@ -493,6 +533,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
       <h3>Ajouter une borne</h3>
       <form method="POST" enctype="multipart/form-data">
         <input type="hidden" name="borne_action" value="add">
+        <input type="hidden" name="csrf_token" value="<?= $token ?>">
         <input type="text" name="nom" placeholder="Nom" required>
         <input type="text" name="modele" placeholder="Modèle" required>
         <input type="text" name="puissance" placeholder="Puissance (ex: 7 kW)" required>
@@ -520,6 +561,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
               <summary class="btn-edit">✏️ Modifier</summary>
               <form method="POST" class="edit-form" enctype="multipart/form-data">
                 <input type="hidden" name="borne_action" value="update">
+                <input type="hidden" name="csrf_token" value="<?= $token ?>">
                 <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
                 <input type="hidden" name="image_existing" value="<?= htmlspecialchars($b['image'] ?? '') ?>">
                 <?php if ($b['image'] && file_exists('../' . $b['image'])): ?>
@@ -538,6 +580,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
             </details>
             <form method="POST" style="display:inline-block;">
               <input type="hidden" name="borne_action" value="delete">
+              <input type="hidden" name="csrf_token" value="<?= $token ?>">
               <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
               <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?> ?')">🗑 Supprimer</button>
             </form>

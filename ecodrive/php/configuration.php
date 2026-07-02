@@ -9,7 +9,9 @@ $conn = new mysqli($host, $user, $password, $dbname);
 $conn->set_charset('utf8mb4');
 
 if ($conn->connect_error) {
-    die('Erreur de connexion à la base de données : ' . $conn->connect_error);
+    // Log detailed error but show a generic message to users
+    error_log('DB connection error: ' . $conn->connect_error);
+    exit('Erreur de connexion à la base de données. Veuillez réessayer plus tard.');
 }
 
 // CSRF : générer un token
