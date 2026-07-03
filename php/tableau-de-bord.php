@@ -74,6 +74,18 @@ for ($i = 5; $i >= 0; $i--) {
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap">
+  <!-- Hero -->
+  <section class="hero" aria-label="Tableau de bord client">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Tableau de bord</div>
+        <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
+        <p>Consultez vos réservations, gérez vos essais et réservez de nouveaux modèles.</p>
+        <p><a href="catalogue.php" class="cta">Parcourir le catalogue</a></p>
+      </div>
+    </div>
+  </section>
+
     <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
 
     <?php if (!empty($message)): ?>

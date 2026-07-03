@@ -47,7 +47,8 @@ $conn->close();
 
   <!-- Hero -->
   <section class="hero" aria-label="Présentation EcoDrive">
-    <div class="hero-content">
+    <div class="hero-inner">
+      <div class="hero-content">
       <div class="hero-eyebrow">Mobilité durable · Tunisie</div>
 
       <h1 class="hero-title">
@@ -60,7 +61,7 @@ $conn->close();
       </p>
 
       <div class="hero-actions">
-        <a href="#showroom" class="btn-primary">Explorer le catalogue</a>
+        <a href="#showroom" class="btn-primary cta">Explorer le catalogue</a>
         <a href="php/inscription.php" class="btn-ghost">S'inscrire</a>
       </div>
 
@@ -97,6 +98,7 @@ $conn->close();
         </div>
       </div>
       <div class="hero-car-subtitle">Dernière arrivée : <?= $hero ? htmlspecialchars($hero['marque'] . ' ' . $hero['modele']) : 'Tesla Model 3' ?></div>
+      </div>
     </div>
   </section>
 
