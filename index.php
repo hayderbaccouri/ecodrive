@@ -1,8 +1,7 @@
 
 <?php
-session_start();
-$user = $_SESSION['user'] ?? null;
 include 'php/bootstrap.php';
+$user = $_SESSION['user'] ?? null;
 $prenom = htmlspecialchars($user['prenom'] ?? 'Visiteur', ENT_QUOTES, 'UTF-8');
 $email = htmlspecialchars($user['email'] ?? '', ENT_QUOTES, 'UTF-8');
 $loggedIn = $user !== null;
@@ -44,63 +43,7 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoDrive — Premier Showroom Électrique de Tunisie</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-
-<body>
-
-  <!-- Bannière de bienvenue personnalisée -->
-  <div class="welcome-banner">
-    👋 Bienvenue, <strong><?= $prenom ?></strong> ! Profitez de votre espace EcoDrive.
-  </div>
-
-  <!-- Top announcement bar -->
-  <div class="topbar">
-    ✦ Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible
-  </div>
-
-  <!-- Header -->
-  <header class="site-header">
-    <a class="logo-link" href="index.php" aria-label="Accueil EcoDrive">
-      <div class="logo-text">eco<span>drive</span></div>
-    </a>
-
-    <nav class="main-nav" aria-label="Navigation principale">
-      <a href="index.php">Accueil</a>
-      <a href="php/catalogue.php">Catalogue</a>
-      <a href="#bornes">Bornes</a>
-      <a href="pages/contact.php">Contact</a>
-
-      <?php if ($loggedIn): ?>
-        <div class="user-menu">
-          <div class="user-badge">
-            <div class="avatar"><?= mb_strtoupper(mb_substr($prenom, 0, 1)) ?></div>
-            <span class="user-name"><?= $prenom ?></span>
-            <span class="chevron">▾</span>
-          </div>
-          <div class="user-dropdown">
-            <?php $dashboardPage = ($user['role'] ?? 'client') === 'admin' ? 'php/admin.php' : 'php/tableau-de-bord.php'; ?>
-            <a href="<?= $dashboardPage ?>">👤 Mon espace</a>
-            <hr>
-            <a href="php/deconnexion.php" class="logout">🚪 Se déconnecter</a>
-          </div>
-        </div>
-      <?php else: ?>
-        <a href="php/connexion.php" class="nav-link">Se connecter</a>
-        <a href="php/inscription.php" class="nav-cta">S'inscrire</a>
-      <?php endif; ?>
-    </nav>
-  </header>
+<?php $asset_base = ''; include 'php/partials/header.php'; ?>
 
   <!-- Hero -->
   <section class="hero" aria-label="Présentation EcoDrive">
@@ -314,18 +257,4 @@ $conn->close();
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-logo">eco<span>drive</span></div>
-    <span>© 2026 EcoDrive. Tous droits réservés.</span>
-    <nav class="footer-nav">
-        <a href="pages/mentions-legales.php" class="footer-link">Mentions légales</a>
-        <a href="pages/confidentialite.php" class="footer-link">Confidentialité</a>
-        <a href="pages/contact.php" class="footer-link">Contact</a>
-    </nav>
-  </footer>
-
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="js/app.js"></script>
-</body>
-</html>
+<?php $asset_base = ''; include 'php/partials/footer.php'; ?>

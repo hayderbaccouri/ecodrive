@@ -1,40 +1,5 @@
+@import 'theme.css';
 @import url('animations.css');
-
-/* ========== Base ========== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --green: #2a6e1a;
-  --green-light: #3d8f28;
-  --green-pale: #e6f2de;
-  --green-mid: #7cb45c;
-  --dark: #0d110c;
-  --dark2: #141b12;
-  --gray: #6b6f68;
-  --gray-light: #f2f3ee;
-  --gray-mid: #b8bdb3;
-  --white: #fbfcfa;
-  --accent: #00e5a0;
-  --accent-dim: rgba(0, 229, 160, 0.08);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--white);
-  color: var(--dark);
-  overflow-x: hidden;
-  line-height: 1.5;
-}
 
 a { color: inherit; }
 

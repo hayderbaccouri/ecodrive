@@ -58,16 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="../css/header.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="../php/catalogue.php">Catalogue</a>
-      <a href="../pages/contact.php">Contact</a>
-      <a href="connexion.php">Connexion</a>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
-    </nav>
-  </header>
+<?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
 <div class="login-page">
   <div class="login-visual">
@@ -109,7 +100,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="../js/app.js"></script>
-</body>
-</html>
+<?php include __DIR__ . '/partials/footer.php'; ?>

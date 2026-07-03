@@ -15,34 +15,7 @@ $loggedIn = isset($_SESSION['user']);
   <link rel="stylesheet" href="../css/header.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="../php/catalogue.php">Catalogue</a>
-      <a href="../index.php#bornes">Bornes</a>
-      <a href="../pages/contact.php">Contact</a>
-      <?php if ($loggedIn): ?>
-        <?php $prenom = explode(' ', $_SESSION['user']['nom'] ?? 'Client')[0]; $initial = mb_strtoupper(mb_substr($prenom, 0, 1)); $dashPage = '../php/' . (($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php'); ?>
-        <div class="user-menu">
-          <div class="user-badge">
-            <div class="avatar"><?= $initial ?></div>
-            <span class="user-name"><?= htmlspecialchars($prenom) ?></span>
-            <span class="chevron">â–¾</span>
-          </div>
-          <div class="user-dropdown">
-            <a href="<?= $dashPage ?>">Mon espace</a>
-            <hr>
-            <a href="../php/deconnexion.php" class="logout">DÃ©connexion</a>
-          </div>
-        </div>
-      <?php else: ?>
-        <a href="../php/connexion.php">Se connecter</a>
-        <a href="../php/inscription.php" class="nav-cta">S'inscrire</a>
-      <?php endif; ?>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
-    </nav>
-  </header>
+<?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
 
   <main class="page-fade-in">
     <?php include '../php/car_slider.php'; renderCarSlider('images/audi-a6-sportback-e-tron-electrique/', 'essai-audi-a6-sportback-e-tron-la-grande-routiere-allemande-passe-au-tout-electrique-107381.webp', 'Audi A6 Sportback e-tron'); ?>
@@ -131,9 +104,7 @@ $loggedIn = isset($_SESSION['user']);
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 EcoDrive â€” Showroom de voitures Ã©lectriques</p>
-  </footer>
+<?php include __DIR__ . '/../php/partials/footer.php'; ?>
 <script>
 document.querySelectorAll('.car-slider').forEach(function(s) {
   var track = s.querySelector('.slider-track');

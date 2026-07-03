@@ -338,16 +338,7 @@ $token = csrf_token();
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="deconnexion.php">Déconnexion</a>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-  </header>
+<?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap">
     <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
@@ -592,8 +583,4 @@ $token = csrf_token();
 
   </main>
 
-  <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="../js/app.js"></script>
-</body>
-</html>
+<?php include __DIR__ . '/partials/footer.php'; ?>

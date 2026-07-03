@@ -65,18 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="catalogue.php">Catalogue</a>
-      <a href="../pages/contact.php">Contact</a>
-      <a href="inscription.php">S'inscrire</a>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-  </header>
+  <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
 <div class="login-page">
 
@@ -144,7 +133,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </div>
 
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="../js/app.js"></script>
-</body>
-</html>
+<?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>

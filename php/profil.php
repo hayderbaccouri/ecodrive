@@ -74,16 +74,7 @@ $stmt->close();
   <link rel="stylesheet" href="../css/header.css">
 </head>
 <body>
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="catalogue.php">Catalogue</a>
-      <a href="tableau-de-bord.php">Mon espace</a>
-      <a href="deconnexion.php">Déconnexion</a>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
-    </nav>
-  </header>
+  <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap">
     <h1>Mon profil</h1>
@@ -115,6 +106,4 @@ $stmt->close();
 
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
 <button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="../js/app.js"></script>
-</body>
-</html>
+<?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>

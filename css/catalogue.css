@@ -2,36 +2,8 @@
    catalogue.css— EcoDrive · Catalogue des voitures
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap');
+@import 'theme.css';
 @import url('animations.css');
-
-/* ── Reset & Variables ────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --black: #0b0c0e;
-  --off-black: #111316;
-  --surface: #181b20;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-mid: rgba(255, 255, 255, 0.13);
-  --accent: #00e5a0;
-  --accent-dim: rgba(0, 229, 160, 0.10);
-  --white: #ffffff;
-  --grey-1: #c4c9d4;
-  --grey-2: #767d8a;
-  --grey-3: #363b44;
-
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --wrap: clamp(1.25rem, 5vw, 4.5rem);
-  --max: 1200px;
-}
 
 html {
   scroll-behavior: smooth;

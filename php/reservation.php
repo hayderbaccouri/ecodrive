@@ -103,15 +103,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
   <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="../php/catalogue.php">Catalogue</a>
-      <a href="../php/tableau-de-bord.php">Mon espace</a>
-      <a href="../php/deconnexion.php">Déconnexion</a>
-    </nav>
-  </header>
+  <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap page-fade-in">
     <div class="progress-steps">
@@ -171,5 +163,4 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
   <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
 <button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
 <script src="../js/app.js"></script>
-</body>
-</html>
+  <?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>

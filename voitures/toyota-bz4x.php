@@ -15,7 +15,7 @@ $loggedIn = isset($_SESSION['user']);
   <link rel="stylesheet" href="../css/header.css" />
 </head>
 <body>
-  <header class="site-header">
+<?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
     <a href="../index.php" class="logo-text">eco<span>drive</span></a>
     <nav>
       <a href="../index.php">Accueil</a>
@@ -132,9 +132,7 @@ $loggedIn = isset($_SESSION['user']);
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 EcoDrive â€” Showroom de voitures Ã©lectriques</p>
-  </footer>
+<?php include __DIR__ . '/../php/partials/footer.php'; ?>
 <script>
 document.querySelectorAll('.car-slider').forEach(function(s) {
   var track = s.querySelector('.slider-track');

@@ -2,25 +2,8 @@
    dashboard.css — EcoDrive · Pages admin & espace client
    ============================================================ */
 
+@import 'theme.css';
 @import url('animations.css');
-
-/* ── Reset & Variables ────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --green: #3B6D11;  --green-light: #639922;  --green-pale: #EAF3DE;
-  --green-mid: #97C459;  --dark: #111410;  --gray: #5F5E5A;
-  --gray-light: #F1EFE8;  --gray-mid: #B4B2A9;  --white: #FAFAF8;
-  --font: 'DM Sans', sans-serif;  --font-display: 'Cormorant Garamond', serif;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font);  background: var(--gray-light);
-  color: var(--dark);  line-height: 1.5;  min-height: 100vh;
-  display: flex;  flex-direction: column;
-}
 
 a { color: inherit; }
 .text-muted { color: var(--gray); font-size: 0.8rem; }

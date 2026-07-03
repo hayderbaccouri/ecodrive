@@ -201,35 +201,7 @@ $loggedIn = isset($_SESSION['user']);
 </head>
 
 <body>
-
-  <header class="site-header">
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="../php/catalogue.php">Catalogue</a>
-      <a href="../index.php#bornes">Bornes</a>
-      <a href="contact.php">Contact</a>
-      <?php if ($loggedIn): ?>
-        <?php $prenom = explode(' ', $_SESSION['user']['nom'] ?? 'Client')[0]; $initial = mb_strtoupper(mb_substr($prenom, 0, 1)); $dashPage = '../php/' . (($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php'); ?>
-        <div class="user-menu">
-          <div class="user-badge">
-            <div class="avatar"><?= $initial ?></div>
-            <span class="user-name"><?= htmlspecialchars($prenom) ?></span>
-            <span class="chevron">▾</span>
-          </div>
-          <div class="user-dropdown">
-            <a href="<?= $dashPage ?>">Mon espace</a>
-            <hr>
-            <a href="../php/deconnexion.php" class="logout">Déconnexion</a>
-          </div>
-        </div>
-      <?php else: ?>
-        <a href="../php/connexion.php">Se connecter</a>
-        <a href="../php/inscription.php" class="nav-cta">S'inscrire</a>
-      <?php endif; ?>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
-    </nav>
-  </header>
+<?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
 
   <!-- Main content -->
   <div class="container">
@@ -478,15 +450,11 @@ $loggedIn = isset($_SESSION['user']);
   </div>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-logo">eco<span>drive</span></div>
-    <span>© 2026 EcoDrive. Tous droits réservés.</span>
-    <nav>
-      <a href="mentions-legales.php">Mentions légales</a>
-      <a href="confidentialite.php">Confidentialité</a>
-      <a href="contact.php">Contact</a>
-    </nav>
-  </footer>
+  <?php include __DIR__ . '/../php/partials/footer.php'; ?>
+
+    </body>
+
+  </html>
 
 <button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
 <script src="../js/app.js"></script>
