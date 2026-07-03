@@ -125,7 +125,19 @@ $specs = [
   <body class="has-topbar">
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-  <section class="showroom">
+  <!-- Hero -->
+  <section class="hero" aria-label="Catalogue EcoDrive">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Catalogue</div>
+        <h1>Notre sélection de véhicules électriques</h1>
+        <p>Explorez <?= (int)$total ?> modèles disponibles. Filtrez par marque, prix et année pour trouver la voiture qui vous convient.</p>
+        <p><a href="#results" class="cta">Voir les modèles</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="showroom">
     <h2>Catalogue des voitures</h2>
 
     <form id="catalogue-search" action="catalogue.php" method="get" class="controls-form">
