@@ -52,22 +52,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<?php
+$page_title = 'Réinitialisation du mot de passe | EcoDrive';
+$page_desc = 'Définissez un nouveau mot de passe pour votre compte EcoDrive.';
+$page_url = 'php/reinitialiser-mot-de-passe.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Réinitialisation mot de passe — EcoDrive</title>
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E" />
+  <?php include __DIR__ . '/partials/meta.php'; ?>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-<div class="login-page">
+<div class="login-page hero-entrance">
   <div class="login-visual">
     <div class="login-visual-grid"></div>
     <div class="login-visual-glow"></div>
@@ -84,25 +91,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="login-form-col">
     <div class="login-form-wrap">
       <?php if ($messageType === 'success'): ?>
-        <div class="login-error" style="background:#e6f2de;color:#2a6e1a"><?= htmlspecialchars($message) ?></div>
+        <div class="login-error" style="background:rgba(var(--green-rgb),0.1);color:var(--green)"><?= htmlspecialchars($message) ?></div>
         <div class="login-footer-links"><span><a href="connexion.php">→ Se connecter</a></span></div>
       <?php elseif ($message): ?>
-        <div class="login-error" style="background:#fef2f2;color:#991b1b"><?= htmlspecialchars($message) ?></div>
+        <div class="login-error" style="background:rgba(var(--danger-rgb),0.1);color:var(--danger)"><?= htmlspecialchars($message) ?></div>
       <?php endif; ?>
 
       <?php if ($validToken && $messageType !== 'success'): ?>
         <div class="login-eyebrow">Nouveau mot de passe</div>
         <h2>Choisissez un<br>mot de passe.</h2>
 
-        <form method="post" action="reinitialiser-mot-de-passe.php">
+        <form method="post" action="reinitialiser-mot-de-passe.php" data-validate>
           <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
           <div>
             <label class="field-label" for="password">Nouveau mot de passe</label>
-            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password" required />
+            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password" required data-msg-required="Veuillez choisir un mot de passe." data-minlength="6" data-msg-minlength="Minimum 6 caractères." />
           </div>
           <div>
             <label class="field-label" for="confirm">Confirmer le mot de passe</label>
-            <input type="password" id="confirm" name="confirm" placeholder="••••••••" autocomplete="new-password" required />
+            <input type="password" id="confirm" name="confirm" placeholder="••••••••" autocomplete="new-password" required data-msg-required="Veuillez confirmer le mot de passe." />
           </div>
           <button type="submit" class="btn-primary">Réinitialiser →</button>
         </form>

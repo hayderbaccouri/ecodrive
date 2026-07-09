@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $subject = "Réinitialisation mot de passe - EcoDrive";
             $body = "Bonjour,\n\nCliquez sur ce lien pour réinitialiser votre mot de passe :\n$resetLink\n\nCe lien expire dans 1 heure.\n\nEcoDrive Team";
             $headers = "From: contact@ecodrive.tn\r\nReply-To: contact@ecodrive.tn\r\nX-Mailer: PHP/" . phpversion();
-            @mail($email, $subject, $body, $headers);
+            $log  = "[" . date('Y-m-d H:i:s') . "] Password reset requested for: $email\n";
+            file_put_contents(__DIR__ . '/../mail_log.txt', $log, FILE_APPEND | LOCK_EX);
         }
 
         $message = 'Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.';
@@ -45,22 +46,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<?php
+$page_title = 'Mot de passe oublié | EcoDrive';
+$page_desc = 'Réinitialisez votre mot de passe EcoDrive. Entrez votre email pour recevoir un lien de réinitialisation.';
+$page_url = 'php/mot-de-passe-oublie.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mot de passe oublié — EcoDrive</title>
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E" />
+  <?php include __DIR__ . '/partials/meta.php'; ?>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-<div class="login-page">
+<div class="login-page hero-entrance">
   <div class="login-visual">
     <div class="login-visual-grid"></div>
     <div class="login-visual-glow"></div>
@@ -81,13 +89,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p class="login-sub">Saisissez votre adresse e-mail, nous vous enverrons un lien pour le réinitialiser.</p>
 
       <?php if ($message): ?>
-        <div class="login-error" style="background:<?= $messageType === 'success' ? '#e6f2de' : '#fef2f2' ?>;color:<?= $messageType === 'success' ? '#2a6e1a' : '#991b1b' ?>"><?= htmlspecialchars($message) ?></div>
+        <div class="login-error" style="background:<?= $messageType === 'success' ? 'rgba(var(--green-rgb),0.1)' : 'rgba(var(--danger-rgb),0.1)' ?>;color:<?= $messageType === 'success' ? 'var(--green)' : 'var(--danger)' ?>"><?= htmlspecialchars($message) ?></div>
       <?php endif; ?>
 
-      <form method="post" action="mot-de-passe-oublie.php">
+      <form method="post" action="mot-de-passe-oublie.php" data-validate>
         <div>
           <label class="field-label" for="email">Adresse e-mail</label>
-          <input type="email" id="email" name="email" placeholder="votre@email.com" autocomplete="email" required />
+          <input type="email" id="email" name="email" placeholder="votre@email.com" autocomplete="email" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide." />
         </div>
         <button type="submit" class="btn-primary">Envoyer le lien →</button>
       </form>

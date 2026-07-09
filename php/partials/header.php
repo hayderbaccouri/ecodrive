@@ -3,27 +3,26 @@
 $asset_base = $asset_base ?? '';
 $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
 ?>
-  <!-- Bannière de bienvenue personnalisée -->
-  <?php if (!empty($prenom) && ($asset_base === '')): ?>
-  <div class="welcome-banner">
-    👋 Bienvenue, <strong><?= htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8') ?></strong> ! Profitez de votre espace EcoDrive.
-  </div>
-  <?php endif; ?>
 
   <!-- Top announcement bar -->
-  <div class="topbar">✦ Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
+  <div class="topbar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><path d="M13 2L3 14h6l-2 8 10-12h-6l2-8z"/></svg> Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
 
   <!-- Header -->
   <header class="site-header">
     <a class="logo-link" href="<?= $asset_base ?>index.php" aria-label="Accueil EcoDrive">
       <div class="logo-text">eco<span>drive</span></div>
+      <div class="brand-tagline">Premier showroom électrique de Tunisie</div>
     </a>
 
+    <button class="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <nav class="main-nav" aria-label="Navigation principale">
       <a href="<?= $asset_base ?>index.php">Accueil</a>
       <a href="<?= $asset_base ?>php/catalogue.php">Catalogue</a>
       <a href="<?= $asset_base ?>#bornes">Bornes</a>
       <a href="<?= $asset_base ?>pages/contact.php">Contact</a>
+
 
       <?php if (!empty($loggedIn)): ?>
         <div class="user-menu">

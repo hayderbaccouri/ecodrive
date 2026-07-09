@@ -2,42 +2,51 @@
 <html lang="fr">
 <?php
 session_start();
-include '../php/configuration.php';
+include '../php/bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
 ?>
 
+<?php
+$page_title = 'Exicom Spin Air 11 kW — Borne de recharge triphasée | EcoDrive';
+$page_desc = 'Borne de recharge triphasée Exicom Spin Air 11 kW pour véhicules électriques. Recharge rapide, connectée et compatible avec tous les modèles.';
+$page_url = 'bornes/ExicomSpinAir11kW.php';
+$page_image = 'images/bornes/SPIN-AIR-11.png';
+?>
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exicom Spin Air 11 kW — EcoDrive</title>
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   
-  <link rel="stylesheet" href="../css/bornes.css">
+  <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
 
 </head>
 
 <body class="has-topbar">
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
 
+<main class="main-wrap page-fade-in">
   <div class="breadcrumb">
     <a href="../index.php">Accueil</a>
     <span>›</span>
     <a href="../index.php#bornes">Bornes de recharge</a>
     <span>›</span>
-    <span class="breadcrumb-current">Exicom Spin Air 11 kW</span>
+    <span style="color: var(--text)">Exicom Spin Air 11 kW</span>
   </div>
 
   <!-- HERO -->
-  <section class="borne-hero">
+  <section class="borne-hero hero-entrance">
 
     <div class="borne-visual">
       <div class="borne-visual-bg"></div>
       <div class="borne-visual-grid"></div>
       <div class="borne-img-frame">
         <div class="borne-img-box">
-          <img src="../images/bornes/SPIN-AIR-11 (1).png" alt="Exicom Spin Air 11 kW"
-            onerror="this.style.display='none'; this.parentNode.innerHTML += '<div class=\'borne-fallback-icon\'>⚡</div>'">
+          <img src="../images/bornes/SPIN-AIR-11.png" alt="Exicom Spin Air 11 kW"
+            onerror="this.style.display='none'; this.parentNode.innerHTML += '<div style=\'font-size:6rem;color:rgba(82,183,136,0.4)\'>⚡</div>'">
         </div>
         <span class="borne-badge-portable">⚡ Triphasé · Semi-professionnel</span>
       </div>
@@ -52,7 +61,7 @@ $loggedIn = isset($_SESSION['user']);
         <span class="power-unit">kW</span>
       </div>
 
-      <div class="borne-title">Exicom Spin Air</div>
+      <div class="borne-title">Exicom Spin Air 11 kW</div>
 
       <div class="borne-divider"></div>
 
@@ -74,19 +83,19 @@ $loggedIn = isset($_SESSION['user']);
           <div class="spec-value">Type 2 (IEC 62196)</div>
         </div>
         <div class="spec-row">
+          <div class="spec-icon">📏</div>
+          <div class="spec-label">Longueur de câble</div>
+          <div class="spec-value">5 mètres</div>
+        </div>
+        <div class="spec-row">
           <div class="spec-icon">📶</div>
           <div class="spec-label">Connectivité</div>
-          <div class="spec-value">Wi-Fi · Bluetooth · 4G/LTE</div>
+          <div class="spec-value">Wi-Fi / Bluetooth / 4G/LTE</div>
         </div>
         <div class="spec-row">
-          <div class="spec-icon">🏢</div>
+          <div class="spec-icon">🏠</div>
           <div class="spec-label">Installation</div>
           <div class="spec-value">Intérieure ou extérieure</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-icon">📱</div>
-          <div class="spec-label">Contrôle</div>
-          <div class="spec-value">Application mobile + programmation</div>
         </div>
       </div>
 
@@ -103,11 +112,11 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- COMMENT ÇA MARCHE -->
-  <section class="how-section">
+  <section class="how-section reveal reveal-up">
     <div class="section-eyebrow">Mode d'emploi</div>
     <h2 class="section-title">Recharge triphasée en 3 étapes</h2>
-    <div class="section-rule"></div>
-    <div class="steps-grid">
+    <div class="blue-bar"></div>
+    <div class="steps-grid stagger-children">
       <div class="step-card">
         <div class="step-num">01</div>
         <div class="step-title">Installation triphasée</div>
@@ -116,13 +125,13 @@ $loggedIn = isset($_SESSION['user']);
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
-        <div class="step-title">Connexion intelligente</div>
-        <p class="step-text">Configurez la borne via Wi-Fi ou 4G/LTE. Programmez vos horaires, suivez la consommation en
-          temps réel et recevez des notifications depuis l'application EcoDrive.</p>
+        <div class="step-title">Pilotage connecté</div>
+        <p class="step-text">Configurez vos plages de recharge via l'interface Wi-Fi ou l'application mobile. Suivez votre
+          consommation en temps réel et recevez des notifications depuis l'application EcoDrive.</p>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
-        <div class="step-title">Recharge rapide &amp; efficace</div>
+        <div class="step-title">Recharge rapide</div>
         <p class="step-text">À 11 kW triphasé, une session de 2 à 4 h suffit pour la plupart des véhicules. Idéal pour
           les utilisateurs à forte mobilité quotidienne.</p>
       </div>
@@ -130,10 +139,10 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- SPECS COMPLÈTES -->
-  <section class="specs-section">
+  <section class="specs-section reveal reveal-up reveal-delay-1">
     <div class="section-eyebrow">Fiche technique</div>
     <h2 class="section-title">Spécifications complètes</h2>
-    <div class="section-rule"></div>
+    <div class="blue-bar"></div>
     <table class="specs-table">
       <thead>
         <tr>
@@ -144,7 +153,7 @@ $loggedIn = isset($_SESSION['user']);
       <tbody>
         <tr>
           <td>Marque / Modèle</td>
-          <td>Exicom Spin Air</td>
+          <td>Exicom Spin Air 11 kW</td>
         </tr>
         <tr>
           <td>Puissance de sortie</td>
@@ -156,39 +165,39 @@ $loggedIn = isset($_SESSION['user']);
         </tr>
         <tr>
           <td>Tension d'entrée</td>
-          <td>400 V / 50 Hz (3 phases)</td>
+          <td>400 V / 50 Hz</td>
         </tr>
         <tr>
           <td>Courant maximum</td>
-          <td>16 A par phase</td>
+          <td>16 A</td>
         </tr>
         <tr>
           <td>Connecteur côté véhicule</td>
           <td>Type 2 (IEC 62196-2)</td>
         </tr>
         <tr>
-          <td>Connectivité</td>
-          <td>Wi-Fi, Bluetooth, 4G/LTE (selon config.)</td>
+          <td>Longueur de câble</td>
+          <td>5 m</td>
         </tr>
         <tr>
-          <td>Contrôle</td>
-          <td>Application mobile, programmation horaire, OCPP 1.6</td>
+          <td>Connectivité</td>
+          <td>Wi-Fi / Bluetooth / 4G LTE</td>
+        </tr>
+        <tr>
+          <td>Indice de protection</td>
+          <td>IP54</td>
+        </tr>
+        <tr>
+          <td>Température de fonctionnement</td>
+          <td>-20 °C à +55 °C</td>
         </tr>
         <tr>
           <td>Installation</td>
           <td>Intérieure ou extérieure</td>
         </tr>
         <tr>
-          <td>Indice de protection</td>
-          <td>IP55</td>
-        </tr>
-        <tr>
-          <td>Température de fonctionnement</td>
-          <td>-25 °C à +55 °C</td>
-        </tr>
-        <tr>
           <td>Certifications</td>
-          <td>CE, RoHS, IEC 61851</td>
+          <td>CE, RoHS</td>
         </tr>
         <tr>
           <td>Garantie</td>
@@ -199,11 +208,11 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- COMPATIBILITÉ -->
-  <section class="compat-section">
+  <section class="compat-section reveal reveal-up reveal-delay-2">
     <div class="section-eyebrow">Compatibilité universelle</div>
     <h2 class="section-title">Compatible avec tous les VE Type 2</h2>
-    <div class="section-rule"></div>
-    <div class="compat-grid">
+    <div class="blue-bar"></div>
+    <div class="compat-grid stagger-children">
       <div class="compat-card">
         <div class="compat-icon">🔵</div>
         <div class="compat-name">Renault Megane E-Tech</div>
@@ -221,17 +230,17 @@ $loggedIn = isset($_SESSION['user']);
       </div>
       <div class="compat-card">
         <div class="compat-icon">🔴</div>
-        <div class="compat-name">Audi A6 e-tron</div>
+        <div class="compat-name">Citroën C3 Electric</div>
         <div class="compat-sub">Type 2 · Compatible</div>
       </div>
     </div>
-    <p class="compat-note">
+    <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted); text-align: center;">
       Compatible avec tous les véhicules électriques équipés d'un port Type 2 acceptant la charge triphasée.
     </p>
   </section>
 
   <!-- CTA BANNER -->
-  <section class="cta-banner">
+  <section class="cta-banner hero-entrance">
     <div>
       <div class="cta-banner-title">Passez au triphasé.</div>
       <div class="cta-banner-sub">Commandez votre Exicom Spin Air 11 kW ou obtenez un devis personnalisé.</div>
@@ -239,8 +248,6 @@ $loggedIn = isset($_SESSION['user']);
     <a href="../pages/contact.php#contact" class="btn-white">Contacter EcoDrive</a>
   </section>
 
+</main>
 <?php include __DIR__ . '/../php/partials/footer.php'; ?>
 
-</body>
-
-</html>

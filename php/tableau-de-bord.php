@@ -60,20 +60,28 @@ for ($i = 5; $i >= 0; $i--) {
     $stmt->close();
 }
 ?>
+<?php
+$page_title = 'Tableau de bord | EcoDrive';
+$page_desc = 'Gérez vos essais, modifiez votre profil et suivez votre activité EcoDrive depuis votre tableau de bord.';
+$page_url = 'php/tableau-de-bord.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Tableau de bord client — EcoDrive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/dashboard.css">
+  <?php include __DIR__ . '/partials/meta.php'; ?>
+  <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/animations.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-  <main class="main-wrap">
+  <main class="main-wrap page-fade-in">
   <!-- Hero -->
   <section class="hero" aria-label="Tableau de bord client">
     <div class="hero-inner">
@@ -129,7 +137,7 @@ for ($i = 5; $i >= 0; $i--) {
       type: 'bar',
       data: {
         labels: <?= json_encode($monthlyLabels) ?>,
-        datasets: [{ label: 'Réservations', data: <?= json_encode($monthlyData) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+        datasets: [{ label: 'Réservations', data: <?= json_encode($monthlyData) ?>, backgroundColor: 'rgba(212,168,83,0.6)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }]
       },
       options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
     });

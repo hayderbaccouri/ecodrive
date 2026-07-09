@@ -108,7 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                            "Reply-To: admin@ecodrive.com\r\n" .
                            "X-Mailer: PHP/" . phpversion();
 
-                mail($to, $subject, $messageEmail, $headers);
+                $logBody = "To: $to\nSubject: $subject\nHeaders: $headers\nBody:\n$messageEmail\n---\n";
+                file_put_contents(__DIR__ . '/../mail_log.txt', $logBody, FILE_APPEND | LOCK_EX);
             }
         } else {
             $message = "❌ Erreur lors de la mise à jour.";
@@ -200,6 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         $stmt->close();
         $message = "✅ Voiture supprimée.";
     }
+  }
 }
 
 // === Gestion du catalogue bornes ===
@@ -207,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
   if (!csrf_verify($_POST['csrf_token'] ?? '')) {
     $message = 'Session invalide.';
   } else {
-  $imgPath = $_POST['image'] ?? '';
+    $imgPath = $_POST['image'] ?? '';
 
     if (isset($_FILES['borne_image_file']) && $_FILES['borne_image_file']['error'] === UPLOAD_ERR_OK) {
         [$ok, $result] = handleUpload($_FILES['borne_image_file'], $uploadDir);
@@ -280,6 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
         $stmt->close();
         $message = "✅ Borne supprimée.";
     }
+  }
 }
 
 // Pagination réservations
@@ -327,20 +330,28 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
 // Token CSRF pour les formulaires
 $token = csrf_token();
 ?>
+<?php
+$page_title = 'Administration | EcoDrive';
+$page_desc = 'Panneau d\'administration EcoDrive — gérez les voitures, les utilisateurs et les réservations.';
+$page_url = 'php/admin.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Admin — EcoDrive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/dashboard.css">
+  <?php include __DIR__ . '/partials/meta.php'; ?>
+  <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/animations.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-  <main class="main-wrap">
+  <main class="main-wrap page-fade-in">
     <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
 
   <?php if (!empty($message)): ?>
@@ -430,7 +441,7 @@ $token = csrf_token();
     type: 'bar',
     data: {
       labels: <?= json_encode($res_monthly_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(212,168,83,0.6)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }]
     },
     options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
@@ -446,7 +457,7 @@ $token = csrf_token();
     type: 'bar',
     data: {
       labels: <?= json_encode($top_cars_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(212,168,83,0.6)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }]
     },
     options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });

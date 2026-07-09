@@ -64,19 +64,27 @@ $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 ?>
+<?php
+$page_title = 'Mon profil | EcoDrive';
+$page_desc = 'Modifiez vos informations personnelles, votre email et votre mot de passe sur votre profil EcoDrive.';
+$page_url = 'php/profil.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mon profil — EcoDrive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/dashboard.css">
+  <?php include __DIR__ . '/partials/meta.php'; ?>
+  <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-  <main class="main-wrap">
+  <main class="main-wrap page-fade-in">
     <h1>Mon profil</h1>
 
     <?php if ($message): ?>
@@ -84,15 +92,15 @@ $stmt->close();
     <?php endif; ?>
 
     <div class="form-card" style="max-width:500px">
-      <form method="POST" action="profil.php">
+      <form method="POST" action="profil.php" data-validate>
         <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <input type="hidden" name="update_profile" value="1">
 
         <label for="nom">Nom complet</label>
-        <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" required>
+        <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" required data-msg-required="Veuillez entrer votre nom.">
 
         <label for="email">Adresse e-mail</label>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide.">
 
         <label for="password">Nouveau mot de passe <em style="font-size:0.75rem;color:var(--gray)">(laisser vide pour conserver)</em></label>
         <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password">
@@ -104,6 +112,4 @@ $stmt->close();
     <p style="margin-top:1rem"><a href="tableau-de-bord.php" class="btn-ghost">← Retour au tableau de bord</a></p>
   </main>
 
-  <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
 <?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>

@@ -2,26 +2,33 @@
 <html lang="fr">
 <?php
 session_start();
-include '../php/configuration.php';
+include '../php/bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
 ?>
 
+<?php
+$page_title = 'Exicom Spin Free 3 kW — Borne de recharge portable | EcoDrive';
+$page_desc = 'Borne de recharge portable Exicom Spin Free 3 kW — recharge tout type de véhicule électrique sur prise standard. Idéale pour la maison et le dépannage.';
+$page_url = 'bornes/ExicomSpinFree3kW.php';
+$page_image = 'images/bornes/SPIN-FREE-3.png';
+?>
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exicom Spin Free 3 kW — EcoDrive</title>
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   
-  <link rel="stylesheet" href="../css/bornes.css">
+  <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
 
 </head>
 
 <body class="has-topbar">
-  <div class="topbar">✦ Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
-
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
 
+<main class="main-wrap page-fade-in">
   <div class="breadcrumb">
     <a href="../index.php">Accueil</a>
     <span>›</span>
@@ -31,7 +38,7 @@ $loggedIn = isset($_SESSION['user']);
   </div>
 
   <!-- HERO -->
-  <section class="borne-hero">
+  <section class="borne-hero hero-entrance">
 
     <div class="borne-visual">
       <div class="borne-visual-bg"></div>
@@ -104,11 +111,11 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- COMMENT ÇA MARCHE -->
-  <section class="how-section">
+  <section class="how-section reveal reveal-up">
     <div class="section-eyebrow">Mode d'emploi</div>
     <h2 class="section-title">Recharge en 3 étapes</h2>
-    <div class="section-rule"></div>
-    <div class="steps-grid">
+    <div class="blue-bar"></div>
+    <div class="steps-grid stagger-children">
       <div class="step-card">
         <div class="step-num">01</div>
         <div class="step-title">Branchez à la prise</div>
@@ -131,10 +138,10 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- SPECS COMPLÈTES -->
-  <section class="specs-section">
+  <section class="specs-section reveal reveal-up reveal-delay-1">
     <div class="section-eyebrow">Fiche technique</div>
     <h2 class="section-title">Spécifications complètes</h2>
-    <div class="section-rule"></div>
+    <div class="blue-bar"></div>
     <table class="specs-table">
       <thead>
         <tr>
@@ -200,11 +207,11 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- COMPATIBILITÉ -->
-  <section class="compat-section">
+  <section class="compat-section reveal reveal-up reveal-delay-2">
     <div class="section-eyebrow">Compatibilité universelle</div>
     <h2 class="section-title">Compatible avec tous les VE Type 2</h2>
-    <div class="section-rule"></div>
-    <div class="compat-grid">
+    <div class="blue-bar"></div>
+    <div class="compat-grid stagger-children">
       <div class="compat-card">
         <div class="compat-icon">🔵</div>
         <div class="compat-name">Renault Megane E-Tech</div>
@@ -232,7 +239,7 @@ $loggedIn = isset($_SESSION['user']);
   </section>
 
   <!-- CTA BANNER -->
-  <section class="cta-banner">
+  <section class="cta-banner hero-entrance">
     <div>
       <div class="cta-banner-title">Prêt à passer à l'électrique ?</div>
       <div class="cta-banner-sub">Commandez votre Exicom Spin Free ou obtenez un devis personnalisé.</div>
@@ -240,8 +247,6 @@ $loggedIn = isset($_SESSION['user']);
     <a href="../pages/contact.php#contact" class="btn-white">Contacter EcoDrive</a>
   </section>
 
+</main>
 <?php include __DIR__ . '/../php/partials/footer.php'; ?>
 
-</body>
-
-</html>

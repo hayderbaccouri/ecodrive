@@ -30,19 +30,27 @@ $stmt->execute();
 $reservations = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 ?>
+<?php
+$page_title = 'Mes essais | EcoDrive';
+$page_desc = 'Consultez l\'historique de vos essais de voitures électriques et suivez le statut de vos réservations EcoDrive.';
+$page_url = 'php/mes-essais.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mes essais — EcoDrive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/dashboard.css">
+  <?php include __DIR__ . '/partials/meta.php'; ?>
+  <link rel="stylesheet" href="../css/theme.css">
   <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-  <main class="main-wrap">
+  <main class="main-wrap page-fade-in">
     <h1>Mes essais</h1>
 
   <section>

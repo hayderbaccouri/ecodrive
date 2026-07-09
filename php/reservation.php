@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id'])) {
@@ -80,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO reservation (utilisateur_id, voiture_id, date_essai, heure_debut, heure_fin, notes, statut) VALUES (?,?,?,?,?,?, 'pending')");
         $stmt->bind_param("iissss", $utilisateurId, $voitureId, $dateEssai, $heureDebut, $heureFin, $notes);
         if ($stmt->execute()) {
-            $message = 'Votre demande d\'essai a été enregistrée. Elle est en attente de confirmation.';
-            $messageType = 'success';
-            $_POST = []; // clear form
+            $_SESSION['last_reservation_id'] = $conn->insert_id;
+            header('Location: confirmation-reservation.php');
+            exit;
         } else {
             $message = 'Erreur lors de l\'enregistrement de la réservation.';
             $messageType = 'error';
@@ -94,13 +93,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER BY marque, modele")->fetch_all(MYSQLI_ASSOC);
 ?>
+<?php
+$page_title = 'Réserver un essai | EcoDrive';
+$page_desc = 'Réservez un essai gratuit de voiture électrique en Tunisie. Choisissez votre modèle préféré et planifiez votre rendez-vous.';
+$page_url = 'php/reservation.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Réservation d'essai — EcoDrive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/dashboard.css">
+  <?php include __DIR__ . '/partials/meta.php'; ?>
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/animations.css">
 </head>
 <body>
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -129,10 +137,10 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
     <?php endif; ?>
 
     <div class="form-card reveal reveal-up">
-      <form method="POST" action="reservation.php">
+      <form method="POST" action="reservation.php" data-validate>
         <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <label for="voiture_id">Voiture</label>
-        <select name="voiture_id" id="voiture_id" required>
+        <select name="voiture_id" id="voiture_id" required data-msg-required="Veuillez sélectionner une voiture.">
           <option value="">Sélectionnez une voiture</option>
           <?php foreach ($voitures as $v): ?>
             <option value="<?= (int)$v['id_voiture'] ?>"<?= $voitureId === (int)$v['id_voiture'] ? ' selected' : '' ?>>
@@ -142,10 +150,10 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
         </select>
 
         <label for="date_essai">Date de l'essai</label>
-        <input type="date" id="date_essai" name="date_essai" value="<?= htmlspecialchars($_POST['date_essai'] ?? '') ?>" required min="<?= date('Y-m-d') ?>">
+        <input type="date" id="date_essai" name="date_essai" value="<?= htmlspecialchars($_POST['date_essai'] ?? '') ?>" required min="<?= date('Y-m-d') ?>" data-msg-required="Veuillez choisir une date.">
 
         <label for="heure_debut">Heure de début</label>
-        <input type="time" id="heure_debut" name="heure_debut" value="<?= htmlspecialchars($_POST['heure_debut'] ?? '') ?>" required>
+        <input type="time" id="heure_debut" name="heure_debut" value="<?= htmlspecialchars($_POST['heure_debut'] ?? '') ?>" required data-msg-required="Veuillez choisir un horaire.">
 
         <label for="heure_fin">Heure de fin</label>
         <input type="time" id="heure_fin" name="heure_fin" value="<?= htmlspecialchars($_POST['heure_fin'] ?? '') ?>" required>
@@ -160,7 +168,4 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele FROM voiture ORDER B
     <p><a href="catalogue.php" class="btn-ghost">Retour au catalogue</a></p>
   </main>
 
-  <footer class="site-footer">&copy; 2026 EcoDrive — Showroom de voitures électriques</footer>
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="../js/app.js"></script>
   <?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>

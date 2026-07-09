@@ -51,23 +51,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<?php
+$page_title = 'Connexion | EcoDrive';
+$page_desc = 'Connectez-vous à votre compte EcoDrive pour gérer vos réservations d\'essais, votre profil et vos voitures favorites.';
+$page_url = 'php/connexion.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connexion — EcoDrive</title>
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <?php include __DIR__ . '/partials/meta.php'; ?>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
 </head>
 <body>
 
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-<div class="login-page">
+<div class="login-page hero-entrance">
 
   <!-- Colonne gauche : visuel -->
   <div class="login-visual">
@@ -76,6 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
+
+      <div class="login-visual-energies">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 14h6l-2 8 10-12h-6l2-8z"/><path d="M18 10c2 2 2 5 0 7" opacity=".6"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.78 10-10 10Z"/></svg>
+      </div>
 
       <div class="login-visual-quote">
         L'avenir de la route,
@@ -99,20 +112,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       <?php endif; ?>
 
-      <form method="post" action="connexion.php">
+      <form method="post" action="connexion.php" data-validate>
         <div>
           <label class="field-label" for="email">Adresse e-mail</label>
           <input type="email" id="email" name="email"
                  placeholder="votre@email.com"
                  value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
-                 autocomplete="email" required />
+                 autocomplete="email" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide." />
         </div>
 
         <div>
           <label class="field-label" for="password">Mot de passe</label>
           <input type="password" id="password" name="password"
                  placeholder="••••••••"
-                 autocomplete="current-password" required />
+                 autocomplete="current-password" required data-msg-required="Veuillez entrer votre mot de passe." />
         </div>
 
         <button type="submit" class="btn-primary">Se connecter →</button>

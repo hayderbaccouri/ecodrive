@@ -4,6 +4,20 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ---------- USER MENU DROPDOWN (click toggle) ---------- */
+  document.querySelectorAll('.user-menu').forEach(function (menu) {
+    var badge = menu.querySelector('.user-badge');
+    if (badge) {
+      badge.addEventListener('click', function (e) {
+        e.stopPropagation();
+        menu.classList.toggle('dropdown-open');
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) menu.classList.remove('dropdown-open');
+    });
+  });
+
   /* ---------- BURGER MENU ---------- */
   document.querySelectorAll('.burger').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -243,5 +257,89 @@ document.addEventListener('DOMContentLoaded', function () {
     // Trigger animation
     requestAnimationFrame(function () { lb.classList.add('open'); });
   }
+
+  /* ---------- SLIDER AUTO-ADVANCE ---------- */
+  document.querySelectorAll('.car-slider').forEach(function (slider) {
+    var track = slider.querySelector('.slider-track');
+    var slides = slider.querySelectorAll('.slider-slide');
+    if (!track || slides.length < 2) return;
+    var dots = slider.querySelectorAll('.slider-dot');
+    var current = 0;
+    var timer;
+    function goTo(idx) {
+      if (idx < 0) idx = slides.length - 1;
+      if (idx >= slides.length) idx = 0;
+      current = idx;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+    }
+    function advance() { goTo(current + 1); }
+    function startAuto() { stopAuto(); timer = setInterval(advance, 5000); }
+    function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+    slider.addEventListener('mouseenter', stopAuto);
+    slider.addEventListener('mouseleave', startAuto);
+    slider.addEventListener('touchstart', stopAuto, { passive: true });
+    slider.addEventListener('touchend', startAuto);
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { goTo(i); startAuto(); });
+    });
+    startAuto();
+  });
+
+  /* ---------- FORM VALIDATION ---------- */
+  document.querySelectorAll('form[data-validate]').forEach(function (form) {
+    form.setAttribute('novalidate', '');
+    form.addEventListener('submit', function (e) {
+      var firstInvalid = null;
+      form.querySelectorAll('input, textarea, select').forEach(function (field) {
+        var errorEl = field.parentNode.querySelector('.field-error');
+        if (errorEl) errorEl.remove();
+        field.classList.remove('field-invalid');
+        var rules = [];
+        if (field.required || field.hasAttribute('data-msg-required')) {
+          rules.push({ test: function (v) { return v.trim() !== ''; }, msg: field.getAttribute('data-msg-required') || 'Ce champ est requis.' });
+        }
+        if (field.type === 'email' && field.hasAttribute('data-msg-email')) {
+          rules.push({ test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }, msg: field.getAttribute('data-msg-email') });
+        }
+        if (field.hasAttribute('data-minlength')) {
+          var min = parseInt(field.getAttribute('data-minlength'));
+          rules.push({ test: function (v) { return v.length >= min; }, msg: field.getAttribute('data-msg-minlength') || 'Minimum ' + min + ' caractères.' });
+        }
+        if (field.hasAttribute('data-msg-tel')) {
+          rules.push({ test: function (v) { return /^[0-9\s\+\-\(\)]{8,}$/.test(v); }, msg: field.getAttribute('data-msg-tel') });
+        }
+        for (var ri = 0; ri < rules.length; ri++) {
+          if (!rules[ri].test(field.value)) {
+            field.classList.add('field-invalid');
+            var err = document.createElement('div');
+            err.className = 'field-error';
+            err.textContent = rules[ri].msg;
+            field.parentNode.appendChild(err);
+            if (!firstInvalid) firstInvalid = field;
+            break;
+          }
+        }
+      });
+      if (firstInvalid) {
+        e.preventDefault();
+        firstInvalid.focus();
+      }
+    });
+  });
+
+  /* ---------- SCROLL PROGRESS BAR ---------- */
+  var progressBar = document.querySelector('.scroll-progress');
+  if (!progressBar) {
+    progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+  }
+  window.addEventListener('scroll', function () {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  });
 
 });
