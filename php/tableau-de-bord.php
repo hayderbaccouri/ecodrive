@@ -1,5 +1,4 @@
-<?php
-session_start();
+﻿<?php
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
@@ -73,9 +72,7 @@ $page_url = 'php/tableau-de-bord.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/style.css?v=13">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -89,12 +86,10 @@ $page_url = 'php/tableau-de-bord.php';
         <div class="hero-eyebrow">Tableau de bord</div>
         <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
         <p>Consultez vos réservations, gérez vos essais et réservez de nouveaux modèles.</p>
-        <p><a href="catalogue.php" class="cta">Parcourir le catalogue</a></p>
+        <p><a href="catalogue.php" class="cta">Parcourir le catalogue</a> <a href="mes-essais.php" class="cta">Mes essais</a></p>
       </div>
     </div>
   </section>
-
-    <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
 
     <?php if (!empty($message)): ?>
       <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
@@ -137,7 +132,7 @@ $page_url = 'php/tableau-de-bord.php';
       type: 'bar',
       data: {
         labels: <?= json_encode($monthlyLabels) ?>,
-        datasets: [{ label: 'Réservations', data: <?= json_encode($monthlyData) ?>, backgroundColor: 'rgba(212,168,83,0.6)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }]
+        datasets: [{ label: 'Réservations', data: <?= json_encode($monthlyData) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
       },
       options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
     });
@@ -154,9 +149,10 @@ $page_url = 'php/tableau-de-bord.php';
     <h2>📌 Mes réservations</h2>
 
     <?php if (count($reservations) === 0): ?>
-      <p style="margin-top:1rem;color:var(--gray);">Vous n'avez pas encore réservé d'essai.</p>
+      <p class="mt-lg text-muted">Vous n'avez pas encore réservé d'essai.</p>
       <a href="catalogue.php" class="btn btn-primary">Parcourir le catalogue</a>
     <?php else: ?>
+      <div class="table-wrap">
       <table>
         <tr>
           <th>Voiture</th>
@@ -169,12 +165,12 @@ $page_url = 'php/tableau-de-bord.php';
         </tr>
         <?php foreach ($reservations as $r): ?>
         <tr>
-          <td><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
-          <td><?= htmlspecialchars($r['date_essai']) ?></td>
-          <td><?= htmlspecialchars($r['heure_debut']) ?></td>
-          <td><?= htmlspecialchars($r['heure_fin']) ?></td>
-          <td><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
-          <td>
+          <td data-label="Voiture"><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
+          <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
+          <td data-label="Début"><?= htmlspecialchars($r['heure_debut']) ?></td>
+          <td data-label="Fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
+          <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
+          <td data-label="Statut">
             <?php if ($r['statut'] === 'pending'): ?>
               <span class="statut-pending">⏳ En attente</span>
             <?php elseif ($r['statut'] === 'confirmed'): ?>
@@ -183,9 +179,9 @@ $page_url = 'php/tableau-de-bord.php';
               <span class="statut-cancelled">❌ Annulée</span>
             <?php endif; ?>
           </td>
-          <td>
+          <td data-label="Action">
             <?php if ($r['statut'] === 'pending'): ?>
-              <form method="POST" style="margin:0;">
+              <form method="POST" class="form-inline">
                 <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 <input type="hidden" name="reservation_id" value="<?= (int)$r['id_reservation'] ?>">
                 <button type="submit" name="cancel" class="btn btn-sm btn-danger" onclick="return confirm('Annuler cette réservation ?')">Annuler</button>
@@ -197,6 +193,7 @@ $page_url = 'php/tableau-de-bord.php';
         </tr>
         <?php endforeach; ?>
       </table>
+      </div>
     <?php endif; ?>
   </main>
 

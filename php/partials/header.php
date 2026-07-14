@@ -14,13 +14,13 @@ $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
       <div class="brand-tagline">Premier showroom électrique de Tunisie</div>
     </a>
 
-    <button class="burger" aria-label="Menu">
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
       <span></span><span></span><span></span>
     </button>
-    <nav class="main-nav" aria-label="Navigation principale">
+    <nav id="site-nav" class="main-nav" aria-label="Navigation principale">
       <a href="<?= $asset_base ?>index.php">Accueil</a>
       <a href="<?= $asset_base ?>php/catalogue.php">Catalogue</a>
-      <a href="<?= $asset_base ?>#bornes">Bornes</a>
+      <a href="<?= $asset_base ?>bornes/index.php">Bornes</a>
       <a href="<?= $asset_base ?>pages/contact.php">Contact</a>
 
 
@@ -31,11 +31,12 @@ $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
             <span class="user-name"><?= htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8') ?></span>
             <span class="chevron">▾</span>
           </div>
-          <div class="user-dropdown">
+          <div class="user-dropdown" role="menu">
             <?php $dashboardPage = ($user['role'] ?? 'client') === 'admin' ? $asset_base . 'php/admin.php' : $asset_base . 'php/tableau-de-bord.php'; ?>
-            <a href="<?= $dashboardPage ?>">👤 Mon espace</a>
-            <hr>
-            <a href="<?= $asset_base ?>php/deconnexion.php" class="logout">🚪 Se déconnecter</a>
+            <a href="<?= $dashboardPage ?>" role="menuitem">👤 Mon espace</a>
+            <a href="<?= $asset_base ?>php/mes-essais.php" role="menuitem">🚗 Mes essais</a>
+            <hr role="separator">
+            <a href="<?= $asset_base ?>php/deconnexion.php" class="logout" role="menuitem">🚪 Se déconnecter</a>
           </div>
         </div>
       <?php else: ?>

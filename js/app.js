@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.burger').forEach(function (btn) {
     btn.addEventListener('click', function () {
       this.classList.toggle('open');
+      this.setAttribute('aria-expanded', this.classList.contains('open'));
       var nav = this.closest('nav');
       if (nav) nav.classList.toggle('open');
     });
@@ -200,11 +201,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (match) activeIdx = Math.round(parseFloat(match[1]) / 100);
       }
 
-      buildLightbox(slides, activeIdx);
+      buildLightbox(slides, activeIdx, this);
     });
   });
 
-  function buildLightbox(images, startIdx) {
+  function buildLightbox(images, startIdx, opener) {
     var existing = document.querySelector('.lightbox');
     if (existing) existing.remove();
 
@@ -233,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function prev() { currentIdx = (currentIdx - 1 + total) % total; update(); }
     function close() {
       lb.classList.remove('open');
+      if (opener && typeof opener.focus === 'function') opener.focus();
       setTimeout(function () { if (lb.parentNode) lb.parentNode.removeChild(lb); }, 350);
     }
 
@@ -254,6 +256,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     update();
+    // Focus trap: focus first focusable element
+    var firstFocusable = lb.querySelector('.lightbox-close');
+    if (firstFocusable) {
+      firstFocusable.setAttribute('tabindex', '-1');
+      firstFocusable.focus();
+    }
     // Trigger animation
     requestAnimationFrame(function () { lb.classList.add('open'); });
   }
@@ -287,44 +295,84 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   /* ---------- FORM VALIDATION ---------- */
+  function validateField(field) {
+    var parent = field.closest('.form-group') || field.parentNode;
+    var errorEl = parent.querySelector('.field-error');
+    if (errorEl) errorEl.remove();
+    field.classList.remove('field-invalid', 'field-valid');
+    var rules = [];
+    if (field.required || field.hasAttribute('data-msg-required')) {
+      rules.push({ test: function (v) { return v.trim() !== ''; }, msg: field.getAttribute('data-msg-required') || 'Ce champ est requis.' });
+    }
+    if (field.type === 'email' && field.hasAttribute('data-msg-email')) {
+      rules.push({ test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }, msg: field.getAttribute('data-msg-email') });
+    }
+    if (field.hasAttribute('minlength') || field.hasAttribute('data-minlength')) {
+      var min = parseInt(field.getAttribute('minlength') || field.getAttribute('data-minlength'));
+      rules.push({ test: function (v) { return v.length >= min; }, msg: field.getAttribute('data-msg-minlength') || 'Minimum ' + min + ' caractères.' });
+    }
+    if (field.hasAttribute('data-msg-tel')) {
+      rules.push({ test: function (v) { return /^[0-9\s\+\-\(\)]{8,}$/.test(v); }, msg: field.getAttribute('data-msg-tel') });
+    }
+    if (field.hasAttribute('data-match')) {
+      var targetName = field.getAttribute('data-match');
+      var form = field.closest('form');
+      var target = form ? form.querySelector('[name="' + targetName + '"]') : null;
+      if (target) {
+        rules.push({ test: function (v) { return v === target.value; }, msg: field.getAttribute('data-msg-match') || 'Les champs ne correspondent pas.' });
+      }
+    }
+    for (var ri = 0; ri < rules.length; ri++) {
+      if (!rules[ri].test(field.value)) {
+        field.classList.add('field-invalid');
+        var err = document.createElement('div');
+        err.className = 'field-error';
+        err.textContent = rules[ri].msg;
+        parent.appendChild(err);
+        return false;
+      }
+    }
+    field.classList.add('field-valid');
+    return true;
+  }
+
   document.querySelectorAll('form[data-validate]').forEach(function (form) {
     form.setAttribute('novalidate', '');
+
+    // Real-time validation on blur
+    form.querySelectorAll('input, textarea, select').forEach(function (input) {
+      input.addEventListener('blur', function () {
+        if (this.value.trim() !== '' || this.classList.contains('field-invalid')) {
+          validateField(this);
+        }
+      });
+      input.addEventListener('input', function () {
+        if (this.classList.contains('field-invalid') || this.classList.contains('field-valid')) {
+          validateField(this);
+        }
+      });
+    });
+
     form.addEventListener('submit', function (e) {
       var firstInvalid = null;
       form.querySelectorAll('input, textarea, select').forEach(function (field) {
-        var errorEl = field.parentNode.querySelector('.field-error');
-        if (errorEl) errorEl.remove();
-        field.classList.remove('field-invalid');
-        var rules = [];
-        if (field.required || field.hasAttribute('data-msg-required')) {
-          rules.push({ test: function (v) { return v.trim() !== ''; }, msg: field.getAttribute('data-msg-required') || 'Ce champ est requis.' });
-        }
-        if (field.type === 'email' && field.hasAttribute('data-msg-email')) {
-          rules.push({ test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }, msg: field.getAttribute('data-msg-email') });
-        }
-        if (field.hasAttribute('data-minlength')) {
-          var min = parseInt(field.getAttribute('data-minlength'));
-          rules.push({ test: function (v) { return v.length >= min; }, msg: field.getAttribute('data-msg-minlength') || 'Minimum ' + min + ' caractères.' });
-        }
-        if (field.hasAttribute('data-msg-tel')) {
-          rules.push({ test: function (v) { return /^[0-9\s\+\-\(\)]{8,}$/.test(v); }, msg: field.getAttribute('data-msg-tel') });
-        }
-        for (var ri = 0; ri < rules.length; ri++) {
-          if (!rules[ri].test(field.value)) {
-            field.classList.add('field-invalid');
-            var err = document.createElement('div');
-            err.className = 'field-error';
-            err.textContent = rules[ri].msg;
-            field.parentNode.appendChild(err);
-            if (!firstInvalid) firstInvalid = field;
-            break;
-          }
+        if (!validateField(field) && !firstInvalid) {
+          firstInvalid = field;
         }
       });
       if (firstInvalid) {
         e.preventDefault();
         firstInvalid.focus();
       }
+    });
+  });
+
+  /* ---------- PASSWORD VISIBILITY TOGGLE ---------- */
+  document.querySelectorAll('.pwd-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var input = this.parentElement.querySelector('input');
+      if (input.type === 'password') { input.type = 'text'; this.textContent = '\uD83D\uDE48'; }
+      else { input.type = 'password'; this.textContent = '\uD83D\uDC41'; }
     });
   });
 

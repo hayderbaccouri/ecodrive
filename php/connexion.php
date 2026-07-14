@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 $loggedIn = isset($_SESSION['user']);
@@ -12,6 +12,7 @@ $error = '';
 $email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) { die('Session invalide.'); }
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -20,6 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Adresse e-mail invalide.';
     } else {
+        // Rate limiting: max 5 attempts per 15 minutes
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $attempts = $conn->prepare("SELECT COUNT(*) AS cnt FROM login_attempts WHERE email=? AND ip_address=? AND attempted_at > DATE_SUB(NOW(), INTERVAL 15 MINUTE)");
+        $attempts->bind_param("ss", $email, $ip);
+        $attempts->execute();
+        $count = $attempts->get_result()->fetch_assoc()['cnt'];
+        $attempts->close();
+
+        if ($count >= 5) {
+            $error = 'Trop de tentatives. Réessayez dans 15 minutes.';
+        } else {
         $stmt = $conn->prepare('SELECT id_utilisateur, nom, email, mot_de_passe, role FROM utilisateur WHERE email = ? LIMIT 1');
 
         if ($stmt) {
@@ -40,6 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'email'  => $user['email'],
                     'role'   => $user['role'] ?? 'client',
                 ];
+                $log = $conn->prepare("INSERT INTO login_attempts (email, ip_address, success) VALUES (?, ?, 1)");
+                $log->bind_param("ss", $email, $ip);
+                $log->execute();
+                $log->close();
                 header('Location: ../index.php');
                 exit;
             }
@@ -48,6 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($error === '') {
             $error = 'Email ou mot de passe incorrect.';
         }
+        $log = $conn->prepare("INSERT INTO login_attempts (email, ip_address, success) VALUES (?, ?, 0)");
+        $log->bind_param("ss", $email, $ip);
+        $log->execute();
+        $log->close();
+        } // fin rate limiting
     }
 }
 ?>
@@ -64,11 +85,7 @@ $page_url = 'php/connexion.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/theme.css" />
-  <link rel="stylesheet" href="../css/header.css" />
-  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 <body>
 
@@ -113,6 +130,7 @@ $page_url = 'php/connexion.php';
       <?php endif; ?>
 
       <form method="post" action="connexion.php" data-validate>
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <div>
           <label class="field-label" for="email">Adresse e-mail</label>
           <input type="email" id="email" name="email"
@@ -123,9 +141,12 @@ $page_url = 'php/connexion.php';
 
         <div>
           <label class="field-label" for="password">Mot de passe</label>
-          <input type="password" id="password" name="password"
-                 placeholder="••••••••"
-                 autocomplete="current-password" required data-msg-required="Veuillez entrer votre mot de passe." />
+          <div class="pwd-wrap">
+            <input type="password" id="password" name="password"
+                   placeholder="••••••••"
+                   autocomplete="current-password" required data-msg-required="Veuillez entrer votre mot de passe." />
+            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
+          </div>
         </div>
 
         <button type="submit" class="btn-primary">Se connecter →</button>

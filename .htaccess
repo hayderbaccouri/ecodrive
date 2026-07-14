@@ -8,12 +8,17 @@ RewriteEngine On
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # Page 404 personnalisée
-ErrorDocument 404 /404.php
+ErrorDocument 404 /ecodrive/404.php
 
 # Protéger les fichiers sensibles
 <FilesMatch "\.(sql|md|env|git|htaccess|htpasswd|json)$">
   Require all denied
 </FilesMatch>
+
+# Autoriser robots.txt et sitemap.xml
+<Files "robots.txt">
+  Require all granted
+</Files>
 
 # Protéger le dossier base-de-donnees
 <IfModule mod_autoindex.c>

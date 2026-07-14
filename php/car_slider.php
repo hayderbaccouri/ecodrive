@@ -36,6 +36,7 @@ function renderCarSlider($folder, $heroImage, $carName) {
         return strcasecmp($aName, $bName);
     });
 ?>
+<div class="car-slider-wrap">
 <section class="car-slider">
   <div class="slider-viewport">
     <div class="slider-track">
@@ -54,6 +55,7 @@ function renderCarSlider($folder, $heroImage, $carName) {
   <div class="slider-dots"></div>
   <?php endif; ?>
 </section>
+</div>
 <?php
 }
 }

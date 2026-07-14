@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 // Vérifier que l'utilisateur est connecté et est admin
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                            "X-Mailer: PHP/" . phpversion();
 
                 $logBody = "To: $to\nSubject: $subject\nHeaders: $headers\nBody:\n$messageEmail\n---\n";
-                file_put_contents(__DIR__ . '/../mail_log.txt', $logBody, FILE_APPEND | LOCK_EX);
+                file_put_contents(__DIR__ . '/../private/logs/mail_log.txt', $logBody, FILE_APPEND | LOCK_EX);
             }
         } else {
             $message = "❌ Erreur lors de la mise à jour.";
@@ -138,14 +138,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
     if ($_POST['car_action'] === 'add') {
         $annee = (int) ($_POST['annee'] ?? 0);
         $prix = (float) ($_POST['prix'] ?? 0);
+        $batteryKwh = $_POST['battery_kwh'] !== '' ? (float) $_POST['battery_kwh'] : null;
+        $horsepower = $_POST['horsepower'] !== '' ? (int) $_POST['horsepower'] : null;
+        $rangeKm = $_POST['range_km'] !== '' ? (int) $_POST['range_km'] : null;
 
-        $stmt = $conn->prepare("INSERT INTO voiture (marque, modele, annee, prix, description, image, details_page) VALUES (?,?,?,?,?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO voiture (marque, modele, annee, prix, battery_kwh, horsepower, range_km, description, image, details_page) VALUES (?,?,?,?,?,?,?,?,?,?)");
         $stmt->bind_param(
-            "ssidsss",
+            "ssidiiisss",
             $_POST['marque'],
             $_POST['modele'],
             $annee,
             $prix,
+            $batteryKwh,
+            $horsepower,
+            $rangeKm,
             $_POST['description'],
             $imgPath,
             $_POST['details_page']
@@ -159,19 +165,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         $annee = (int) ($_POST['annee'] ?? 0);
         $prix = (float) ($_POST['prix'] ?? 0);
         $idVoiture = (int) ($_POST['id_voiture'] ?? 0);
+        $batteryKwh = $_POST['battery_kwh'] !== '' ? (float) $_POST['battery_kwh'] : null;
+        $horsepower = $_POST['horsepower'] !== '' ? (int) $_POST['horsepower'] : null;
+        $rangeKm = $_POST['range_km'] !== '' ? (int) $_POST['range_km'] : null;
 
         // Keep existing image if no new upload and no manual override
         if ($imgPath === '' && $_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
             $imgPath = $_POST['image_existing'] ?? '';
         }
 
-        $stmt = $conn->prepare("UPDATE voiture SET marque=?, modele=?, annee=?, prix=?, description=?, image=?, details_page=? WHERE id_voiture=?");
+        $stmt = $conn->prepare("UPDATE voiture SET marque=?, modele=?, annee=?, prix=?, battery_kwh=?, horsepower=?, range_km=?, description=?, image=?, details_page=? WHERE id_voiture=?");
         $stmt->bind_param(
-            "ssidsssi",
+            "ssidiiisssi",
             $_POST['marque'],
             $_POST['modele'],
             $annee,
             $prix,
+            $batteryKwh,
+            $horsepower,
+            $rangeKm,
             $_POST['description'],
             $imgPath,
             $_POST['details_page'],
@@ -285,19 +297,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
   }
 }
 
-// Pagination réservations
+// Pagination réservations (avec filtres)
 $pageRes = max(1, (int)($_GET['page_reservations'] ?? 1));
 $limitRes = 10;
 $offsetRes = ($pageRes - 1) * $limitRes;
-$totalRes = $conn->query("SELECT COUNT(*) AS cnt FROM reservation")->fetch_assoc()['cnt'] ?? 0;
+
+$searchRes = $_GET['search'] ?? '';
+$filterStatus = $_GET['filter_status'] ?? '';
+
+$where = [];
+$params = [];
+
+if ($searchRes !== '') {
+    $where[] = '(u.nom LIKE ? OR u.email LIKE ?)';
+    $params[] = '%' . $searchRes . '%';
+    $params[] = '%' . $searchRes . '%';
+}
+if ($filterStatus !== '') {
+    $where[] = 'r.statut = ?';
+    $params[] = $filterStatus;
+}
+
+$whereSQL = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+
+$countStmt = $conn->prepare("SELECT COUNT(*) AS cnt FROM reservation r JOIN utilisateur u ON r.utilisateur_id=u.id_utilisateur $whereSQL");
+if ($params) { $countStmt->execute($params); } else { $countStmt->execute(); }
+$totalRes = $countStmt->get_result()->fetch_assoc()['cnt'] ?? 0;
+$countStmt->close();
 $totalPagesRes = max(1, (int)ceil($totalRes / $limitRes));
 
-$reservations = $conn->query("SELECT r.id_reservation, u.nom AS client, u.email, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut, r.notes 
+$resParams = array_merge($params, [$limitRes, $offsetRes]);
+$resStmt = $conn->prepare("SELECT r.id_reservation, u.nom AS client, u.email, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut, r.notes 
                               FROM reservation r 
                               JOIN utilisateur u ON r.utilisateur_id=u.id_utilisateur 
                               JOIN voiture v ON r.voiture_id=v.id_voiture 
+                              $whereSQL
                               ORDER BY r.date_essai ASC 
-                              LIMIT $limitRes OFFSET $offsetRes")->fetch_all(MYSQLI_ASSOC);
+                              LIMIT ? OFFSET ?");
+$resStmt->execute($resParams);
+$reservations = $resStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$resStmt->close();
 
 $pendingCount = $conn->query("SELECT COUNT(*) AS cnt FROM reservation WHERE statut='pending'")->fetch_assoc()['cnt'] ?? 0;
 
@@ -329,6 +368,32 @@ $voitures = $conn->query("SELECT * FROM voiture ORDER BY created_at DESC")->fetc
 $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_all(MYSQLI_ASSOC);
 // Token CSRF pour les formulaires
 $token = csrf_token();
+
+// === Gestion des rôles utilisateurs ===
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_role'])) {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        $message = "Session invalide.";
+    } else {
+        $userId = (int) ($_POST['user_id'] ?? 0);
+        if ($userId > 0) {
+            $stmt = $conn->prepare("SELECT role FROM utilisateur WHERE id_utilisateur = ?");
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $current = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            if ($current) {
+                $newRole = $current['role'] === 'admin' ? 'client' : 'admin';
+                $stmt = $conn->prepare("UPDATE utilisateur SET role = ? WHERE id_utilisateur = ?");
+                $stmt->bind_param("si", $newRole, $userId);
+                $stmt->execute();
+                $stmt->close();
+                $message = "✅ Rôle mis à jour.";
+            }
+        }
+    }
+}
+
+$users = $conn->query("SELECT u.*, COUNT(r.id_reservation) AS reservation_count FROM utilisateur u LEFT JOIN reservation r ON u.id_utilisateur = r.utilisateur_id GROUP BY u.id_utilisateur ORDER BY u.nom")->fetch_all(MYSQLI_ASSOC);
 ?>
 <?php
 $page_title = 'Administration | EcoDrive';
@@ -343,9 +408,7 @@ $page_url = 'php/admin.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/style.css?v=13">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -365,46 +428,74 @@ $page_url = 'php/admin.php';
     <a href="export.php?type=bornes" class="btn btn-ghost btn-sm">📄 Export bornes CSV</a>
   </div>
 
+  <nav class="form-actions mb-lg">
+    <button class="btn btn-sm btn-primary tab-btn active" data-tab="reservations">📌 Réservations</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="stats">📊 Statistiques</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="voitures">🚗 Voitures</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="bornes">🔌 Bornes</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="users">👥 Utilisateurs</button>
+  </nav>
+
+  <div id="tab-reservations" class="admin-tab">
   <h2>📌 Gestion des réservations</h2>
+
+  <div class="filter-bar">
+    <form method="get" class="form-actions">
+      <input type="hidden" name="tab" value="reservations">
+      <input type="text" name="search" placeholder="Rechercher un client..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" class="filter-input">
+      <select name="filter_status" class="filter-input">
+        <option value="">Tous les statuts</option>
+        <option value="pending" <?= ($_GET['filter_status'] ?? '') === 'pending' ? 'selected' : '' ?>>En attente</option>
+        <option value="confirmed" <?= ($_GET['filter_status'] ?? '') === 'confirmed' ? 'selected' : '' ?>>Confirmée</option>
+        <option value="cancelled" <?= ($_GET['filter_status'] ?? '') === 'cancelled' ? 'selected' : '' ?>>Annulée</option>
+      </select>
+      <button type="submit" class="btn-primary btn-sm">Filtrer</button>
+    </form>
+  </div>
+  <div class="table-wrap">
   <table>
     <tr><th>ID</th><th>Client</th><th>Email</th><th>Voiture</th><th>Date</th><th>Début</th><th>Fin</th><th>Notes</th><th>Statut</th><th>Actions</th></tr>
     <?php foreach ($reservations as $r): ?>
     <tr>
-      <td><?= (int)$r['id_reservation'] ?></td>
-      <td><?= htmlspecialchars($r['client']) ?></td>
-      <td><?= htmlspecialchars($r['email']) ?></td>
-      <td><?= htmlspecialchars($r['marque'] . ' ' . $r['modele']) ?></td>
-      <td><?= htmlspecialchars($r['date_essai']) ?></td>
-      <td><?= htmlspecialchars($r['heure_debut']) ?></td>
-      <td><?= htmlspecialchars($r['heure_fin']) ?></td>
-      <td><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
-      <td><span class="statut-<?= htmlspecialchars($r['statut']) ?>"><?= htmlspecialchars($r['statut']) ?></span></td>
-      <td>
-        <form method="POST" style="display:inline">
+      <td data-label="ID"><?= (int)$r['id_reservation'] ?></td>
+      <td data-label="Client"><?= htmlspecialchars($r['client']) ?></td>
+      <td data-label="Email"><?= htmlspecialchars($r['email']) ?></td>
+      <td data-label="Voiture"><?= htmlspecialchars($r['marque'] . ' ' . $r['modele']) ?></td>
+      <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
+      <td data-label="Début"><?= htmlspecialchars($r['heure_debut']) ?></td>
+      <td data-label="Fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
+      <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
+      <td data-label="Statut"><span class="statut-<?= htmlspecialchars($r['statut']) ?>"><?= htmlspecialchars($r['statut']) ?></span></td>
+      <td data-label="Actions">
+        <form method="POST" class="form-inline">
           <?php $token = csrf_token(); ?>
           <input type="hidden" name="csrf_token" value="<?= $token ?>">
           <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
           <input type="hidden" name="action" value="confirmed">
-          <button type="submit" class="btn btn-sm btn-primary">Confirmer</button>
+          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Êtes-vous sûr de vouloir confirmer cette réservation ?')">Confirmer</button>
         </form>
-        <form method="POST" style="display:inline">
+        <form method="POST" class="form-inline">
           <input type="hidden" name="csrf_token" value="<?= $token ?>">
           <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
           <input type="hidden" name="action" value="cancelled">
-          <button type="submit" class="btn btn-sm btn-danger">Annuler</button>
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')">Annuler</button>
         </form>
       </td>
     </tr>
     <?php endforeach; ?>
   </table>
+  </div>
 
   <?php if ($totalPagesRes > 1): ?>
-  <div class="pagination" style="margin-bottom:1rem">
+  <div class="pagination mb-lg">
     <?php for ($i = 1; $i <= $totalPagesRes; $i++): ?>
-      <a href="?page_reservations=<?= $i ?>" class="pagination-link <?= $i === $pageRes ? 'active' : '' ?>"><?= $i ?></a>
+      <a href="?page_reservations=<?= $i ?>&amp;tab=reservations&amp;search=<?= urlencode($searchRes) ?>&amp;filter_status=<?= urlencode($filterStatus) ?>" class="pagination-link <?= $i === $pageRes ? 'active' : '' ?>"><?= $i ?></a>
     <?php endfor; ?>
   </div>
   <?php endif; ?>
+  </div>
+
+  <div id="tab-stats" class="admin-tab tab-hidden">
 
   <!-- 📊 Statistiques -->
   <h2>📊 Statistiques</h2>
@@ -427,12 +518,14 @@ $page_url = 'php/admin.php';
     </div>
     <div class="chart-card">
       <h3>Clients les plus actifs</h3>
+      <div class="table-wrap">
       <table>
         <tr><th>Nom</th><th>Email</th><th>Réservations</th></tr>
         <?php foreach ($res_clients as $c): ?>
           <tr><td><?= htmlspecialchars($c['nom']) ?></td><td><?= htmlspecialchars($c['email']) ?></td><td><?= (int)$c['total'] ?></td></tr>
         <?php endforeach; ?>
       </table>
+      </div>
     </div>
   </div>
 
@@ -441,7 +534,7 @@ $page_url = 'php/admin.php';
     type: 'bar',
     data: {
       labels: <?= json_encode($res_monthly_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(212,168,83,0.6)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
     },
     options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
@@ -457,11 +550,14 @@ $page_url = 'php/admin.php';
     type: 'bar',
     data: {
       labels: <?= json_encode($top_cars_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(212,168,83,0.6)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
     },
     options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
   </script>
+  </div>
+
+  <div id="tab-voitures" class="admin-tab tab-hidden">
 
   <!-- 🚗 Gestion du catalogue voitures -->
   <h2>🚗 Gestion des voitures</h2>
@@ -475,24 +571,28 @@ $page_url = 'php/admin.php';
         <input type="text" name="modele" placeholder="Modèle" required>
         <input type="number" name="annee" placeholder="Année" required>
         <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
+        <input type="number" step="0.1" name="battery_kwh" placeholder="Batterie (kWh)">
+        <input type="number" name="horsepower" placeholder="Puissance (ch)">
+        <input type="number" name="range_km" placeholder="Autonomie (km)">
         <textarea name="description" placeholder="Description" rows="2"></textarea>
         <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
         <input type="text" name="image" placeholder="Ou chemin direct (ex: images/marque/voiture.jpg)">
         <input type="text" name="details_page" placeholder="Page détails (ex: voitures/Modele.php)">
-        <button type="submit">Ajouter</button>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </div>
     <div class="admin-section">
       <h3>Voitures existantes</h3>
+      <div class="table-wrap">
       <table>
         <tr><th>ID</th><th>Marque</th><th>Modèle</th><th>Prix</th><th>Actions</th></tr>
         <?php foreach ($voitures as $v): ?>
         <tr>
-          <td><?= (int)$v['id_voiture'] ?></td>
-          <td><?= htmlspecialchars($v['marque']) ?></td>
-          <td><?= htmlspecialchars($v['modele']) ?></td>
-          <td><?= number_format((float)$v['prix'], 0, ',', ' ') ?> DT</td>
-          <td>
+          <td data-label="ID"><?= (int)$v['id_voiture'] ?></td>
+          <td data-label="Marque"><?= htmlspecialchars($v['marque']) ?></td>
+          <td data-label="Modèle"><?= htmlspecialchars($v['modele']) ?></td>
+          <td data-label="Prix"><?= number_format((float)$v['prix'], 0, ',', ' ') ?> DT</td>
+          <td data-label="Actions">
             <details class="edit-inline">
               <summary class="btn-edit">✏️ Modifier</summary>
               <form method="POST" class="edit-form" enctype="multipart/form-data">
@@ -507,14 +607,17 @@ $page_url = 'php/admin.php';
                 <input type="text" name="modele" value="<?= htmlspecialchars($v['modele']) ?>" required>
                 <input type="number" name="annee" value="<?= (int)$v['annee'] ?>" required>
                 <input type="number" step="0.01" name="prix" value="<?= (float)$v['prix'] ?>" required>
+                <input type="number" step="0.1" name="battery_kwh" value="<?= htmlspecialchars($v['battery_kwh'] ?? '') ?>" placeholder="Batterie (kWh)">
+                <input type="number" name="horsepower" value="<?= htmlspecialchars($v['horsepower'] ?? '') ?>" placeholder="Puissance (ch)">
+                <input type="number" name="range_km" value="<?= htmlspecialchars($v['range_km'] ?? '') ?>" placeholder="Autonomie (km)">
                 <textarea name="description" rows="2"><?= htmlspecialchars($v['description'] ?? '') ?></textarea>
                 <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
                 <input type="text" name="image" value="<?= htmlspecialchars($v['image'] ?? '') ?>" placeholder="Ou chemin direct">
                 <input type="text" name="details_page" value="<?= htmlspecialchars($v['details_page'] ?? '') ?>">
-                <button type="submit">💾 Enregistrer</button>
+                <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
               </form>
             </details>
-            <form method="POST" style="display:inline-block;">
+            <form method="POST" class="form-inline">
               <input type="hidden" name="car_action" value="delete">
               <input type="hidden" name="csrf_token" value="<?= $token ?>">
               <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
@@ -524,8 +627,13 @@ $page_url = 'php/admin.php';
         </tr>
         <?php endforeach; ?>
       </table>
+      </div>
     </div>
   </div>
+
+  </div>
+
+  <div id="tab-bornes" class="admin-tab tab-hidden">
 
   <!-- 🔌 Gestion des bornes -->
   <h2>🔌 Gestion des bornes</h2>
@@ -543,21 +651,22 @@ $page_url = 'php/admin.php';
         <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
         <input type="text" name="image" placeholder="Ou chemin direct (ex: images/bornes/borne.png)">
         <input type="text" name="details_page" placeholder="Page détails (ex: bornes/Modèle.php)">
-        <button type="submit">Ajouter</button>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </div>
     <div class="admin-section">
       <h3>Bornes existantes</h3>
+      <div class="table-wrap">
       <table>
         <tr><th>ID</th><th>Nom</th><th>Modèle</th><th>Puissance</th><th>Prix</th><th>Actions</th></tr>
         <?php foreach ($bornes as $b): ?>
         <tr>
-          <td><?= (int)$b['id_borne'] ?></td>
-          <td><?= htmlspecialchars($b['nom']) ?></td>
-          <td><?= htmlspecialchars($b['modele']) ?></td>
-          <td><?= htmlspecialchars($b['puissance']) ?></td>
-          <td><?= number_format((float)$b['prix'], 0, ',', ' ') ?> DT</td>
-          <td>
+          <td data-label="ID"><?= (int)$b['id_borne'] ?></td>
+          <td data-label="Nom"><?= htmlspecialchars($b['nom']) ?></td>
+          <td data-label="Modèle"><?= htmlspecialchars($b['modele']) ?></td>
+          <td data-label="Puissance"><?= htmlspecialchars($b['puissance']) ?></td>
+          <td data-label="Prix"><?= number_format((float)$b['prix'], 0, ',', ' ') ?> DT</td>
+          <td data-label="Actions">
             <details class="edit-inline">
               <summary class="btn-edit">✏️ Modifier</summary>
               <form method="POST" class="edit-form" enctype="multipart/form-data">
@@ -576,10 +685,10 @@ $page_url = 'php/admin.php';
                 <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
                 <input type="text" name="image" value="<?= htmlspecialchars($b['image'] ?? '') ?>" placeholder="Ou chemin direct">
                 <input type="text" name="details_page" value="<?= htmlspecialchars($b['details_page'] ?? '') ?>">
-                <button type="submit">💾 Enregistrer</button>
+                <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
               </form>
             </details>
-            <form method="POST" style="display:inline-block;">
+            <form method="POST" class="form-inline">
               <input type="hidden" name="borne_action" value="delete">
               <input type="hidden" name="csrf_token" value="<?= $token ?>">
               <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
@@ -589,9 +698,51 @@ $page_url = 'php/admin.php';
         </tr>
         <?php endforeach; ?>
       </table>
+      </div>
     </div>
+  </div>
+  </div>
+
+  <div id="tab-users" class="admin-tab tab-hidden">
+  <h2>👥 Gestion des utilisateurs</h2>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Réservations</th><th>Actions</th></tr>
+    <?php foreach ($users as $u): ?>
+    <tr>
+      <td data-label="Nom"><?= htmlspecialchars($u['nom']) ?></td>
+      <td data-label="Email"><?= htmlspecialchars($u['email']) ?></td>
+      <td data-label="Rôle"><span class="statut-<?= htmlspecialchars($u['role']) ?>"><?= htmlspecialchars($u['role']) ?></span></td>
+      <td data-label="Réservations"><?= (int)$u['reservation_count'] ?></td>
+      <td data-label="Actions">
+        <form method="POST" class="form-inline">
+          <input type="hidden" name="csrf_token" value="<?= $token ?>">
+          <input type="hidden" name="user_id" value="<?= (int)$u['id_utilisateur'] ?>">
+          <input type="hidden" name="toggle_role" value="1">
+          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Changer le rôle de <?= htmlspecialchars($u['nom']) ?> ?')">
+            <?= $u['role'] === 'admin' ? '→ Client' : '→ Admin' ?>
+          </button>
+        </form>
+      </td>
+    </tr>
+    <?php endforeach; ?>
+  </table>
+  </div>
   </div>
 
   </main>
+
+  <script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.classList.add('btn-ghost'); b.classList.remove('btn-primary'); });
+      document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
+      btn.classList.add('active');
+      btn.classList.remove('btn-ghost');
+      btn.classList.add('btn-primary');
+      document.getElementById('tab-' + btn.dataset.tab).style.display = '';
+    });
+  });
+  </script>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>

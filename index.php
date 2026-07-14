@@ -1,4 +1,4 @@
-
+﻿
 <?php
 include 'php/bootstrap.php';
 $user = $_SESSION['user'] ?? null;
@@ -11,6 +11,7 @@ $contactSuccess = false;
 
 // Traitement du formulaire de contact
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) { die('Session invalide.'); }
     $name    = trim($_POST['name'] ?? '');
     $email   = trim($_POST['email'] ?? '');
     $model   = trim($_POST['model'] ?? '');
@@ -34,15 +35,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
     }
 }
 
-// Récupérer les 3 voitures vedettes pour l'accueil
-$voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, details_page FROM voiture WHERE id_voiture IN (2,1,8) ORDER BY id_voiture")->fetch_all(MYSQLI_ASSOC);
-// Compter le nombre total de modèles dans le catalogue
-$totalModeles = (int) $conn->query("SELECT COUNT(*) AS c FROM voiture")->fetch_assoc()['c'];
-$conn->close();
+// Récupérer les voitures vedettes pour l'accueil
+$voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, details_page FROM voiture WHERE is_featured = 1 ORDER BY marque")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
+  <?php include __DIR__ . '/php/partials/meta.php'; ?>
+  <link rel="stylesheet" href="css/style.css?v=13">
+  <?php $jsonld_type = 'localbusiness'; $jsonld_products = array_map(fn($v) => $v['marque'].' '.$v['modele'], $voitures); include __DIR__ . '/php/partials/jsonld.php'; ?>
+</head>
+<body>
 <?php $asset_base = ''; include 'php/partials/header.php'; ?>
 
   <!-- Hero -->
@@ -71,34 +78,6 @@ $conn->close();
       </div>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="hero-visual-bg"></div>
-      <div class="hero-visual-grid"></div>
-      <div class="hero-visual-glow"></div>
-
-      <div class="hero-car-placeholder">
-        <div class="hero-car-title">Découvrez les nouvelles voitures électriques 2026</div>
-        <div class="hero-car-icon">
-          <?php $hero = $voitures[0] ?? null; ?>
-          <img src="<?= $hero ? htmlspecialchars(ltrim($hero['image'], '/')) : 'images/Mercedes-Benz-Classe-C-2026.jpg' ?>" alt="Véhicule EcoDrive" loading="lazy">
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="hero-stat-value">100%</div>
-            <div class="hero-stat-label">Électrique</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value">0</div>
-            <div class="hero-stat-label">Émissions CO<sub>2</sub></div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value">+<?= $totalModeles ?></div>
-            <div class="hero-stat-label">Modèles électriques</div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-car-subtitle">Dernière arrivée : <?= $hero ? htmlspecialchars($hero['marque'] . ' ' . $hero['modele']) : 'Tesla Model 3' ?></div>
-      </div>
     </div>
   </section>
 
@@ -147,55 +126,62 @@ $conn->close();
     </div>
   </section>
 
-  <!-- Bornes de recharge -->
-  <section id="bornes" class="bornes-section">
-    <div class="section-header section-header--tight">
-      <div class="section-eyebrow">Infrastructure</div>
-      <h2 class="section-title">Bornes de recharge</h2>
+  <!-- Marques -->
+  <section class="brands-section">
+    <div class="section-header">
+      <div class="section-eyebrow">Explorer par marque</div>
+      <h2 class="section-title">Les meilleures marques électriques</h2>
       <div class="section-rule"></div>
     </div>
-
-    <p class="bornes-intro">
-      Rechargez partout, en toute confiance. EcoDrive propose une gamme complète de bornes Exicom
-      adaptées à chaque usage — domicile, bureau ou flotte.
-    </p>
-
-    <div class="bornes-grid">
-      <a class="borne-card" href="bornes/ExicomSpinFree3kW.php">
-        <img src="images/bornes/SPIN-FREE-3.png" alt="Borne 3 kW" class="borne-image" loading="lazy" />
-        <div><span class="borne-power">3</span><span class="borne-unit"> kW</span></div>
-        <div class="borne-name">Exicom Spin Free</div>
-        <p class="borne-desc">Chargeur portable compact pour recharge d'appoint et déplacements. Câble 5 m, compatible Type 2.</p>
-        <div class="borne-price">1 290 DT</div>
-        <div class="borne-tag">Portable</div>
+    <div class="brands-grid">
+      <a href="php/catalogue.php?brand=Tesla" class="brand-card">
+        <div class="brand-logo">
+          <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600" letter-spacing="3">TESLA</text></svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-count">2 modèles</span>
+          <span class="brand-arrow">→</span>
+        </div>
       </a>
-
-      <a class="borne-card" href="bornes/ExicomSpinAir7kW.php">
-        <img src="images/bornes/SPIN-AIR-11 (2).png" alt="Borne 7.4 kW" class="borne-image" loading="lazy" />
-        <div><span class="borne-power">7.4</span><span class="borne-unit"> kW</span></div>
-        <div class="borne-name">Exicom Spin Air</div>
-        <p class="borne-desc">Chargeur monophasé pour recharge résidentielle quotidienne avec contrôle intelligent.</p>
-        <div class="borne-price">2 490 DT</div>
-        <div class="borne-tag">Résidentiel</div>
+      <a href="php/catalogue.php?brand=BMW" class="brand-card">
+        <div class="brand-logo">
+          <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600" letter-spacing="3">BMW</text></svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-count">1 modèle</span>
+          <span class="brand-arrow">→</span>
+        </div>
       </a>
-
-      <a class="borne-card" href="bornes/ExicomSpinAir11kW.php">
-        <img src="images/bornes/SPIN-AIR-11.png" alt="Borne 11 kW" class="borne-image" loading="lazy" />
-        <div><span class="borne-power">11</span><span class="borne-unit"> kW</span></div>
-        <div class="borne-name">Exicom Spin Air</div>
-        <p class="borne-desc">Solution triphasée pour maisons, bureaux et parkings privés avec usage régulier.</p>
-        <div class="borne-price">3 290 DT</div>
-        <div class="borne-tag">Semi-professionnel</div>
+      <a href="php/catalogue.php?brand=Mercedes" class="brand-card">
+        <div class="brand-logo">
+          <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="22" font-weight="600" letter-spacing="2">MERCEDES-BENZ</text></svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-count">2 modèles</span>
+          <span class="brand-arrow">→</span>
+        </div>
       </a>
-
-      <a class="borne-card" href="bornes/ExicomSpinAir22kW.php">
-        <img src="images/bornes/SPIN-AIR-11 (2).png" alt="Borne 22 kW" class="borne-image" loading="lazy" />
-        <div><span class="borne-power">22</span><span class="borne-unit"> kW</span></div>
-        <div class="borne-name">Exicom Spin Air</div>
-        <p class="borne-desc">Chargeur haute puissance pour flottes, entreprises et sites à plusieurs utilisateurs.</p>
-        <div class="borne-price">4 490 DT</div>
-        <div class="borne-tag">Professionnel</div>
+      <a href="php/catalogue.php?brand=Porsche" class="brand-card">
+        <div class="brand-logo">
+          <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600" letter-spacing="3">PORSCHE</text></svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-count">1 modèle</span>
+          <span class="brand-arrow">→</span>
+        </div>
       </a>
+    </div>
+  </section>
+
+  <!-- Bornes CTA -->
+  <section class="bornes-cta">
+    <div class="bornes-cta-content">
+      <div class="bornes-cta-text">
+        <div class="section-eyebrow">Infrastructure</div>
+        <h2 class="section-title">Bornes de recharge Exicom</h2>
+        <p>Rechargez votre véhicule à domicile, au bureau ou en déplacement. EcoDrive propose une gamme complète de bornes murales et autonomes, adaptées à chaque besoin — du résidentiel au professionnel.</p>
+      </div>
+      <a href="bornes/index.php" class="btn-primary">Découvrir nos bornes</a>
     </div>
   </section>
 
@@ -247,6 +233,7 @@ $conn->close();
         <div class="contact-success"><?= htmlspecialchars($contactMessage) ?></div>
       <?php endif; ?>
       <form action="index.php#contact" method="post">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <input type="hidden" name="contact" value="1">
         <input type="text" name="name" placeholder="Votre nom complet"
                value="<?= $prenom ?>" autocomplete="name" required />

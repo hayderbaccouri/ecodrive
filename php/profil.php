@@ -1,5 +1,4 @@
-<?php
-session_start();
+﻿<?php
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id'])) {
@@ -11,6 +10,28 @@ $userId = $_SESSION['user']['id'];
 $message = '';
 $messageType = '';
 
+// Delete account
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        $message = 'Session invalide.';
+        $messageType = 'error';
+    } else {
+        $stmt = $conn->prepare("DELETE FROM reservation WHERE utilisateur_id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $conn->prepare("DELETE FROM utilisateur WHERE id_utilisateur = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->close();
+
+        session_destroy();
+        header('Location: ../index.php');
+        exit;
+    }
+}
+
 // Mise à jour du profil
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
@@ -19,13 +40,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     } else {
         $nom = trim($_POST['nom'] ?? '');
         $email = trim($_POST['email'] ?? '');
+        $telephone = trim($_POST['telephone'] ?? '');
         $password = $_POST['password'] ?? '';
+        $passwordConfirm = $_POST['password_confirm'] ?? '';
 
         if ($nom === '' || $email === '') {
             $message = 'Le nom et l\'email sont obligatoires.';
             $messageType = 'error';
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $message = 'Email invalide.';
+            $messageType = 'error';
+        } elseif ($password !== '' && $password !== $passwordConfirm) {
+            $message = 'Les mots de passe ne correspondent pas.';
             $messageType = 'error';
         } else {
             $stmt = $conn->prepare("SELECT id_utilisateur FROM utilisateur WHERE email = ? AND id_utilisateur != ? LIMIT 1");
@@ -37,11 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
             } else {
                 if ($password !== '') {
                     $hash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("UPDATE utilisateur SET nom = ?, email = ?, mot_de_passe = ? WHERE id_utilisateur = ?");
-                    $stmt->bind_param("sssi", $nom, $email, $hash, $userId);
+                    $stmt = $conn->prepare("UPDATE utilisateur SET nom = ?, email = ?, telephone = ?, mot_de_passe = ? WHERE id_utilisateur = ?");
+                    $stmt->bind_param("ssssi", $nom, $email, $telephone, $hash, $userId);
                 } else {
-                    $stmt = $conn->prepare("UPDATE utilisateur SET nom = ?, email = ? WHERE id_utilisateur = ?");
-                    $stmt->bind_param("ssi", $nom, $email, $userId);
+                    $stmt = $conn->prepare("UPDATE utilisateur SET nom = ?, email = ?, telephone = ? WHERE id_utilisateur = ?");
+                    $stmt->bind_param("sssi", $nom, $email, $telephone, $userId);
                 }
                 $stmt->execute();
                 $stmt->close();
@@ -58,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
-$stmt = $conn->prepare("SELECT nom, email FROM utilisateur WHERE id_utilisateur = ?");
+$stmt = $conn->prepare("SELECT nom, email, telephone FROM utilisateur WHERE id_utilisateur = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
@@ -77,9 +103,7 @@ $page_url = 'php/profil.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 <body>
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -102,14 +126,36 @@ $page_url = 'php/profil.php';
         <label for="email">Adresse e-mail</label>
         <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide.">
 
-        <label for="password">Nouveau mot de passe <em style="font-size:0.75rem;color:var(--gray)">(laisser vide pour conserver)</em></label>
-        <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" value="<?= htmlspecialchars($user['telephone'] ?? '') ?>" placeholder="+216 XX XXX XXX">
+
+        <label for="password">Nouveau mot de passe <em class="text-muted" style="font-size:.75rem">(laisser vide pour conserver)</em></label>
+        <div class="pwd-wrap">
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password">
+          <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
+        </div>
+
+        <label for="password_confirm">Confirmer le mot de passe</label>
+        <div class="pwd-wrap">
+          <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••" autocomplete="new-password" data-match="password">
+          <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
+        </div>
 
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
       </form>
     </div>
 
-    <p style="margin-top:1rem"><a href="tableau-de-bord.php" class="btn-ghost">← Retour au tableau de bord</a></p>
+    <section class="mt-lg" style="padding-top:1.5rem;border-top:1px solid var(--border)">
+      <h3 style="color:var(--danger)">Zone dangereuse</h3>
+      <p class="text-muted" style="font-size:.9rem;margin-bottom:1rem">La suppression de votre compte est irréversible.</p>
+      <form method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+        <input type="hidden" name="delete_account" value="1">
+        <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
+      </form>
+    </section>
+
+    <p class="mt-lg"><a href="tableau-de-bord.php" class="btn-ghost">← Retour au tableau de bord</a></p>
   </main>
 
 <?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>

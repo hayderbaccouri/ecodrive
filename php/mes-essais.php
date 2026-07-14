@@ -1,5 +1,4 @@
-<?php
-session_start();
+﻿<?php
 include 'bootstrap.php';
 
 // Vérifier que l'utilisateur est connecté et est client
@@ -43,9 +42,7 @@ $page_url = 'php/mes-essais.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -56,8 +53,9 @@ $page_url = 'php/mes-essais.php';
   <section>
     <h2>📌 Historique de mes essais</h2>
     <?php if (count($reservations) === 0): ?>
-      <p>Vous n’avez pas encore réservé d’essai.</p>
+      <p>Vous n'avez pas encore réservé d'essai.</p>
     <?php else: ?>
+      <div class="table-wrap">
       <table>
         <tr>
           <th>ID</th>
@@ -69,12 +67,12 @@ $page_url = 'php/mes-essais.php';
         </tr>
         <?php foreach ($reservations as $r): ?>
         <tr>
-          <td><?= (int)$r['id_reservation'] ?></td>
-          <td><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
-          <td><?= htmlspecialchars($r['date_essai']) ?></td>
-          <td><?= htmlspecialchars($r['heure_debut']) ?></td>
-          <td><?= htmlspecialchars($r['heure_fin']) ?></td>
-          <td>
+          <td data-label="ID"><?= (int)$r['id_reservation'] ?></td>
+          <td data-label="Voiture"><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
+          <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
+          <td data-label="Heure début"><?= htmlspecialchars($r['heure_debut']) ?></td>
+          <td data-label="Heure fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
+          <td data-label="Statut">
             <?php if ($r['statut'] === 'pending'): ?>
               ⏳ En attente
             <?php elseif ($r['statut'] === 'confirmed'): ?>
@@ -82,6 +80,12 @@ $page_url = 'php/mes-essais.php';
             <?php else: ?>
               ❌ Annulée
             <?php endif; ?>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+      </table>
+      </div>
+    <?php endif; ?>
           </td>
         </tr>
         <?php endforeach; ?>

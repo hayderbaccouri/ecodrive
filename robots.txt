@@ -1,4 +1,16 @@
 User-agent: *
 Allow: /
+Disallow: /php/admin.php
+Disallow: /php/tableau-de-bord.php
+Disallow: /php/reservation.php
+Disallow: /php/profil.php
+Disallow: /php/mes-essais.php
+Disallow: /php/connexion.php
+Disallow: /php/inscription.php
+Disallow: /php/mot-de-passe-oublie.php
+Disallow: /php/reinitialiser-mot-de-passe.php
+Disallow: /php/deconnexion.php
+Disallow: /php/export.php
+Disallow: /private/
 
 Sitemap: https://ecodrive.tn/sitemap.xml

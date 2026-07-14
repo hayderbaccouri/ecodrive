@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 $loggedIn = isset($_SESSION['user']);
 $page_title = 'CGU | EcoDrive';
@@ -13,11 +13,7 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 <body class="page-legal">
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>

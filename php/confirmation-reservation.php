@@ -1,5 +1,4 @@
-<?php
-session_start();
+﻿<?php
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id'])) {
@@ -43,38 +42,7 @@ $page_url = 'php/confirmation-reservation.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="../css/animations.css">
-  <style>
-    .confirmation-icon {
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: rgba(var(--accent-rgb),0.12);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.5rem;
-    }
-    .confirmation-icon svg { width: 40px; height: 40px; }
-    .confirmation-details {
-      max-width: 560px; margin: 2rem auto;
-      padding: 2rem;
-      background: rgba(var(--white-rgb),0.03);
-      border: 1px solid rgba(var(--white-rgb),0.08);
-      border-radius: 16px;
-    }
-    .confirmation-details .detail-row {
-      display: flex; justify-content: space-between;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(var(--white-rgb),0.05);
-    }
-    .confirmation-details .detail-row:last-child { border-bottom: none; }
-    .detail-label { color: var(--grey-2); font-size: 0.85rem; }
-    .detail-value { color: var(--grey-1); font-weight: 500; font-size: 0.9rem; text-align: right; }
-    .confirmation-actions {
-      display: flex; gap: 1rem; justify-content: center;
-      flex-wrap: wrap; margin-top: 2rem;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 <body>
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -86,8 +54,8 @@ $page_url = 'php/confirmation-reservation.php';
       </svg>
     </div>
 
-    <h1 class="hero-entrance" style="text-align:center;">Réservation confirmée !</h1>
-    <p class="hero-entrance" style="text-align:center;color:var(--grey-2);">Votre demande d'essai a bien été enregistrée.</p>
+    <h1 class="hero-entrance text-center">Réservation confirmée !</h1>
+    <p class="hero-entrance text-center" style="color:var(--grey-2);">Votre demande d'essai a bien été enregistrée.</p>
 
     <div class="confirmation-details reveal reveal-up">
       <div class="detail-row">
@@ -122,7 +90,7 @@ $page_url = 'php/confirmation-reservation.php';
       <?php endif; ?>
     </div>
 
-    <div class="next-steps reveal reveal-up reveal-delay-1" style="text-align:center;">
+    <div class="next-steps reveal reveal-up reveal-delay-1 text-center">
       <h2>Prochaines &eacute;tapes</h2>
       <p style="color:var(--grey-2);max-width:500px;margin:0 auto;">
         Notre &eacute;quipe examinera votre demande et vous confirmera le rendez-vous.<br>
@@ -131,6 +99,7 @@ $page_url = 'php/confirmation-reservation.php';
     </div>
 
     <div class="confirmation-actions">
+      <a href="export-ics.php?id=<?= $reservationId ?>" class="btn-primary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;font-size:.85rem">📅 Ajouter au calendrier</a>
       <a href="tableau-de-bord.php" class="btn-primary">Voir mes r&eacute;servations</a>
       <a href="catalogue.php" class="btn-ghost">Retour au catalogue</a>
     </div>

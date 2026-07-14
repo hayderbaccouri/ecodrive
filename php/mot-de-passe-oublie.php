@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 $loggedIn = isset($_SESSION['user']);
@@ -11,6 +11,7 @@ $message = '';
 $messageType = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) { die('Session invalide.'); }
     $email = trim($_POST['email'] ?? '');
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -32,13 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->close();
 
+            include 'email.php';
             $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-            $resetLink = "$scheme://{$_SERVER['HTTP_HOST']}/php/reinitialiser-mot-de-passe.php?token=$token";
-            $subject = "Réinitialisation mot de passe - EcoDrive";
-            $body = "Bonjour,\n\nCliquez sur ce lien pour réinitialiser votre mot de passe :\n$resetLink\n\nCe lien expire dans 1 heure.\n\nEcoDrive Team";
-            $headers = "From: contact@ecodrive.tn\r\nReply-To: contact@ecodrive.tn\r\nX-Mailer: PHP/" . phpversion();
-            $log  = "[" . date('Y-m-d H:i:s') . "] Password reset requested for: $email\n";
-            file_put_contents(__DIR__ . '/../mail_log.txt', $log, FILE_APPEND | LOCK_EX);
+            emailPasswordReset($email, $token, $scheme, $_SERVER['HTTP_HOST']);
         }
 
         $message = 'Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.';
@@ -59,11 +56,7 @@ $page_url = 'php/mot-de-passe-oublie.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E" />
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/theme.css" />
-  <link rel="stylesheet" href="../css/header.css" />
-  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -93,6 +86,7 @@ $page_url = 'php/mot-de-passe-oublie.php';
       <?php endif; ?>
 
       <form method="post" action="mot-de-passe-oublie.php" data-validate>
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <div>
           <label class="field-label" for="email">Adresse e-mail</label>
           <input type="email" id="email" name="email" placeholder="votre@email.com" autocomplete="email" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide." />

@@ -1,7 +1,10 @@
-<?php
-session_start();
+﻿<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
+$page_title = 'BYD Dolphin — EcoDrive';
+$page_desc  = 'BYD Dolphin, citadine électrique accessible et polyvalente. Autonomie jusqu à 427 km. Découvrez-la chez EcoDrive.';
+$page_url   = 'voitures/BYD-Dolphin.php';
+$page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
 ?>
 
 <!DOCTYPE html>
@@ -9,49 +12,27 @@ $loggedIn = isset($_SESSION['user']);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BYD Dolphin Surf â€” EcoDrive</title>
+  <title>BYD Dolphin Surf — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/voitures.css">
-  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/style.css?v=13">
+  <?php include __DIR__ . '/../php/partials/meta.php'; ?>
+  <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'BYD Dolphin Surf', 'description' => htmlspecialchars($page_desc, ENT_QUOTES, 'UTF-8'), 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'BYD', 'price' => '55000']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
-    <a href="../index.php" class="logo-text">eco<span>drive</span></a>
-    <nav>
-      <a href="../index.php">Accueil</a>
-      <a href="../php/catalogue.php">Catalogue</a>
-      <a href="../index.php#bornes">Bornes</a>
-      <a href="../pages/contact.php">Contact</a>
-      <?php if ($loggedIn): ?>
-        <?php $prenom = explode(' ', $_SESSION['user']['nom'] ?? 'Client')[0]; $initial = mb_strtoupper(mb_substr($prenom, 0, 1)); $dashPage = '../php/' . (($_SESSION['user']['role'] ?? 'client') === 'admin' ? 'admin.php' : 'tableau-de-bord.php'); ?>
-        <div class="user-menu">
-          <div class="user-badge">
-            <div class="avatar"><?= $initial ?></div>
-            <span class="user-name"><?= htmlspecialchars($prenom) ?></span>
-            <span class="chevron">â–¾</span>
-          </div>
-          <div class="user-dropdown">
-            <a href="<?= $dashPage ?>">Mon espace</a>
-            <hr>
-            <a href="../php/deconnexion.php" class="logout">DÃ©connexion</a>
-          </div>
-        </div>
-      <?php else: ?>
-        <a href="../php/connexion.php">Se connecter</a>
-        <a href="../php/inscription.php" class="nav-cta">S'inscrire</a>
-      <?php endif; ?>
-      <button class="burger" aria-label="Menu" onclick="this.classList.toggle('open');document.querySelector('.site-header nav').classList.toggle('open')"><span></span><span></span><span></span></button>
-    </nav>
-  </header>
 
-  <main class="page-fade-in">
-    <?php include '../php/car_slider.php'; renderCarSlider('images/byd-dolphin/', 'byd-dolphin.jpg', 'BYD Dolphin Surf'); ?>
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="../index.php">Accueil</a> / <a href="../php/catalogue.php">Catalogue</a> / <span class="breadcrumb-current">BYD Dolphin Surf</span>
+</nav>
+
+<main class="page-fade-in">
+    <?php include '../php/car_slider.php'; renderCarSlider('images/byd-dolphin/', 'byd-dolphin-surf-38.88-kwh-102711.webp', 'BYD Dolphin Surf'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">Ã€ partir de</span>
+        <span class="price-label">À partir de</span>
         <span class="price-value">55 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=4" class="btn-reserve">RÃ©server un essai</a>
+      <a href="../php/reservation.php?car=4" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
@@ -97,7 +78,7 @@ $loggedIn = isset($_SESSION['user']);
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>43,2 kWh</dd></div>
+            <div class="spec-row"><dt>Capacité batterie</dt><dd>43,2 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Blade LFP</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>310 km</dd></div>
             <div class="spec-row"><dt>Consommation</dt><dd>13,8 kWh/100 km</dd></div>
@@ -125,8 +106,8 @@ $loggedIn = isset($_SESSION['user']);
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la BYD Dolphin Surf</h2>
-        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=4" class="cta-btn">RÃ©server un essai gratuit</a>
+        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=4" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>
@@ -157,7 +138,3 @@ document.querySelectorAll('.car-slider').forEach(function(s) {
   if (next) next.addEventListener('click', function() { go(cur + 1); });
 });
 </script>
-<button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
-<script src="../js/app.js"></script>
-</body>
-</html>

@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html lang="fr">
-<?php
-session_start();
+﻿<?php
 include '../php/bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
-?>
-
-<?php
 $page_title = 'Exicom Spin Air 11 kW — Borne de recharge triphasée | EcoDrive';
 $page_desc = 'Borne de recharge triphasée Exicom Spin Air 11 kW pour véhicules électriques. Recharge rapide, connectée et compatible avec tous les modèles.';
 $page_url = 'bornes/ExicomSpinAir11kW.php';
 $page_image = 'images/bornes/SPIN-AIR-11.png';
 ?>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
-  
-  <link rel="stylesheet" href="../css/theme.css">
-  <link rel="stylesheet" href="../css/header.css" />
-  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/style.css?v=13">
 
 </head>
 
@@ -32,7 +25,7 @@ $page_image = 'images/bornes/SPIN-AIR-11.png';
   <div class="breadcrumb">
     <a href="../index.php">Accueil</a>
     <span>›</span>
-    <a href="../index.php#bornes">Bornes de recharge</a>
+    <a href="../bornes/index.php">Bornes de recharge</a>
     <span>›</span>
     <span style="color: var(--text)">Exicom Spin Air 11 kW</span>
   </div>

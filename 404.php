@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $uri = htmlspecialchars($_SERVER['REQUEST_URI'] ?? '', ENT_QUOTES, 'UTF-8');
 session_start();
 $loggedIn = isset($_SESSION['user']);
@@ -15,17 +15,13 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/php/partials/meta.php'; ?>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/theme.css">
-  <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/style.css?v=13">
   <style>
-    .page-404{background:var(--dark);color:var(--white);min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;flex:1}
+    .page-404{color:var(--dark);min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;flex:1}
     .page-404 h1{font-family:var(--font-display);font-size:clamp(6rem,12vw,10rem);font-weight:300;color:var(--accent);line-height:1;margin-bottom:.5rem}
-    .page-404 h2{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:400;color:rgba(var(--white-rgb),.7);margin-bottom:1rem}
-    .page-404 p{color:rgba(var(--white-rgb),.35);font-size:.92rem;margin-bottom:2rem;max-width:400px}
-    .page-404 .path{font-size:.72rem;color:rgba(var(--white-rgb),.15);margin-top:3rem}
+    .page-404 h2{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:400;color:var(--gray);margin-bottom:1rem}
+    .page-404 p{color:var(--gray);font-size:.92rem;margin-bottom:2rem;max-width:400px}
+    .page-404 .path{font-size:.72rem;color:var(--gray-mid);margin-top:3rem}
   </style>
 </head>
 <body>
