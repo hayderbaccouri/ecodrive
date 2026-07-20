@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include 'bootstrap.php';
 
 $user = $_SESSION['user'] ?? null;
@@ -113,25 +113,16 @@ $page_url = 'php/catalogue.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=13">
+  <link rel="stylesheet" href="../css/style.css?v=14">
   <?php $jsonld_type = 'localbusiness'; include __DIR__ . '/partials/jsonld.php'; ?>
 </head>
 
   <body class="has-topbar">
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-  <!-- Hero -->
-  <section class="hero" aria-label="Catalogue EcoDrive">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-eyebrow">Catalogue</div>
-        <h1>Notre sélection<br>de véhicules électriques</h1>
-      </div>
-    </div>
-  </section>
 
   <section id="results" class="showroom reveal reveal-up">
-    <h2 class="section-title">Catalogue des voitures</h2>
+    <h2 class="section-title">Notre sélection de véhicules électriques</h2>
     <div class="blue-bar"></div>
 
     <form id="catalogue-search" action="catalogue.php" method="get" class="controls-form">

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include '../php/bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
 $page_title = 'Exicom Spin Air 11 kW — Borne de recharge triphasée | EcoDrive';
@@ -14,7 +14,7 @@ $page_image = 'images/bornes/SPIN-AIR-11.png';
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
-  <link rel="stylesheet" href="../css/style.css?v=13">
+  <link rel="stylesheet" href="../css/style.css?v=14">
 
 </head>
 
@@ -39,7 +39,8 @@ $page_image = 'images/bornes/SPIN-AIR-11.png';
       <div class="borne-img-frame">
         <div class="borne-img-box">
           <img src="../images/bornes/SPIN-AIR-11.png" alt="Exicom Spin Air 11 kW"
-            onerror="this.style.display='none'; this.parentNode.innerHTML += '<div style=\'font-size:6rem;color:rgba(82,183,136,0.4)\'>⚡</div>'">
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
+          <div class="borne-img-fallback" style="display:none;font-size:6rem;color:rgba(82,183,136,0.4);place-items:center">⚡</div>
         </div>
         <span class="borne-badge-portable">⚡ Triphasé · Semi-professionnel</span>
       </div>

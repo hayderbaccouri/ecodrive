@@ -3,6 +3,18 @@ session_start();
 
 if (!hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'] ?? '')) { die('Session invalide.'); }
 
+// Rate limiting: max 3 submissions per 10 minutes
+$now = time();
+$contactHistory = $_SESSION['contact_history'] ?? [];
+$contactHistory = array_filter($contactHistory, fn($t) => $now - $t < 600);
+if (count($contactHistory) >= 3) {
+    $_SESSION['contact_error'] = 'Trop de tentatives. Réessayez dans 10 minutes.';
+    header('Location: contact.php?error=1');
+    exit;
+}
+$contactHistory[] = $now;
+$_SESSION['contact_history'] = $contactHistory;
+
 $name    = trim($_POST['name'] ?? '');
 $email   = trim($_POST['email'] ?? '');
 $phone   = trim($_POST['phone'] ?? '');

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include __DIR__ . '/../php/bootstrap.php';
 
 $user = $_SESSION['user'] ?? null;
@@ -18,20 +18,11 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=13">
+  <link rel="stylesheet" href="../css/style.css?v=14">
 </head>
 
 <body class="has-topbar">
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
-
-  <section class="hero" aria-label="Bornes de recharge EcoDrive">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-eyebrow">Infrastructure</div>
-        <h1>Bornes de recharge</h1>
-      </div>
-    </div>
-  </section>
 
   <section id="bornes-list" class="bornes-page">
     <div class="container" style="max-width:var(--wrap-max);margin:0 auto;padding:clamp(2rem,5vw,3rem) var(--wrap)">

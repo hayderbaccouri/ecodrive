@@ -266,14 +266,29 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(function () { lb.classList.add('open'); });
   }
 
-  /* ---------- SLIDER AUTO-ADVANCE ---------- */
+  /* ---------- CAR SLIDER (init + auto-advance) ---------- */
   document.querySelectorAll('.car-slider').forEach(function (slider) {
     var track = slider.querySelector('.slider-track');
-    var slides = slider.querySelectorAll('.slider-slide');
+    var slides = track ? track.querySelectorAll('.slider-slide') : [];
     if (!track || slides.length < 2) return;
-    var dots = slider.querySelectorAll('.slider-dot');
+    var prev = slider.querySelector('.slider-prev');
+    var next = slider.querySelector('.slider-next');
+    var dotsEl = slider.querySelector('.slider-dots');
     var current = 0;
     var timer;
+
+    // Create dots dynamically if container is empty
+    if (dotsEl && dotsEl.children.length === 0) {
+      for (var i = 0; i < slides.length; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Image ' + (i + 1));
+        (function (idx) { dot.addEventListener('click', function () { goTo(idx); startAuto(); }); })(i);
+        dotsEl.appendChild(dot);
+      }
+    }
+    var dots = dotsEl ? dotsEl.querySelectorAll('.slider-dot') : [];
+
     function goTo(idx) {
       if (idx < 0) idx = slides.length - 1;
       if (idx >= slides.length) idx = 0;
@@ -284,13 +299,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function advance() { goTo(current + 1); }
     function startAuto() { stopAuto(); timer = setInterval(advance, 5000); }
     function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+    if (prev) prev.addEventListener('click', function () { goTo(current - 1); startAuto(); });
+    if (next) next.addEventListener('click', function () { goTo(current + 1); startAuto(); });
     slider.addEventListener('mouseenter', stopAuto);
     slider.addEventListener('mouseleave', startAuto);
     slider.addEventListener('touchstart', stopAuto, { passive: true });
     slider.addEventListener('touchend', startAuto);
-    dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () { goTo(i); startAuto(); });
-    });
     startAuto();
   });
 

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
 $page_title = 'Mercedes Classe C 2026 — EcoDrive';
@@ -14,7 +14,7 @@ $page_image = 'images/mercedes-classe-c-2026/1-Mercedes-Benz-Classe-C-2026.jpg';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mercedes-Benz Classe C 2026 — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/style.css?v=13">
+  <link rel="stylesheet" href="../css/style.css?v=14">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'Mercedes-Benz Classe C 2026', 'description' => htmlspecialchars($page_desc, ENT_QUOTES, 'UTF-8'), 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'Mercedes-Benz', 'price' => '320000']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
 </head>
@@ -114,28 +114,3 @@ $page_image = 'images/mercedes-classe-c-2026/1-Mercedes-Benz-Classe-C-2026.jpg';
   </main>
 
 <?php include __DIR__ . '/../php/partials/footer.php'; ?>
-<script>
-document.querySelectorAll('.car-slider').forEach(function(s) {
-  var track = s.querySelector('.slider-track');
-  var slides = track.querySelectorAll('.slider-slide');
-  if (slides.length < 2) return;
-  var prev = s.querySelector('.slider-prev');
-  var next = s.querySelector('.slider-next');
-  var dotsEl = s.querySelector('.slider-dots');
-  var cur = 0;
-  for (var i = 0; i < slides.length; i++) {
-    var dot = document.createElement('button');
-    dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', 'Image ' + (i + 1));
-    (function(idx){dot.addEventListener('click',function(){go(idx);});})(i);
-    dotsEl.appendChild(dot);
-  }
-  function go(idx) {
-    cur = (idx + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
-    dotsEl.querySelectorAll('.slider-dot').forEach(function(d,i){d.classList.toggle('active',i===cur);});
-  }
-  if (prev) prev.addEventListener('click', function() { go(cur - 1); });
-  if (next) next.addEventListener('click', function() { go(cur + 1); });
-});
-</script>

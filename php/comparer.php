@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include 'bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
 
@@ -20,7 +20,7 @@ if (!empty($ids)) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comparer des voitures — EcoDrive</title>
-  <link rel="stylesheet" href="../css/style.css?v=13">
+  <link rel="stylesheet" href="../css/style.css?v=14">
   <?php include __DIR__ . '/partials/meta.php'; ?>
 </head>
 <body>

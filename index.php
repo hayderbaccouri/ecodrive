@@ -1,4 +1,4 @@
-﻿
+
 <?php
 include 'php/bootstrap.php';
 $user = $_SESSION['user'] ?? null;
@@ -46,7 +46,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/style.css?v=14">
   <?php $jsonld_type = 'localbusiness'; $jsonld_products = array_map(fn($v) => $v['marque'].' '.$v['modele'], $voitures); include __DIR__ . '/php/partials/jsonld.php'; ?>
 </head>
 <body>
@@ -56,28 +56,19 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <section class="hero" aria-label="Présentation EcoDrive">
     <div class="hero-inner">
       <div class="hero-content">
-      <div class="hero-eyebrow">Mobilité durable · Tunisie</div>
-
-      <h1 class="hero-title">
-        L'avenir de la route, <strong>sans émissions.</strong>
-      </h1>
-
-      <p class="hero-desc">
-        EcoDrive est le premier showroom spécialisé en véhicules électriques en Tunisie.
-        Découvrez une sélection premium, testez avant d'acheter, et rejoignez la révolution verte.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#showroom" class="btn-primary cta">Explorer le catalogue</a>
-        <a href="php/inscription.php" class="btn-ghost">S'inscrire</a>
+        <div class="hero-eyebrow">Mobilité durable en Tunisie</div>
+        <h1 class="hero-title">
+          L'avenir de la route, <strong>sans émissions.</strong>
+        </h1>
+        <p class="hero-desc">
+          EcoDrive est le premier showroom spécialisé en véhicules électriques en Tunisie.
+          Découvrez une sélection premium, testez avant d'acheter, et rejoignez la révolution verte.
+        </p>
+        <div class="hero-actions">
+          <a href="#showroom" class="btn-primary cta">Explorer le catalogue</a>
+          <a href="php/inscription.php" class="btn-ghost">S'inscrire</a>
+        </div>
       </div>
-
-      <div class="hero-cta-banner">
-        <p>Prêt pour un essai ? Réservez un test drive directement depuis votre espace client.</p>
-        <a href="<?= $loggedIn ? 'php/reservation.php' : 'php/connexion.php' ?>" class="btn-ghost"><?= $loggedIn ? 'Voir mes essais' : 'Se connecter pour réserver' ?></a>
-      </div>
-    </div>
-
     </div>
   </section>
 

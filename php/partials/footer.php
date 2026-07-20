@@ -37,13 +37,14 @@ $asset_base = $asset_base ?? '';
           <p class="footer-newsletter-text">Restez informé des nouveautés et offres exclusives.</p>
           <form method="post" action="<?= $asset_base ?>php/newsletter.php" class="footer-newsletter-form">
             <input type="email" name="email" placeholder="votre@email.com" required>
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <button type="submit" class="btn-newsletter">→</button>
           </form>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 EcoDrive Tunisie. Tous droits réservés.</span>
-        <span class="footer-bottom-right">Fait avec ⚡ en Tunisie</span>
+        <span class="footer-bottom-right">Fait par Hayder Baccouri</span>
       </div>
     </div>
   </footer>
