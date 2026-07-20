@@ -176,28 +176,6 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about" class="about-strip">
-    <div class="about-visual" aria-hidden="true">
-      <img src="<?= $asset_base ?>images/EcoDrive logo.png" alt="EcoDrive" class="about-logo-img">
-    </div>
-    <div class="about-content">
-      <div class="section-eyebrow">Notre mission</div>
-      <h2 class="section-title">Un avenir plus vert pour la Tunisie</h2>
-      <p class="about-text">
-        Chez EcoDrive, nous croyons que la mobilité durable doit être accessible à tous.
-        Notre mission est d'accélérer la transition vers le véhicule électrique en Tunisie,
-        en proposant une expérience d'achat irréprochable et un accompagnement sur-mesure.
-      </p>
-      <div class="about-values">
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Véhicules certifiés zéro émission</div></div>
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Financement flexible disponible</div></div>
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Service après-vente dédié</div></div>
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Installation de borne à domicile</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- Contact -->
   <section id="contact" class="contact-section">
     <div class="contact-left">
