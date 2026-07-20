@@ -986,6 +986,10 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
    ADMIN
    =================================================== */
 
+.admin-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+.admin-header h1{margin:0}
+.admin-header .export-bar{margin:0}
+
 .admin-layout{display:grid;grid-template-columns:1fr 2fr;gap:2rem;margin-bottom:2rem}
 .admin-section{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:0 8px 24px rgba(0,0,0,0.06);transition:box-shadow .3s ease}
 .admin-section:hover{box-shadow:0 12px 32px rgba(0,0,0,0.1)}
@@ -995,11 +999,36 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
 .admin-section form button{background:linear-gradient(135deg,#0A7DA8,#086B8E);color:#fff;border:none;padding:.7rem 1.3rem;border-radius:999px;font-weight:400;cursor:pointer;transition:all .3s cubic-bezier(.25,.46,.45,.94);box-shadow:0 4px 12px rgba(10,125,168,0.2)}
 .admin-section form button:hover{background:linear-gradient(135deg,#086B8E,#064D6B);box-shadow:0 6px 18px rgba(10,125,168,0.3);transform:translateY(-2px)}
 .admin-section form button:hover{opacity:.85}
-.badge-pending{display:inline-block;background:rgba(var(--accent-rgb),0.1);color:var(--accent);padding:.25rem .75rem;border-radius:var(--radius-full);font-size:.78rem;font-weight:400;margin-left:.75rem}
-.export-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.badge-pending{display:inline-block;background:rgba(var(--danger-rgb),0.1);color:var(--danger);padding:.25rem .75rem;border-radius:var(--radius-full);font-size:.78rem;font-weight:400;margin-left:.75rem}
+.export-bar{display:flex;gap:.5rem;flex-wrap:wrap}
 .edit-inline{margin-bottom:.5rem}
 .edit-inline summary{cursor:pointer;list-style:none}
 .edit-form{margin-top:.75rem;padding:1rem;background:var(--gray-light);border-radius:var(--radius-md);border:1px solid var(--border)}
+
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.admin-stat{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;box-shadow:0 4px 16px rgba(0,0,0,0.04);transition:transform .25s,box-shadow .25s}
+.admin-stat:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.admin-stat-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.4rem;flex-shrink:0}
+.admin-stat-icon.blue{background:rgba(var(--blue-rgb),0.1);color:var(--blue)}
+.admin-stat-icon.accent{background:rgba(var(--accent-rgb),0.1);color:var(--accent)}
+.admin-stat-icon.green{background:rgba(var(--green-rgb),0.1);color:var(--green)}
+.admin-stat-icon.danger{background:rgba(var(--danger-rgb),0.1);color:var(--danger)}
+.admin-stat-text{display:flex;flex-direction:column}
+.admin-stat-value{font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--dark);line-height:1.1}
+.admin-stat-label{font-size:.8rem;color:var(--gray);margin-top:.15rem}
+
+.admin-tabs{display:flex;gap:.25rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.35rem;margin-bottom:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.03)}
+.admin-tab-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;border:none;background:transparent;color:var(--gray);border-radius:calc(var(--radius-lg) - 4px);font-family:var(--font-body);font-size:.88rem;font-weight:400;cursor:pointer;transition:all .25s;white-space:nowrap}
+.admin-tab-btn:hover{color:var(--dark);background:rgba(var(--blue-rgb),0.04)}
+.admin-tab-btn.active{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(var(--blue-rgb),0.25)}
+.admin-tab-btn .tab-count{background:rgba(255,255,255,0.2);padding:.1rem .45rem;border-radius:var(--radius-full);font-size:.72rem;margin-left:.15rem}
+.admin-tab-btn:not(.active) .tab-count{background:rgba(var(--blue-rgb),0.08);color:var(--blue)}
+
+.admin-tab-section{display:none}
+.admin-tab-section.active{display:block;animation:fadeInUp .3s ease}
+
+.admin-section-title{display:flex;align-items:center;gap:.5rem;font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--dark);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--border)}
+.admin-section-title span{font-size:1.2rem}
 
 /* ===================================================
    CATALOGUE CONTROLS
@@ -1107,6 +1136,8 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
   .login-visual-quote{font-size:1.5rem}
   .login-form-col{padding:2rem 1.5rem}
   .admin-layout{grid-template-columns:1fr}
+  .admin-stats{grid-template-columns:repeat(2,1fr)}
+  .admin-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .chart-row{grid-template-columns:1fr}
   .showroom-controls{flex-direction:column;align-items:stretch}
   .controls-left{flex-direction:column}

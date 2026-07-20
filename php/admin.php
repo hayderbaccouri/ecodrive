@@ -394,6 +394,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_role'])) {
 }
 
 $users = $conn->query("SELECT u.*, COUNT(r.id_reservation) AS reservation_count FROM utilisateur u LEFT JOIN reservation r ON u.id_utilisateur = r.utilisateur_id GROUP BY u.id_utilisateur ORDER BY u.nom")->fetch_all(MYSQLI_ASSOC);
+
+$totalVoitures = $conn->query("SELECT COUNT(*) AS cnt FROM voiture")->fetch_assoc()['cnt'] ?? 0;
+$totalBornes = $conn->query("SELECT COUNT(*) AS cnt FROM borne")->fetch_assoc()['cnt'] ?? 0;
+$totalReservations = $conn->query("SELECT COUNT(*) AS cnt FROM reservation")->fetch_assoc()['cnt'] ?? 0;
+$totalUsers = $conn->query("SELECT COUNT(*) AS cnt FROM utilisateur")->fetch_assoc()['cnt'] ?? 0;
 ?>
 <?php
 $page_title = 'Administration | EcoDrive';
@@ -408,36 +413,69 @@ $page_url = 'php/admin.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=17">
+  <link rel="stylesheet" href="../css/style.css?v=18">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap page-fade-in">
-    <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
+
+    <div class="admin-header">
+      <h1>Tableau de bord Admin<?php if ($pendingCount > 0): ?> <span class="badge-pending"><?= (int)$pendingCount ?> en attente</span><?php endif; ?></h1>
+      <div class="export-bar">
+        <a href="export.php?type=backup" class="btn btn-sm btn-ghost">Backup SQL</a>
+        <a href="export.php?type=reservations" class="btn btn-sm btn-ghost">Export réservations</a>
+        <a href="export.php?type=voitures" class="btn btn-sm btn-ghost">Export voitures</a>
+        <a href="export.php?type=bornes" class="btn btn-sm btn-ghost">Export bornes</a>
+      </div>
+    </div>
 
   <?php if (!empty($message)): ?>
     <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
   <?php endif; ?>
 
-  <div class="export-bar">
-    <a href="export.php?type=backup" class="btn btn-ghost btn-sm">💾 Backup SQL</a>
-    <a href="export.php?type=reservations" class="btn btn-ghost btn-sm">📄 Export réservations CSV</a>
-    <a href="export.php?type=voitures" class="btn btn-ghost btn-sm">📄 Export voitures CSV</a>
-    <a href="export.php?type=bornes" class="btn btn-ghost btn-sm">📄 Export bornes CSV</a>
+  <div class="admin-stats">
+    <div class="admin-stat">
+      <div class="admin-stat-icon blue">🚗</div>
+      <div class="admin-stat-text">
+        <div class="admin-stat-value"><?= (int)$totalVoitures ?></div>
+        <div class="admin-stat-label">Voitures</div>
+      </div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-icon accent">🔌</div>
+      <div class="admin-stat-text">
+        <div class="admin-stat-value"><?= (int)$totalBornes ?></div>
+        <div class="admin-stat-label">Bornes</div>
+      </div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-icon green">📋</div>
+      <div class="admin-stat-text">
+        <div class="admin-stat-value"><?= (int)$totalReservations ?></div>
+        <div class="admin-stat-label">Réservations</div>
+      </div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-icon danger">👥</div>
+      <div class="admin-stat-text">
+        <div class="admin-stat-value"><?= (int)$totalUsers ?></div>
+        <div class="admin-stat-label">Utilisateurs</div>
+      </div>
+    </div>
   </div>
 
-  <nav class="form-actions mb-lg">
-    <button class="btn btn-sm btn-primary tab-btn active" data-tab="reservations">📌 Réservations</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="stats">📊 Statistiques</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="voitures">🚗 Voitures</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="bornes">🔌 Bornes</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="users">👥 Utilisateurs</button>
+  <nav class="admin-tabs">
+    <button class="admin-tab-btn active" data-tab="reservations">📋 Réservations<?php if ($pendingCount > 0): ?><span class="tab-count"><?= (int)$pendingCount ?></span><?php endif; ?></button>
+    <button class="admin-tab-btn" data-tab="stats">📊 Statistiques</button>
+    <button class="admin-tab-btn" data-tab="voitures">🚗 Voitures <span class="tab-count"><?= (int)$totalVoitures ?></span></button>
+    <button class="admin-tab-btn" data-tab="bornes">🔌 Bornes <span class="tab-count"><?= (int)$totalBornes ?></span></button>
+    <button class="admin-tab-btn" data-tab="users">👥 Utilisateurs <span class="tab-count"><?= (int)$totalUsers ?></span></button>
   </nav>
 
-  <div id="tab-reservations" class="admin-tab">
-  <h2>📌 Gestion des réservations</h2>
+  <div id="tab-reservations" class="admin-tab-section active">
+  <h2 class="admin-section-title"><span>📋</span> Gestion des réservations</h2>
 
   <div class="filter-bar">
     <form method="get" class="form-actions">
@@ -495,12 +533,10 @@ $page_url = 'php/admin.php';
   <?php endif; ?>
   </div>
 
-  <div id="tab-stats" class="admin-tab tab-hidden">
+  <div id="tab-stats" class="admin-tab-section">
+  <h2 class="admin-section-title"><span>📊</span> Statistiques</h2>
 
-  <!-- 📊 Statistiques -->
-  <h2>📊 Statistiques</h2>
-
-  <div class="chart-row reveal reveal-up reveal-delay-1">
+  <div class="chart-row">
     <div class="chart-card">
       <h3>Réservations par mois</h3>
       <canvas id="chartMonthly" width="350" height="180"></canvas>
@@ -511,7 +547,7 @@ $page_url = 'php/admin.php';
     </div>
   </div>
 
-  <div class="chart-row reveal reveal-up reveal-delay-1">
+  <div class="chart-row">
     <div class="chart-card">
       <h3>Voitures les plus demandées</h3>
       <canvas id="chartTopCars" width="350" height="180"></canvas>
@@ -557,10 +593,8 @@ $page_url = 'php/admin.php';
   </script>
   </div>
 
-  <div id="tab-voitures" class="admin-tab tab-hidden">
-
-  <!-- 🚗 Gestion du catalogue voitures -->
-  <h2>🚗 Gestion des voitures</h2>
+  <div id="tab-voitures" class="admin-tab-section">
+  <h2 class="admin-section-title"><span>🚗</span> Gestion des voitures</h2>
   <div class="admin-layout">
     <div class="admin-section">
       <h3>Ajouter une voiture</h3>
@@ -630,13 +664,10 @@ $page_url = 'php/admin.php';
       </div>
     </div>
   </div>
-
   </div>
 
-  <div id="tab-bornes" class="admin-tab tab-hidden">
-
-  <!-- 🔌 Gestion des bornes -->
-  <h2>🔌 Gestion des bornes</h2>
+  <div id="tab-bornes" class="admin-tab-section">
+  <h2 class="admin-section-title"><span>🔌</span> Gestion des bornes</h2>
   <div class="admin-layout">
     <div class="admin-section">
       <h3>Ajouter une borne</h3>
@@ -703,8 +734,8 @@ $page_url = 'php/admin.php';
   </div>
   </div>
 
-  <div id="tab-users" class="admin-tab tab-hidden">
-  <h2>👥 Gestion des utilisateurs</h2>
+  <div id="tab-users" class="admin-tab-section">
+  <h2 class="admin-section-title"><span>👥</span> Gestion des utilisateurs</h2>
   <div class="table-wrap">
   <table>
     <tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Réservations</th><th>Actions</th></tr>
@@ -733,16 +764,22 @@ $page_url = 'php/admin.php';
   </main>
 
   <script>
-  document.querySelectorAll('.tab-btn').forEach(btn => {
+  document.querySelectorAll('.admin-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.classList.add('btn-ghost'); b.classList.remove('btn-primary'); });
-      document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.admin-tab-section').forEach(t => { t.classList.remove('active'); t.style.display = 'none'; });
       btn.classList.add('active');
-      btn.classList.remove('btn-ghost');
-      btn.classList.add('btn-primary');
-      document.getElementById('tab-' + btn.dataset.tab).style.display = '';
+      const tab = document.getElementById('tab-' + btn.dataset.tab);
+      tab.style.display = '';
+      tab.classList.add('active');
     });
   });
+  const params = new URLSearchParams(window.location.search);
+  const tabParam = params.get('tab');
+  if (tabParam) {
+    const btn = document.querySelector('.admin-tab-btn[data-tab="' + tabParam + '"]');
+    if (btn) btn.click();
+  }
   </script>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>

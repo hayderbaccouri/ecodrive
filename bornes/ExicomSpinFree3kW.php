@@ -14,7 +14,7 @@ $page_image = 'images/bornes/SPIN-FREE-3.png';
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
-  <link rel="stylesheet" href="../css/style.css?v=17">
+  <link rel="stylesheet" href="../css/style.css?v=18">
 
 </head>
 
