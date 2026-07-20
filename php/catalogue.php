@@ -103,8 +103,10 @@ $page_url = 'php/catalogue.php';
 
 
   <section id="results" class="showroom reveal reveal-up">
-    <h2 class="section-title">Notre sélection de véhicules électriques</h2>
-    <div class="blue-bar"></div>
+    <div style="max-width:var(--wrap-max);margin:0 auto">
+      <h2 class="section-title">Rechercher un modèle</h2>
+      <div class="blue-bar"></div>
+    </div>
 
     <form id="catalogue-search" action="catalogue.php" method="get" class="controls-form">
       <div class="showroom-controls">
@@ -147,7 +149,7 @@ $page_url = 'php/catalogue.php';
       </div>
     </form>
 
-    <div class="grid reveal reveal-up reveal-delay-2">
+    <div class="cars-grid reveal reveal-up reveal-delay-2">
       <?php if (count($voitures) === 0): ?>
         <div style="text-align:center;padding:3rem 1rem;grid-column:1/-1">
           <div style="font-size:3rem;margin-bottom:1rem">🔍</div>
@@ -189,15 +191,4 @@ $page_url = 'php/catalogue.php';
     </div>
   </section>
 
-<script>
-document.querySelector('.catalogue-filter form')?.addEventListener('submit',function(){
-  var grid=document.querySelector('.car-grid');
-  if(!grid) return;
-  var html='';
-  for(var i=0;i<6;i++){
-    html+='<div class="car-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>';
-  }
-  grid.innerHTML=html;
-});
-</script>
 <?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>
