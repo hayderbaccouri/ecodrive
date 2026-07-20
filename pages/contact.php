@@ -1,4 +1,5 @@
 <?php
+if (!defined('CACHE_VERSION')) define('CACHE_VERSION', '20');
 session_set_cookie_params(['lifetime' => 7200, 'httponly' => true, 'samesite' => 'Lax']);
 session_start();
 $loggedIn = isset($_SESSION['user']);

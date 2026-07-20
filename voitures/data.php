@@ -1,7 +1,7 @@
 <?php
 // Shared car data — each entry drives the car-page.php template.
 return [
-    [
+    'Audi-A6-Sportback-e-tron' => [
         'filename' => 'Audi-A6-Sportback-e-tron',
         'page_title' => 'Audi A6 Sportback e-tron — EcoDrive',
         'page_desc'  => 'Audi A6 Sportback e-tron, berline électrique premium avec 700 plus km d\'autonomie. Essai gratuit EcoDrive.',
@@ -28,7 +28,7 @@ return [
         'specs_recharge' => ['9 h 10 (11 kW)', '21 min (10-80%, 270 kW)'],
         'specs_dimensions' => ['4 960 mm', '1 960 mm', '1 450 mm', '502 L'],
     ],
-    [
+    'BMW-iX3' => [
         'filename' => 'BMW-iX3',
         'page_title' => 'BMW iX3 — EcoDrive',
         'page_desc'  => 'BMW iX3, SUV électrique avec 460 km d\'autonomie et technologie eDrive. Découvrez-le chez EcoDrive.',
@@ -55,7 +55,7 @@ return [
         'specs_recharge' => ['8 h 15 (11 kW)', '21 min (10-80%, 400 kW)'],
         'specs_dimensions' => ['4 755 mm', '2 020 mm', '1 665 mm', '540 L'],
     ],
-    [
+    'BYD-Atto-3' => [
         'filename' => 'BYD-Atto-3',
         'page_title' => 'BYD Atto 3 — EcoDrive',
         'page_desc'  => 'BYD Atto 3, SUV compact électrique au design audacieux. Autonomie 420 km WLTP. Réservez votre essai.',
@@ -82,7 +82,7 @@ return [
         'specs_recharge' => ['7 h (11 kW)', '25 min (10-80%, 220 kW)'],
         'specs_dimensions' => ['4 455 mm', '1 875 mm', '1 615 mm', '440 L'],
     ],
-    [
+    'BYD-Dolphin' => [
         'filename' => 'BYD-Dolphin',
         'page_title' => 'BYD Dolphin — EcoDrive',
         'page_desc'  => 'BYD Dolphin, citadine électrique accessible et polyvalente. Autonomie jusqu\'à 427 km. Découvrez-la chez EcoDrive.',
@@ -109,7 +109,7 @@ return [
         'specs_recharge' => ['4 h 30 (7,4 kW)', '30 min (10-80%, 85 kW)'],
         'specs_dimensions' => ['3 990 mm', '1 755 mm', '1 580 mm', '345 L'],
     ],
-    [
+    'kia-ev3' => [
         'filename' => 'kia-ev3',
         'page_title' => 'Kia EV3 — EcoDrive',
         'page_desc'  => 'Kia EV3, crossover électrique avec design futuriste et autonomie impressionnante. Réservez votre essai.',
@@ -136,7 +136,7 @@ return [
         'specs_recharge' => ['7 h (11 kW)', '31 min (10-80%, 128 kW)'],
         'specs_dimensions' => ['4 300 mm', '1 850 mm', '1 560 mm', '460 L'],
     ],
-    [
+    'mercedes-classe-c-2026' => [
         'filename' => 'mercedes-classe-c-2026',
         'page_title' => 'Mercedes Classe C 2026 — EcoDrive',
         'page_desc'  => 'Mercedes Classe C 2026, berline électrique de luxe. Design, technologie et performance.',
@@ -163,7 +163,7 @@ return [
         'specs_recharge' => ['8 h 30 (11 kW)', '22 min (10-80%, 330 kW)'],
         'specs_dimensions' => ['4 850 mm', '1 900 mm', '1 420 mm', '480 L'],
     ],
-    [
+    'mercedes-EQC' => [
         'filename' => 'mercedes-EQC',
         'page_title' => 'Mercedes EQC — EcoDrive',
         'page_desc'  => 'Mercedes EQC, premier SUV électrique Mercedes. 419 km d\'autonomie, luxe et performance.',
@@ -190,7 +190,7 @@ return [
         'specs_recharge' => ['7 h 30 (11 kW)', '30 min (10-80%, 110 kW)'],
         'specs_dimensions' => ['4 762 mm', '1 884 mm', '1 624 mm', '500 L'],
     ],
-    [
+    'mg4' => [
         'filename' => 'mg4',
         'page_title' => 'MG4 — EcoDrive',
         'page_desc'  => 'MG4, berline électrique sportive au prix accessible. Jusqu\'à 450 km d\'autonomie. Essai EcoDrive.',
@@ -217,7 +217,7 @@ return [
         'specs_recharge' => ['6 h (11 kW)', '24 min (10-80%, 135 kW)'],
         'specs_dimensions' => ['4 287 mm', '1 836 mm', '1 504 mm', '385 L'],
     ],
-    [
+    'Peugeot-e-208' => [
         'filename' => 'Peugeot-e-208',
         'page_title' => 'Peugeot e-208 — EcoDrive',
         'page_desc'  => 'Peugeot e-208, citadine électrique chic et agile. Autonomie 362 km WLTP. Découvrez-la.',
@@ -244,7 +244,7 @@ return [
         'specs_recharge' => ['5 h (11 kW)', '25 min (10-80%, 100 kW)'],
         'specs_dimensions' => ['4 055 mm', '1 745 mm', '1 430 mm', '311 L'],
     ],
-    [
+    'Porsche-Taycan' => [
         'filename' => 'Porsche-Taycan',
         'page_title' => 'Porsche Taycan — EcoDrive',
         'page_desc'  => 'Porsche Taycan, berline électrique de haute performance. 0-100 en 2,8s. Réservez votre essai.',
@@ -271,7 +271,7 @@ return [
         'specs_recharge' => ['9 h 30 (11 kW)', '18 min (10-80%)'],
         'specs_dimensions' => ['4 963 mm', '1 966 mm', '1 395 mm', '407 L'],
     ],
-    [
+    'Tesla-Model-3' => [
         'filename' => 'Tesla-Model-3',
         'page_title' => 'Tesla Model 3 2026 — EcoDrive',
         'page_desc'  => 'Découvrez la Tesla Model 3 2026, berline électrique avec 702 km d\'autonomie. Réservez votre essai EcoDrive en Tunisie.',
@@ -298,7 +298,7 @@ return [
         'specs_recharge' => ['8 h 30 (11 kW)', '20 min (10-80%, 250 kW)'],
         'specs_dimensions' => ['4 720 mm', '1 933 mm', '1 441 mm', '594 L'],
     ],
-    [
+    'Tesla-Model-S-Plaid' => [
         'filename' => 'Tesla-Model-S-Plaid',
         'page_title' => 'Tesla Model S Plaid — EcoDrive',
         'page_desc'  => 'Tesla Model S Plaid, la berline électrique la plus puissante. 1 020 ch, 0-100 en 2,1s. Essai chez EcoDrive.',
@@ -325,7 +325,7 @@ return [
         'specs_recharge' => ['9 h (11 kW)', '15 min (10-80%, 250 kW)'],
         'specs_dimensions' => ['5 021 mm', '1 987 mm', '1 431 mm', '793 L'],
     ],
-    [
+    'toyota-bz4x' => [
         'filename' => 'toyota-bz4x',
         'page_title' => 'Toyota bZ4X — EcoDrive',
         'page_desc'  => 'Toyota bZ4X, SUV électrique fiable avec plateforme e-TNGA. Autonomie 500 km.',
@@ -352,7 +352,7 @@ return [
         'specs_recharge' => ['7 h (11 kW)', '28 min (10-80%)'],
         'specs_dimensions' => ['4 690 mm', '1 860 mm', '1 650 mm', '452 L'],
     ],
-    [
+    'Geely-EX2' => [
         'filename' => 'Geely-EX2',
         'page_title' => 'Geely EX2 — EcoDrive',
         'page_desc'  => 'Geely EX2, SUV électrique compact au excellent rapport qualité-prix. Autonomie et confort garantis.',

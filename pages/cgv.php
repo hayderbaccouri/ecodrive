@@ -1,4 +1,5 @@
 <?php
+if (!defined('CACHE_VERSION')) define('CACHE_VERSION', '20');
 session_start();
 $loggedIn = isset($_SESSION['user']);
 $page_title = 'CGV | EcoDrive';

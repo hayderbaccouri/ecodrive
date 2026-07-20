@@ -1,4 +1,5 @@
 <?php
+if (!defined('CACHE_VERSION')) define('CACHE_VERSION', '20');
 $uri = htmlspecialchars($_SERVER['REQUEST_URI'] ?? '', ENT_QUOTES, 'UTF-8');
 session_start();
 $loggedIn = isset($_SESSION['user']);
