@@ -37,6 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
 
 // Récupérer les voitures vedettes pour l'accueil
 $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, details_page FROM voiture WHERE is_featured = 1 ORDER BY marque")->fetch_all(MYSQLI_ASSOC);
+
+$page_title = 'EcoDrive — Premier showroom électrique en Tunisie';
+$page_desc = 'Découvrez les meilleures voitures électriques en Tunisie. Essai gratuit, bornes de recharge et accompagnement sur-mesure.';
+$page_url = '';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
