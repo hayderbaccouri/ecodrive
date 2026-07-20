@@ -121,6 +121,19 @@ body.has-topbar .site-header{margin-top:28px}
 .btn-white{display:inline-block;background:var(--white);color:var(--dark);padding:.65rem 1.25rem;font-weight:400;border-radius:999px;border:1px solid rgba(var(--dark-rgb),0.1);text-decoration:none;transition:background .2s,transform .15s}
 .btn-white:hover{background:var(--gray-light);transform:translateY(-2px)}
 
+/* ---------- RESERVATION BUTTONS ---------- */
+.btn-next-step{background:linear-gradient(135deg,#0A7DA8,#086B8E);color:#fff;padding:.85rem 2.2rem;font-size:.95rem;border-radius:999px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(10,125,168,0.25);transition:all .3s cubic-bezier(.25,.46,.45,.94);letter-spacing:.01em}
+.btn-next-step:hover{background:linear-gradient(135deg,#086B8E,#064D6B);box-shadow:0 8px 24px rgba(10,125,168,0.35);transform:translateY(-2px)}
+.btn-next-step:active{transform:translateY(0);box-shadow:0 2px 8px rgba(10,125,168,0.2)}
+
+.btn-prev-step{background:transparent;color:var(--dark);padding:.85rem 1.8rem;font-size:.9rem;border-radius:999px;border:1px solid var(--border);cursor:pointer;transition:all .3s}
+.btn-prev-step:hover{background:var(--gray-light);border-color:var(--accent);color:var(--accent)}
+
+.btn-confirm{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#10B981,#059669);color:#fff;padding:.9rem 2.4rem;font-size:1rem;border-radius:999px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(16,185,129,0.3);transition:all .3s cubic-bezier(.25,.46,.45,.94);font-weight:400;letter-spacing:.01em}
+.btn-confirm:hover{background:linear-gradient(135deg,#059669,#047857);box-shadow:0 8px 28px rgba(16,185,129,0.4);transform:translateY(-2px)}
+.btn-confirm:active{transform:translateY(0);box-shadow:0 2px 8px rgba(16,185,129,0.2)}
+.btn-confirm:disabled{background:var(--gray-mid);color:var(--white);box-shadow:none;cursor:not-allowed;transform:none}
+
 /* ---------- ALERTS ---------- */
 .alert{padding:.85rem 1rem;border-radius:var(--radius-sm);margin-bottom:1rem;font-size:.9rem}
 .alert-success{background:rgba(42,110,26,0.1);color:var(--green);border:1px solid rgba(42,110,26,0.15)}

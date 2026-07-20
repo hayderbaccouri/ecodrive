@@ -177,7 +177,7 @@ $page_url = 'php/reservation.php';
             <input type="time" id="heure_debut" name="heure_debut" value="<?= htmlspecialchars($_POST['heure_debut'] ?? '') ?>" min="08:00" max="17:00" required data-msg-required="Veuillez choisir un horaire.">
 
             <div class="btn-row">
-              <button type="button" class="btn btn-primary step-next">Suivant</button>
+              <button type="button" class="btn btn-primary btn-next-step">Continuer →</button>
             </div>
           </div>
 
@@ -193,8 +193,8 @@ $page_url = 'php/reservation.php';
             <textarea id="notes" name="notes" rows="2" placeholder="Informations complémentaires…"><?= htmlspecialchars($_POST['notes'] ?? '') ?></textarea>
 
             <div class="btn-row-between">
-              <button type="button" class="btn btn-ghost step-prev">Précédent</button>
-              <button type="submit" class="btn btn-primary">Réserver l'essai</button>
+              <button type="button" class="btn btn-ghost btn-prev-step">← Retour</button>
+              <button type="submit" class="btn btn-confirm">✅ Confirmer l'essai</button>
             </div>
           </div>
         </form>
@@ -220,7 +220,7 @@ $page_url = 'php/reservation.php';
       current = idx;
     }
 
-    document.querySelectorAll('.step-next').forEach(function(btn){
+    document.querySelectorAll('.btn-next-step').forEach(function(btn){
       btn.addEventListener('click', function(e){
         e.preventDefault();
         var voiture = document.getElementById('voiture_id');
@@ -249,7 +249,7 @@ $page_url = 'php/reservation.php';
       });
     });
 
-    document.querySelectorAll('.step-prev').forEach(function(btn){
+    document.querySelectorAll('.btn-prev-step').forEach(function(btn){
       btn.addEventListener('click', function(e){
         e.preventDefault();
         if(current > 0) showStep(current - 1);

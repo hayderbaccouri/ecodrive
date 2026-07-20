@@ -108,9 +108,9 @@ $page_url = 'php/confirmation-reservation.php';
       </div>
 
       <div class="confirmation-actions" style="margin-top:2rem;text-align:center;display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center">
-        <a href="export-ics.php?id=<?= $reservationId ?>" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.5rem">📅 Ajouter au calendrier</a>
-        <a href="tableau-de-bord.php" class="btn btn-primary">Voir mes réservations</a>
-        <a href="catalogue.php" class="btn btn-ghost">Retour au catalogue</a>
+        <a href="export-ics.php?id=<?= $reservationId ?>" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem">📅 Ajouter au calendrier</a>
+        <a href="tableau-de-bord.php" class="btn btn-primary" style="padding:.85rem 2rem">Voir mes réservations</a>
+        <a href="catalogue.php" class="btn btn-ghost" style="padding:.85rem 2rem">Retour au catalogue</a>
       </div>
     </div>
   </main>
