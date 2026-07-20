@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id'])) { header('Location: connexion.php'); exit; }
 
 $reservationId = (int)($_GET['id'] ?? 0);
-if (!$reservationId) { exit('Réservation invalide.'); }
+if (!$reservationId) { exit('RÃ©servation invalide.'); }
 
 $userId = $_SESSION['user']['id'];
 $stmt = $conn->prepare("SELECT r.*, v.marque, v.modele FROM reservation r JOIN voiture v ON r.voiture_id = v.id_voiture WHERE r.id_reservation = ? AND r.utilisateur_id = ?");
@@ -12,7 +12,7 @@ $stmt->bind_param("ii", $reservationId, $userId);
 $stmt->execute();
 $r = $stmt->get_result()->fetch_assoc();
 $stmt->close();
-if (!$r) { exit('Réservation introuvable.'); }
+if (!$r) { exit('RÃ©servation introuvable.'); }
 
 $date = $r['date_essai'];
 $start = $date . 'T' . $r['heure_debut'] . ':00';
@@ -29,8 +29,8 @@ $ics = "BEGIN:VCALENDAR\r\n"
      . "DTSTAMP:$now\r\n"
      . "DTSTART:$start\r\n"
      . "DTEND:$end\r\n"
-     . "SUMMARY:Essai $car — EcoDrive\r\n"
-     . "DESCRIPTION:Réservation d'essai gratuit pour $car chez EcoDrive.\r\n"
+     . "SUMMARY:Essai $car â€” EcoDrive\r\n"
+     . "DESCRIPTION:RÃ©servation d'essai gratuit pour $car chez EcoDrive.\r\n"
      . "LOCATION:EcoDrive, Tunis\r\n"
      . "STATUS:CONFIRMED\r\n"
      . "END:VEVENT\r\n"

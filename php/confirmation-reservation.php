@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id'])) {
@@ -30,8 +30,8 @@ if (!$reservation) {
 }
 ?>
 <?php
-$page_title = 'Confirmation de réservation | EcoDrive';
-$page_desc = 'Votre réservation d\'essai a été confirmée. Retrouvez tous les détails sur votre tableau de bord.';
+$page_title = 'Confirmation de rÃ©servation | EcoDrive';
+$page_desc = 'Votre rÃ©servation d\'essai a Ã©tÃ© confirmÃ©e. Retrouvez tous les dÃ©tails sur votre tableau de bord.';
 $page_url = 'php/confirmation-reservation.php';
 ?>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ $page_url = 'php/confirmation-reservation.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
 </head>
 <body>
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -54,8 +54,8 @@ $page_url = 'php/confirmation-reservation.php';
       </svg>
     </div>
 
-    <h1 class="hero-entrance text-center">Réservation confirmée !</h1>
-    <p class="hero-entrance text-center" style="color:var(--grey-2);">Votre demande d'essai a bien été enregistrée.</p>
+    <h1 class="hero-entrance text-center">RÃ©servation confirmÃ©e !</h1>
+    <p class="hero-entrance text-center" style="color:var(--grey-2);">Votre demande d'essai a bien Ã©tÃ© enregistrÃ©e.</p>
 
     <div class="confirmation-details reveal reveal-up">
       <div class="detail-row">
@@ -99,7 +99,7 @@ $page_url = 'php/confirmation-reservation.php';
     </div>
 
     <div class="confirmation-actions">
-      <a href="export-ics.php?id=<?= $reservationId ?>" class="btn-primary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;font-size:.85rem">📅 Ajouter au calendrier</a>
+      <a href="export-ics.php?id=<?= $reservationId ?>" class="btn-primary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;font-size:.85rem">ðŸ“… Ajouter au calendrier</a>
       <a href="tableau-de-bord.php" class="btn-primary">Voir mes r&eacute;servations</a>
       <a href="catalogue.php" class="btn-ghost">Retour au catalogue</a>
     </div>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Central bootstrap: load env, start session, DB connection and helpers
 if (session_status() === PHP_SESSION_NONE) {
     $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
@@ -36,7 +36,7 @@ $conn->set_charset($dbCharset);
 // Generic error handler for DB connection
 if ($conn->connect_error) {
     error_log('DB connection error: ' . $conn->connect_error);
-    exit('Erreur de connexion à la base de données.');
+    exit('Erreur de connexion Ã  la base de donnÃ©es.');
 }
 
 // CSRF helpers

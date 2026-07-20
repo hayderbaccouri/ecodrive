@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Toyota bZ4X — EcoDrive';
-$page_desc  = 'Toyota bZ4X, SUV électrique fiable avec plateforme e-TNGA. Autonomie 500 km.';
+$page_title = 'Toyota bZ4X â€” EcoDrive';
+$page_desc  = 'Toyota bZ4X, SUV Ã©lectrique fiable avec plateforme e-TNGA. Autonomie 500 km.';
 $page_url   = 'voitures/toyota-bz4x.php';
 $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
 ?>
@@ -12,9 +12,9 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toyota bZ4X 73.1 kWh — EcoDrive</title>
+  <title>Toyota bZ4X 73.1 kWh â€” EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'Toyota bZ4X 73.1 kWh', 'description' => htmlspecialchars($page_desc, ENT_QUOTES, 'UTF-8'), 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'Toyota', 'price' => '129800']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
 </head>
@@ -29,14 +29,14 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
     <?php include '../php/car_slider.php'; renderCarSlider('images/toyota-bz4x-73.1-kwh/', 'toyota-bz4x-73.1-kwh-109445.webp', 'Toyota bZ4X 73.1 kWh'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">À partir de</span>
+        <span class="price-label">Ã€ partir de</span>
         <span class="price-value">129 800 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=15" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=15" class="btn-reserve">RÃ©server un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV 100% électrique Toyota plateforme e-TNGA. 227 ch traction avant, batterie NMC 73,1 kWh, autonomie 573 km WLTP, recharge DC (10-80% en 28 min). Design futuriste, fiabilité légendaire.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>SUV 100% Ã©lectrique Toyota plateforme e-TNGA. 227 ch traction avant, batterie NMC 73,1 kWh, autonomie 573 km WLTP, recharge DC (10-80% en 28 min). Design futuriste, fiabilitÃ© lÃ©gendaire.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -78,7 +78,7 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>Capacité batterie</dt><dd>73,1 kWh</dd></div>
+            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>73,1 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Lithium-ion NMC</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>573 km</dd></div>
             <div class="spec-row"><dt>Consommation</dt><dd>14,3 kWh/100 km</dd></div>
@@ -107,8 +107,8 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la Toyota bZ4X 73.1 kWh</h2>
-        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=15" class="cta-btn">Réserver un essai gratuit</a>
+        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=15" class="cta-btn">RÃ©server un essai gratuit</a>
       </div>
     </section>
   </main>

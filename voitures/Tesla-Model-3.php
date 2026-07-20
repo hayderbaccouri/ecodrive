@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Tesla Model 3 2026 — EcoDrive';
-$page_desc  = 'Découvrez la Tesla Model 3 2026, berline électrique avec 702 km d autonomie. Réservez votre essai EcoDrive en Tunisie.';
+$page_title = 'Tesla Model 3 2026 â€” EcoDrive';
+$page_desc  = 'DÃ©couvrez la Tesla Model 3 2026, berline Ã©lectrique avec 702 km d autonomie. RÃ©servez votre essai EcoDrive en Tunisie.';
 $page_url   = 'voitures/Tesla-Model-3.php';
 $page_image = 'images/tesla-model-3/tesla-model3.jpg';
 ?>
@@ -12,11 +12,11 @@ $page_image = 'images/tesla-model-3/tesla-model3.jpg';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tesla Model 3 2026 — EcoDrive</title>
+  <title>Tesla Model 3 2026 â€” EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'Tesla Model 3', 'description' => 'Tesla Model 3 2026, berline électrique avec 702 km d autonomie.', 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'Tesla', 'price' => '147000']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
+  <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'Tesla Model 3', 'description' => 'Tesla Model 3 2026, berline Ã©lectrique avec 702 km d autonomie.', 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'Tesla', 'price' => '147000']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
@@ -29,14 +29,14 @@ $page_image = 'images/tesla-model-3/tesla-model3.jpg';
     <?php include '../php/car_slider.php'; renderCarSlider('images/tesla-model-3/', 'tesla-model3.jpg', 'Tesla Model 3'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">À partir de</span>
+        <span class="price-label">Ã€ partir de</span>
         <span class="price-value">147 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=13" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=13" class="btn-reserve">RÃ©server un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline électrique la plus vendue au monde. Autonomie jusqu'à 702 km WLTP, accès réseau Superchargeur, mises à jour OTA, performances exceptionnelles, minimalisme technologique.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>Berline Ã©lectrique la plus vendue au monde. Autonomie jusqu'Ã  702 km WLTP, accÃ¨s rÃ©seau Superchargeur, mises Ã  jour OTA, performances exceptionnelles, minimalisme technologique.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -71,17 +71,17 @@ $page_image = 'images/tesla-model-3/tesla-model3.jpg';
           <dl>
             <div class="spec-row"><dt>Puissance max</dt><dd>498 ch (366 kW)</dd></div>
             <div class="spec-row"><dt>Couple max</dt><dd>510 Nm</dd></div>
-            <div class="spec-row"><dt>Transmission</dt><dd>Intégrale (AWD)</dd></div>
+            <div class="spec-row"><dt>Transmission</dt><dd>IntÃ©grale (AWD)</dd></div>
             <div class="spec-row"><dt>Vitesse max</dt><dd>262 km/h</dd></div>
           </dl>
         </div>
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>Capacité batterie</dt><dd>82 kWh</dd></div>
+            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>82 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Lithium-ion NMC</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>702 km</dd></div>
-            <div class="spec-row"><dt>Émissions CO₂</dt><dd>0 g/km CO₂</dd></div>
+            <div class="spec-row"><dt>Ã‰missions COâ‚‚</dt><dd>0 g/km COâ‚‚</dd></div>
           
             <div class="spec-row battery-visual"><dt>Niveau</dt><dd><div class="battery-bar"><div class="battery-track"><div class="battery-fill high" data-width="75%"></div></div><span class="battery-label">82 kWh</span></div></dd></div></dl>
         </div>
@@ -106,8 +106,8 @@ $page_image = 'images/tesla-model-3/tesla-model3.jpg';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la Tesla Model 3 2026</h2>
-        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=13" class="cta-btn">Réserver un essai gratuit</a>
+        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=13" class="cta-btn">RÃ©server un essai gratuit</a>
       </div>
     </section>
   </main>

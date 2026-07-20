@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (!isset($jsonld_type)) return;
 
 if ($jsonld_type === 'localbusiness') {
@@ -6,12 +6,12 @@ if ($jsonld_type === 'localbusiness') {
     '@context' => 'https://schema.org',
     '@type' => 'LocalBusiness',
     'name' => 'EcoDrive',
-    'description' => 'Premier showroom électrique en Tunisie',
+    'description' => 'Premier showroom Ã©lectrique en Tunisie',
     'url' => 'https://ecodrive.tn',
     'telephone' => '+216 90 311 428',
     'address' => [
       '@type' => 'PostalAddress',
-      'streetAddress' => '123 Rue de la Liberté',
+      'streetAddress' => '123 Rue de la LibertÃ©',
       'addressLocality' => 'Tunis',
       'addressCountry' => 'TN',
     ],

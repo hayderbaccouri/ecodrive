@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 session_start();
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Politique de Confidentialité | EcoDrive';
-$page_desc = 'Politique de confidentialité du site EcoDrive — showroom de voitures électriques en Tunisie.';
+$page_title = 'Politique de ConfidentialitÃ© | EcoDrive';
+$page_desc = 'Politique de confidentialitÃ© du site EcoDrive â€” showroom de voitures Ã©lectriques en Tunisie.';
 $page_url = 'pages/confidentialite.php';
 $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 ?><!DOCTYPE html>
@@ -13,125 +13,125 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
 </head>
 <body class="page-legal">
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
 
 <main class="page-fade-in">
   <div class="container">
-    <h1 class="hero-entrance">Politique de Confidentialité</h1>
-    <div class="legal-meta">Dernière mise à jour : 13 juin 2026</div>
+    <h1 class="hero-entrance">Politique de ConfidentialitÃ©</h1>
+    <div class="legal-meta">DerniÃ¨re mise Ã  jour : 13 juin 2026</div>
 
     <div class="content-section">
       <h2>Introduction</h2>
-      <p>EcoDrive accorde une grande importance à la protection de vos données personnelles. La présente politique de confidentialité a pour objectif de vous informer sur la manière dont nous collectons, utilisons et protégeons vos informations lorsque vous utilisez notre site web.</p>
-      <p>En utilisant le site EcoDrive, vous acceptez les pratiques décrites dans cette politique.</p>
+      <p>EcoDrive accorde une grande importance Ã  la protection de vos donnÃ©es personnelles. La prÃ©sente politique de confidentialitÃ© a pour objectif de vous informer sur la maniÃ¨re dont nous collectons, utilisons et protÃ©geons vos informations lorsque vous utilisez notre site web.</p>
+      <p>En utilisant le site EcoDrive, vous acceptez les pratiques dÃ©crites dans cette politique.</p>
     </div>
 
     <div class="content-section">
       <h2>Responsable du traitement</h2>
-      <p>Le responsable du traitement des données est EcoDrive, représenté par Hayder Baccouri, dans le cadre d'un projet de fin de formation 2026.</p>
+      <p>Le responsable du traitement des donnÃ©es est EcoDrive, reprÃ©sentÃ© par Hayder Baccouri, dans le cadre d'un projet de fin de formation 2026.</p>
     </div>
 
     <div class="content-section">
-      <h2>Données collectées</h2>
-      <h3>Données que vous nous fournissez</h3>
+      <h2>DonnÃ©es collectÃ©es</h2>
+      <h3>DonnÃ©es que vous nous fournissez</h3>
       <ul>
-        <li>Nom et prénom</li>
+        <li>Nom et prÃ©nom</li>
         <li>Adresse e-mail</li>
-        <li>Numéro de téléphone</li>
+        <li>NumÃ©ro de tÃ©lÃ©phone</li>
         <li>Message via le formulaire de contact</li>
-        <li>Informations de compte (nom d'utilisateur, mot de passe haché)</li>
+        <li>Informations de compte (nom d'utilisateur, mot de passe hachÃ©)</li>
       </ul>
-      <h3>Données collectées automatiquement</h3>
+      <h3>DonnÃ©es collectÃ©es automatiquement</h3>
       <ul>
         <li>Adresse IP</li>
         <li>Type et version du navigateur</li>
-        <li>Pages visitées et durée de la visite</li>
+        <li>Pages visitÃ©es et durÃ©e de la visite</li>
         <li>Cookies et technologies similaires</li>
       </ul>
     </div>
 
     <div class="content-section">
-      <h2>Base légale du traitement</h2>
-      <p>Le traitement de vos données repose sur les bases légales suivantes :</p>
+      <h2>Base lÃ©gale du traitement</h2>
+      <p>Le traitement de vos donnÃ©es repose sur les bases lÃ©gales suivantes :</p>
       <ul>
         <li><strong>Consentement :</strong> pour l'envoi de communications et l'utilisation de cookies non essentiels</li>
-        <li><strong>Exécution contractuelle :</strong> pour la gestion de votre compte et des services associés</li>
-        <li><strong>Intérêt légitime :</strong> pour l'amélioration du site et la sécurité</li>
+        <li><strong>ExÃ©cution contractuelle :</strong> pour la gestion de votre compte et des services associÃ©s</li>
+        <li><strong>IntÃ©rÃªt lÃ©gitime :</strong> pour l'amÃ©lioration du site et la sÃ©curitÃ©</li>
       </ul>
     </div>
 
     <div class="content-section">
-      <h2>Finalités du traitement</h2>
-      <p>Nous utilisons vos données pour :</p>
+      <h2>FinalitÃ©s du traitement</h2>
+      <p>Nous utilisons vos donnÃ©es pour :</p>
       <ul>
-        <li>Gérer votre compte utilisateur</li>
-        <li>Répondre à vos demandes via le formulaire de contact</li>
-        <li>Améliorer notre site et votre expérience utilisateur</li>
-        <li>Assurer la sécurité et le bon fonctionnement du site</li>
-        <li>Respecter nos obligations légales</li>
+        <li>GÃ©rer votre compte utilisateur</li>
+        <li>RÃ©pondre Ã  vos demandes via le formulaire de contact</li>
+        <li>AmÃ©liorer notre site et votre expÃ©rience utilisateur</li>
+        <li>Assurer la sÃ©curitÃ© et le bon fonctionnement du site</li>
+        <li>Respecter nos obligations lÃ©gales</li>
       </ul>
     </div>
 
     <div class="content-section">
-      <h2>Durée de conservation</h2>
-      <p>Vos données personnelles sont conservées aussi longtemps que nécessaire pour les finalités pour lesquelles elles ont été collectées :</p>
+      <h2>DurÃ©e de conservation</h2>
+      <p>Vos donnÃ©es personnelles sont conservÃ©es aussi longtemps que nÃ©cessaire pour les finalitÃ©s pour lesquelles elles ont Ã©tÃ© collectÃ©es :</p>
       <ul>
-        <li>Données de compte : jusqu'à la suppression du compte</li>
-        <li>Données de contact : 3 ans à compter du dernier contact</li>
-        <li>Cookies : durée spécifiée dans chaque cookie</li>
+        <li>DonnÃ©es de compte : jusqu'Ã  la suppression du compte</li>
+        <li>DonnÃ©es de contact : 3 ans Ã  compter du dernier contact</li>
+        <li>Cookies : durÃ©e spÃ©cifiÃ©e dans chaque cookie</li>
       </ul>
     </div>
 
     <div class="content-section">
-      <h2>Partage des données</h2>
-      <p>Nous ne vendons pas vos données personnelles à des tiers. Vos données peuvent être partagées uniquement dans les cas suivants :</p>
+      <h2>Partage des donnÃ©es</h2>
+      <p>Nous ne vendons pas vos donnÃ©es personnelles Ã  des tiers. Vos donnÃ©es peuvent Ãªtre partagÃ©es uniquement dans les cas suivants :</p>
       <ul>
         <li>Avec votre consentement explicite</li>
-        <li>Pour respecter une obligation légale</li>
-        <li>Avec des prestataires techniques (hébergement, maintenance) sous contrat</li>
+        <li>Pour respecter une obligation lÃ©gale</li>
+        <li>Avec des prestataires techniques (hÃ©bergement, maintenance) sous contrat</li>
       </ul>
     </div>
 
     <div class="content-section">
-      <h2>Sécurité des données</h2>
-      <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, modification, divulgation ou destruction. Ces mesures incluent le chiffrement des mots de passe, l'utilisation de connexions sécurisées et des contrôles d'accès stricts.</p>
+      <h2>SÃ©curitÃ© des donnÃ©es</h2>
+      <p>Nous mettons en Å“uvre des mesures techniques et organisationnelles appropriÃ©es pour protÃ©ger vos donnÃ©es contre tout accÃ¨s non autorisÃ©, modification, divulgation ou destruction. Ces mesures incluent le chiffrement des mots de passe, l'utilisation de connexions sÃ©curisÃ©es et des contrÃ´les d'accÃ¨s stricts.</p>
     </div>
 
     <div class="content-section">
       <h2>Vos droits</h2>
-      <p>Conformément à la réglementation applicable en matière de protection des données, vous disposez des droits suivants :</p>
+      <p>ConformÃ©ment Ã  la rÃ©glementation applicable en matiÃ¨re de protection des donnÃ©es, vous disposez des droits suivants :</p>
       <ul>
-        <li>Droit d'accès à vos données</li>
-        <li>Droit de rectification des données inexactes</li>
-        <li>Droit à l'effacement (droit à l'oubli)</li>
-        <li>Droit à la limitation du traitement</li>
-        <li>Droit à la portabilité de vos données</li>
+        <li>Droit d'accÃ¨s Ã  vos donnÃ©es</li>
+        <li>Droit de rectification des donnÃ©es inexactes</li>
+        <li>Droit Ã  l'effacement (droit Ã  l'oubli)</li>
+        <li>Droit Ã  la limitation du traitement</li>
+        <li>Droit Ã  la portabilitÃ© de vos donnÃ©es</li>
         <li>Droit d'opposition au traitement</li>
       </ul>
-      <p>Pour exercer ces droits, veuillez nous contacter via la page contact ou à l'adresse email ci-dessous.</p>
+      <p>Pour exercer ces droits, veuillez nous contacter via la page contact ou Ã  l'adresse email ci-dessous.</p>
     </div>
 
     <div class="content-section">
       <h2>Cookies</h2>
-      <p>Notre site utilise des cookies pour améliorer votre expérience de navigation. Vous pouvez contrôler l'utilisation des cookies via les paramètres de votre navigateur. Les cookies que nous utilisons peuvent inclure :</p>
+      <p>Notre site utilise des cookies pour amÃ©liorer votre expÃ©rience de navigation. Vous pouvez contrÃ´ler l'utilisation des cookies via les paramÃ¨tres de votre navigateur. Les cookies que nous utilisons peuvent inclure :</p>
       <ul>
-        <li>Cookies de session (nécessaires au fonctionnement du site)</li>
+        <li>Cookies de session (nÃ©cessaires au fonctionnement du site)</li>
         <li>Cookies d'analyse (pour comprendre l'utilisation du site)</li>
-        <li>Cookies de préférences (pour mémoriser vos choix)</li>
+        <li>Cookies de prÃ©fÃ©rences (pour mÃ©moriser vos choix)</li>
       </ul>
     </div>
 
     <div class="content-section">
       <h2>Modifications de la politique</h2>
-      <p>Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Les modifications seront publiées sur cette page avec une date de mise à jour révisée. Nous vous encourageons à consulter régulièrement cette page.</p>
+      <p>Nous nous rÃ©servons le droit de modifier cette politique de confidentialitÃ© Ã  tout moment. Les modifications seront publiÃ©es sur cette page avec une date de mise Ã  jour rÃ©visÃ©e. Nous vous encourageons Ã  consulter rÃ©guliÃ¨rement cette page.</p>
     </div>
 
     <div class="content-section">
       <h2>Contact</h2>
-      <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits :</p>
+      <p>Pour toute question concernant cette politique de confidentialitÃ© ou pour exercer vos droits :</p>
       <p><strong>Email :</strong> <a href="mailto:info@ecodrive.tn">info@ecodrive.tn</a></p>
       <p><strong>Contact :</strong> <a href="contact.php">Formulaire de contact</a></p>
     </div>

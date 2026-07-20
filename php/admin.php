@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
-// Vérifier que l'utilisateur est connecté et est admin
+// VÃ©rifier que l'utilisateur est connectÃ© et est admin
 if (!isset($_SESSION['user']['id'])) {
     header('Location: connexion.php');
     exit;
@@ -17,14 +17,14 @@ $user = $result->fetch_assoc();
 $stmt->close();
 
 if (!$user || $user['role'] !== 'admin') {
-    die("Accès refusé. Vous devez être administrateur.");
+    die("AccÃ¨s refusÃ©. Vous devez Ãªtre administrateur.");
 }
 
 $message = '';
 $uploadDir = realpath(__DIR__ . '/../images') ?: __DIR__ . '/../images';
 if (substr($uploadDir, -1) !== DIRECTORY_SEPARATOR) $uploadDir .= DIRECTORY_SEPARATOR;
 
-// === Upload d'image sécurisé ===
+// === Upload d'image sÃ©curisÃ© ===
 function handleUpload($file, $uploadDir) {
   // limits
   $maxBytes = 5 * 1024 * 1024; // 5MB
@@ -36,14 +36,14 @@ function handleUpload($file, $uploadDir) {
 
   $mime = $info['mime'] ?? '';
   $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/avif' => 'avif'];
-  if (!isset($allowed[$mime])) return [false, 'Format d\'image non autorisé.'];
+  if (!isset($allowed[$mime])) return [false, 'Format d\'image non autorisÃ©.'];
 
   $ext = $allowed[$mime];
   $name = uniqid('img_') . '.' . $ext;
   $dest = rtrim($uploadDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $name;
 
   if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
-    return [false, 'Impossible de créer le dossier de destination.'];
+    return [false, 'Impossible de crÃ©er le dossier de destination.'];
   }
 
   if (!move_uploaded_file($file['tmp_name'], $dest)) {
@@ -66,7 +66,7 @@ function safe_unlink($relPath, $imagesDir) {
   return false;
 }
 
-// === Gestion des réservations (confirmer / annuler + envoi email) ===
+// === Gestion des rÃ©servations (confirmer / annuler + envoi email) ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $message = "Session invalide.";
@@ -79,10 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $stmt->bind_param("si", $action, $reservationId);
 
         if ($stmt->execute()) {
-            $message = "✅ Réservation mise à jour.";
+            $message = "âœ… RÃ©servation mise Ã  jour.";
             $stmt->close();
 
-            // Récupérer les infos du client pour l'email
+            // RÃ©cupÃ©rer les infos du client pour l'email
             $stmt2 = $conn->prepare("SELECT u.email, u.nom, v.marque, v.modele, r.date_essai 
                                      FROM reservation r
                                      JOIN utilisateur u ON r.utilisateur_id = u.id_utilisateur
@@ -93,15 +93,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $info = $stmt2->get_result()->fetch_assoc();
             $stmt2->close();
 
-            // Envoi de l'email uniquement si on a bien récupéré les infos
+            // Envoi de l'email uniquement si on a bien rÃ©cupÃ©rÃ© les infos
             if ($info) {
                 $to = $info['email'];
-                $subject = "Mise à jour de votre réservation EcoDrive";
+                $subject = "Mise Ã  jour de votre rÃ©servation EcoDrive";
 
                 if ($action === 'confirmed') {
-                    $messageEmail = "Bonjour {$info['nom']},\n\nVotre réservation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a été CONFIRMÉE.\n\nMerci de votre confiance.\nEcoDrive Team";
+                    $messageEmail = "Bonjour {$info['nom']},\n\nVotre rÃ©servation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a Ã©tÃ© CONFIRMÃ‰E.\n\nMerci de votre confiance.\nEcoDrive Team";
                 } else {
-                    $messageEmail = "Bonjour {$info['nom']},\n\nVotre réservation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a été ANNULÉE.\n\nEcoDrive Team";
+                    $messageEmail = "Bonjour {$info['nom']},\n\nVotre rÃ©servation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a Ã©tÃ© ANNULÃ‰E.\n\nEcoDrive Team";
                 }
 
                 $headers = "From: admin@ecodrive.com\r\n" .
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 file_put_contents(__DIR__ . '/../private/logs/mail_log.txt', $logBody, FILE_APPEND | LOCK_EX);
             }
         } else {
-            $message = "❌ Erreur lors de la mise à jour.";
+            $message = "âŒ Erreur lors de la mise Ã  jour.";
             $stmt->close();
         }
     }
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         if ($ok) {
             $imgPath = $result;
         } else {
-            $message = "⚠️ " . $result;
+            $message = "âš ï¸ " . $result;
         }
     }
 
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         );
         $stmt->execute();
         $stmt->close();
-        $message = "✅ Voiture ajoutée.";
+        $message = "âœ… Voiture ajoutÃ©e.";
     }
 
     if ($_POST['car_action'] === 'update') {
@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         );
         $stmt->execute();
         $stmt->close();
-        $message = "✅ Voiture mise à jour.";
+        $message = "âœ… Voiture mise Ã  jour.";
     }
 
     if ($_POST['car_action'] === 'delete') {
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
         $stmt->bind_param("i", $idVoiture);
         $stmt->execute();
         $stmt->close();
-        $message = "✅ Voiture supprimée.";
+        $message = "âœ… Voiture supprimÃ©e.";
     }
   }
 }
@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
         if ($ok) {
             $imgPath = $result;
         } else {
-            $message = "⚠️ " . $result;
+            $message = "âš ï¸ " . $result;
         }
     }
 
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
         );
         $stmt->execute();
         $stmt->close();
-        $message = "✅ Borne ajoutée.";
+        $message = "âœ… Borne ajoutÃ©e.";
     }
 
     if ($_POST['borne_action'] === 'update') {
@@ -273,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
         );
         $stmt->execute();
         $stmt->close();
-        $message = "✅ Borne mise à jour.";
+        $message = "âœ… Borne mise Ã  jour.";
     }
 
     if ($_POST['borne_action'] === 'delete') {
@@ -292,12 +292,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borne_action'])) {
         $stmt->bind_param("i", $idBorne);
         $stmt->execute();
         $stmt->close();
-        $message = "✅ Borne supprimée.";
+        $message = "âœ… Borne supprimÃ©e.";
     }
   }
 }
 
-// Pagination réservations (avec filtres)
+// Pagination rÃ©servations (avec filtres)
 $pageRes = max(1, (int)($_GET['page_reservations'] ?? 1));
 $limitRes = 10;
 $offsetRes = ($pageRes - 1) * $limitRes;
@@ -340,7 +340,7 @@ $resStmt->close();
 
 $pendingCount = $conn->query("SELECT COUNT(*) AS cnt FROM reservation WHERE statut='pending'")->fetch_assoc()['cnt'] ?? 0;
 
-// Données pour les graphiques admin
+// DonnÃ©es pour les graphiques admin
 $res_stats = $conn->query("SELECT DATE_FORMAT(date_essai, '%Y-%m') AS mois, COUNT(*) AS total FROM reservation GROUP BY mois ORDER BY mois ASC")->fetch_all(MYSQLI_ASSOC);
 $res_monthly_labels = array_column($res_stats, 'mois');
 $res_monthly_data   = array_map('intval', array_column($res_stats, 'total'));
@@ -351,7 +351,7 @@ $top_cars_data   = array_map(fn($v) => (int)$v['total'], $res_voitures);
 
 // Stats status (pour le pie)
 $status_stats = $conn->query("SELECT statut, COUNT(*) AS total FROM reservation GROUP BY statut")->fetch_all(MYSQLI_ASSOC);
-$status_labels = ['pending' => 'En attente', 'confirmed' => 'Confirmées', 'cancelled' => 'Annulées'];
+$status_labels = ['pending' => 'En attente', 'confirmed' => 'ConfirmÃ©es', 'cancelled' => 'AnnulÃ©es'];
 $status_colors = ['pending' => '#f59e0b', 'confirmed' => '#22c55e', 'cancelled' => '#ef4444'];
 $pie_labels = [];
 $pie_data   = [];
@@ -369,7 +369,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY created_at DESC")->fetch_al
 // Token CSRF pour les formulaires
 $token = csrf_token();
 
-// === Gestion des rôles utilisateurs ===
+// === Gestion des rÃ´les utilisateurs ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_role'])) {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $message = "Session invalide.";
@@ -387,7 +387,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_role'])) {
                 $stmt->bind_param("si", $newRole, $userId);
                 $stmt->execute();
                 $stmt->close();
-                $message = "✅ Rôle mis à jour.";
+                $message = "âœ… RÃ´le mis Ã  jour.";
             }
         }
     }
@@ -397,7 +397,7 @@ $users = $conn->query("SELECT u.*, COUNT(r.id_reservation) AS reservation_count 
 ?>
 <?php
 $page_title = 'Administration | EcoDrive';
-$page_desc = 'Panneau d\'administration EcoDrive — gérez les voitures, les utilisateurs et les réservations.';
+$page_desc = 'Panneau d\'administration EcoDrive â€” gÃ©rez les voitures, les utilisateurs et les rÃ©servations.';
 $page_url = 'php/admin.php';
 ?>
 <!DOCTYPE html>
@@ -408,7 +408,7 @@ $page_url = 'php/admin.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -422,22 +422,22 @@ $page_url = 'php/admin.php';
   <?php endif; ?>
 
   <div class="export-bar">
-    <a href="export.php?type=backup" class="btn btn-ghost btn-sm">💾 Backup SQL</a>
-    <a href="export.php?type=reservations" class="btn btn-ghost btn-sm">📄 Export réservations CSV</a>
-    <a href="export.php?type=voitures" class="btn btn-ghost btn-sm">📄 Export voitures CSV</a>
-    <a href="export.php?type=bornes" class="btn btn-ghost btn-sm">📄 Export bornes CSV</a>
+    <a href="export.php?type=backup" class="btn btn-ghost btn-sm">ðŸ’¾ Backup SQL</a>
+    <a href="export.php?type=reservations" class="btn btn-ghost btn-sm">ðŸ“„ Export rÃ©servations CSV</a>
+    <a href="export.php?type=voitures" class="btn btn-ghost btn-sm">ðŸ“„ Export voitures CSV</a>
+    <a href="export.php?type=bornes" class="btn btn-ghost btn-sm">ðŸ“„ Export bornes CSV</a>
   </div>
 
   <nav class="form-actions mb-lg">
-    <button class="btn btn-sm btn-primary tab-btn active" data-tab="reservations">📌 Réservations</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="stats">📊 Statistiques</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="voitures">🚗 Voitures</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="bornes">🔌 Bornes</button>
-    <button class="btn btn-sm btn-ghost tab-btn" data-tab="users">👥 Utilisateurs</button>
+    <button class="btn btn-sm btn-primary tab-btn active" data-tab="reservations">ðŸ“Œ RÃ©servations</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="stats">ðŸ“Š Statistiques</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="voitures">ðŸš— Voitures</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="bornes">ðŸ”Œ Bornes</button>
+    <button class="btn btn-sm btn-ghost tab-btn" data-tab="users">ðŸ‘¥ Utilisateurs</button>
   </nav>
 
   <div id="tab-reservations" class="admin-tab">
-  <h2>📌 Gestion des réservations</h2>
+  <h2>ðŸ“Œ Gestion des rÃ©servations</h2>
 
   <div class="filter-bar">
     <form method="get" class="form-actions">
@@ -446,15 +446,15 @@ $page_url = 'php/admin.php';
       <select name="filter_status" class="filter-input">
         <option value="">Tous les statuts</option>
         <option value="pending" <?= ($_GET['filter_status'] ?? '') === 'pending' ? 'selected' : '' ?>>En attente</option>
-        <option value="confirmed" <?= ($_GET['filter_status'] ?? '') === 'confirmed' ? 'selected' : '' ?>>Confirmée</option>
-        <option value="cancelled" <?= ($_GET['filter_status'] ?? '') === 'cancelled' ? 'selected' : '' ?>>Annulée</option>
+        <option value="confirmed" <?= ($_GET['filter_status'] ?? '') === 'confirmed' ? 'selected' : '' ?>>ConfirmÃ©e</option>
+        <option value="cancelled" <?= ($_GET['filter_status'] ?? '') === 'cancelled' ? 'selected' : '' ?>>AnnulÃ©e</option>
       </select>
       <button type="submit" class="btn-primary btn-sm">Filtrer</button>
     </form>
   </div>
   <div class="table-wrap">
   <table>
-    <tr><th>ID</th><th>Client</th><th>Email</th><th>Voiture</th><th>Date</th><th>Début</th><th>Fin</th><th>Notes</th><th>Statut</th><th>Actions</th></tr>
+    <tr><th>ID</th><th>Client</th><th>Email</th><th>Voiture</th><th>Date</th><th>DÃ©but</th><th>Fin</th><th>Notes</th><th>Statut</th><th>Actions</th></tr>
     <?php foreach ($reservations as $r): ?>
     <tr>
       <td data-label="ID"><?= (int)$r['id_reservation'] ?></td>
@@ -462,9 +462,9 @@ $page_url = 'php/admin.php';
       <td data-label="Email"><?= htmlspecialchars($r['email']) ?></td>
       <td data-label="Voiture"><?= htmlspecialchars($r['marque'] . ' ' . $r['modele']) ?></td>
       <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
-      <td data-label="Début"><?= htmlspecialchars($r['heure_debut']) ?></td>
+      <td data-label="DÃ©but"><?= htmlspecialchars($r['heure_debut']) ?></td>
       <td data-label="Fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
-      <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
+      <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: 'â€”' ?></td>
       <td data-label="Statut"><span class="statut-<?= htmlspecialchars($r['statut']) ?>"><?= htmlspecialchars($r['statut']) ?></span></td>
       <td data-label="Actions">
         <form method="POST" class="form-inline">
@@ -472,13 +472,13 @@ $page_url = 'php/admin.php';
           <input type="hidden" name="csrf_token" value="<?= $token ?>">
           <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
           <input type="hidden" name="action" value="confirmed">
-          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Êtes-vous sûr de vouloir confirmer cette réservation ?')">Confirmer</button>
+          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('ÃŠtes-vous sÃ»r de vouloir confirmer cette rÃ©servation ?')">Confirmer</button>
         </form>
         <form method="POST" class="form-inline">
           <input type="hidden" name="csrf_token" value="<?= $token ?>">
           <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
           <input type="hidden" name="action" value="cancelled">
-          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')">Annuler</button>
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('ÃŠtes-vous sÃ»r de vouloir annuler cette rÃ©servation ?')">Annuler</button>
         </form>
       </td>
     </tr>
@@ -497,30 +497,30 @@ $page_url = 'php/admin.php';
 
   <div id="tab-stats" class="admin-tab tab-hidden">
 
-  <!-- 📊 Statistiques -->
-  <h2>📊 Statistiques</h2>
+  <!-- ðŸ“Š Statistiques -->
+  <h2>ðŸ“Š Statistiques</h2>
 
   <div class="chart-row reveal reveal-up reveal-delay-1">
     <div class="chart-card">
-      <h3>Réservations par mois</h3>
+      <h3>RÃ©servations par mois</h3>
       <canvas id="chartMonthly" width="350" height="180"></canvas>
     </div>
     <div class="chart-card">
-      <h3>Répartition par statut</h3>
+      <h3>RÃ©partition par statut</h3>
       <canvas id="chartStatus" width="200" height="180"></canvas>
     </div>
   </div>
 
   <div class="chart-row reveal reveal-up reveal-delay-1">
     <div class="chart-card">
-      <h3>Voitures les plus demandées</h3>
+      <h3>Voitures les plus demandÃ©es</h3>
       <canvas id="chartTopCars" width="350" height="180"></canvas>
     </div>
     <div class="chart-card">
       <h3>Clients les plus actifs</h3>
       <div class="table-wrap">
       <table>
-        <tr><th>Nom</th><th>Email</th><th>Réservations</th></tr>
+        <tr><th>Nom</th><th>Email</th><th>RÃ©servations</th></tr>
         <?php foreach ($res_clients as $c): ?>
           <tr><td><?= htmlspecialchars($c['nom']) ?></td><td><?= htmlspecialchars($c['email']) ?></td><td><?= (int)$c['total'] ?></td></tr>
         <?php endforeach; ?>
@@ -534,7 +534,7 @@ $page_url = 'php/admin.php';
     type: 'bar',
     data: {
       labels: <?= json_encode($res_monthly_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'RÃ©servations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(60,154,190,0.6)', borderColor: '#3C9ABE', borderWidth: 1, borderRadius: 4 }]
     },
     options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
@@ -550,7 +550,7 @@ $page_url = 'php/admin.php';
     type: 'bar',
     data: {
       labels: <?= json_encode($top_cars_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'RÃ©servations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(60,154,190,0.6)', borderColor: '#3C9ABE', borderWidth: 1, borderRadius: 4 }]
     },
     options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
@@ -559,8 +559,8 @@ $page_url = 'php/admin.php';
 
   <div id="tab-voitures" class="admin-tab tab-hidden">
 
-  <!-- 🚗 Gestion du catalogue voitures -->
-  <h2>🚗 Gestion des voitures</h2>
+  <!-- ðŸš— Gestion du catalogue voitures -->
+  <h2>ðŸš— Gestion des voitures</h2>
   <div class="admin-layout">
     <div class="admin-section">
       <h3>Ajouter une voiture</h3>
@@ -568,8 +568,8 @@ $page_url = 'php/admin.php';
         <input type="hidden" name="car_action" value="add">
         <input type="hidden" name="csrf_token" value="<?= $token ?>">
         <input type="text" name="marque" placeholder="Marque" required>
-        <input type="text" name="modele" placeholder="Modèle" required>
-        <input type="number" name="annee" placeholder="Année" required>
+        <input type="text" name="modele" placeholder="ModÃ¨le" required>
+        <input type="number" name="annee" placeholder="AnnÃ©e" required>
         <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
         <input type="number" step="0.1" name="battery_kwh" placeholder="Batterie (kWh)">
         <input type="number" name="horsepower" placeholder="Puissance (ch)">
@@ -577,7 +577,7 @@ $page_url = 'php/admin.php';
         <textarea name="description" placeholder="Description" rows="2"></textarea>
         <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
         <input type="text" name="image" placeholder="Ou chemin direct (ex: images/marque/voiture.jpg)">
-        <input type="text" name="details_page" placeholder="Page détails (ex: voitures/Modele.php)">
+        <input type="text" name="details_page" placeholder="Page dÃ©tails (ex: voitures/Modele.php)">
         <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </div>
@@ -585,23 +585,23 @@ $page_url = 'php/admin.php';
       <h3>Voitures existantes</h3>
       <div class="table-wrap">
       <table>
-        <tr><th>ID</th><th>Marque</th><th>Modèle</th><th>Prix</th><th>Actions</th></tr>
+        <tr><th>ID</th><th>Marque</th><th>ModÃ¨le</th><th>Prix</th><th>Actions</th></tr>
         <?php foreach ($voitures as $v): ?>
         <tr>
           <td data-label="ID"><?= (int)$v['id_voiture'] ?></td>
           <td data-label="Marque"><?= htmlspecialchars($v['marque']) ?></td>
-          <td data-label="Modèle"><?= htmlspecialchars($v['modele']) ?></td>
+          <td data-label="ModÃ¨le"><?= htmlspecialchars($v['modele']) ?></td>
           <td data-label="Prix"><?= number_format((float)$v['prix'], 0, ',', ' ') ?> DT</td>
           <td data-label="Actions">
             <details class="edit-inline">
-              <summary class="btn-edit">✏️ Modifier</summary>
+              <summary class="btn-edit">âœï¸ Modifier</summary>
               <form method="POST" class="edit-form" enctype="multipart/form-data">
                 <input type="hidden" name="car_action" value="update">
                 <input type="hidden" name="csrf_token" value="<?= $token ?>">
                 <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
                 <input type="hidden" name="image_existing" value="<?= htmlspecialchars($v['image'] ?? '') ?>">
                 <?php if ($v['image'] && file_exists('../' . $v['image'])): ?>
-                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($v['image']) ?>" alt="Aperçu <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?>" class="img-preview"></div>
+                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($v['image']) ?>" alt="AperÃ§u <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?>" class="img-preview"></div>
                 <?php endif; ?>
                 <input type="text" name="marque" value="<?= htmlspecialchars($v['marque']) ?>" required>
                 <input type="text" name="modele" value="<?= htmlspecialchars($v['modele']) ?>" required>
@@ -614,14 +614,14 @@ $page_url = 'php/admin.php';
                 <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/avif">
                 <input type="text" name="image" value="<?= htmlspecialchars($v['image'] ?? '') ?>" placeholder="Ou chemin direct">
                 <input type="text" name="details_page" value="<?= htmlspecialchars($v['details_page'] ?? '') ?>">
-                <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+                <button type="submit" class="btn btn-primary">ðŸ’¾ Enregistrer</button>
               </form>
             </details>
             <form method="POST" class="form-inline">
               <input type="hidden" name="car_action" value="delete">
               <input type="hidden" name="csrf_token" value="<?= $token ?>">
               <input type="hidden" name="id_voiture" value="<?= (int)$v['id_voiture'] ?>">
-              <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?> ?')">🗑 Supprimer</button>
+              <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($v['marque'].' '.$v['modele']) ?> ?')">ðŸ—‘ Supprimer</button>
             </form>
           </td>
         </tr>
@@ -635,8 +635,8 @@ $page_url = 'php/admin.php';
 
   <div id="tab-bornes" class="admin-tab tab-hidden">
 
-  <!-- 🔌 Gestion des bornes -->
-  <h2>🔌 Gestion des bornes</h2>
+  <!-- ðŸ”Œ Gestion des bornes -->
+  <h2>ðŸ”Œ Gestion des bornes</h2>
   <div class="admin-layout">
     <div class="admin-section">
       <h3>Ajouter une borne</h3>
@@ -644,13 +644,13 @@ $page_url = 'php/admin.php';
         <input type="hidden" name="borne_action" value="add">
         <input type="hidden" name="csrf_token" value="<?= $token ?>">
         <input type="text" name="nom" placeholder="Nom" required>
-        <input type="text" name="modele" placeholder="Modèle" required>
+        <input type="text" name="modele" placeholder="ModÃ¨le" required>
         <input type="text" name="puissance" placeholder="Puissance (ex: 7 kW)" required>
         <input type="number" step="0.01" name="prix" placeholder="Prix (DT)" required>
         <textarea name="description" placeholder="Description" rows="2"></textarea>
         <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
         <input type="text" name="image" placeholder="Ou chemin direct (ex: images/bornes/borne.png)">
-        <input type="text" name="details_page" placeholder="Page détails (ex: bornes/Modèle.php)">
+        <input type="text" name="details_page" placeholder="Page dÃ©tails (ex: bornes/ModÃ¨le.php)">
         <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </div>
@@ -658,24 +658,24 @@ $page_url = 'php/admin.php';
       <h3>Bornes existantes</h3>
       <div class="table-wrap">
       <table>
-        <tr><th>ID</th><th>Nom</th><th>Modèle</th><th>Puissance</th><th>Prix</th><th>Actions</th></tr>
+        <tr><th>ID</th><th>Nom</th><th>ModÃ¨le</th><th>Puissance</th><th>Prix</th><th>Actions</th></tr>
         <?php foreach ($bornes as $b): ?>
         <tr>
           <td data-label="ID"><?= (int)$b['id_borne'] ?></td>
           <td data-label="Nom"><?= htmlspecialchars($b['nom']) ?></td>
-          <td data-label="Modèle"><?= htmlspecialchars($b['modele']) ?></td>
+          <td data-label="ModÃ¨le"><?= htmlspecialchars($b['modele']) ?></td>
           <td data-label="Puissance"><?= htmlspecialchars($b['puissance']) ?></td>
           <td data-label="Prix"><?= number_format((float)$b['prix'], 0, ',', ' ') ?> DT</td>
           <td data-label="Actions">
             <details class="edit-inline">
-              <summary class="btn-edit">✏️ Modifier</summary>
+              <summary class="btn-edit">âœï¸ Modifier</summary>
               <form method="POST" class="edit-form" enctype="multipart/form-data">
                 <input type="hidden" name="borne_action" value="update">
                 <input type="hidden" name="csrf_token" value="<?= $token ?>">
                 <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
                 <input type="hidden" name="image_existing" value="<?= htmlspecialchars($b['image'] ?? '') ?>">
                 <?php if ($b['image'] && file_exists('../' . $b['image'])): ?>
-                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($b['image']) ?>" alt="Aperçu <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?>" class="img-preview"></div>
+                  <div class="preview-wrap"><img src="../<?= htmlspecialchars($b['image']) ?>" alt="AperÃ§u <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?>" class="img-preview"></div>
                 <?php endif; ?>
                 <input type="text" name="nom" value="<?= htmlspecialchars($b['nom']) ?>" required>
                 <input type="text" name="modele" value="<?= htmlspecialchars($b['modele']) ?>" required>
@@ -685,14 +685,14 @@ $page_url = 'php/admin.php';
                 <input type="file" name="borne_image_file" accept="image/jpeg,image/png,image/webp,image/avif">
                 <input type="text" name="image" value="<?= htmlspecialchars($b['image'] ?? '') ?>" placeholder="Ou chemin direct">
                 <input type="text" name="details_page" value="<?= htmlspecialchars($b['details_page'] ?? '') ?>">
-                <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+                <button type="submit" class="btn btn-primary">ðŸ’¾ Enregistrer</button>
               </form>
             </details>
             <form method="POST" class="form-inline">
               <input type="hidden" name="borne_action" value="delete">
               <input type="hidden" name="csrf_token" value="<?= $token ?>">
               <input type="hidden" name="id_borne" value="<?= (int)$b['id_borne'] ?>">
-              <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?> ?')">🗑 Supprimer</button>
+              <button type="submit" class="btn-delete" onclick="return confirm('Supprimer <?= htmlspecialchars($b['nom'].' '.$b['modele']) ?> ?')">ðŸ—‘ Supprimer</button>
             </form>
           </td>
         </tr>
@@ -704,23 +704,23 @@ $page_url = 'php/admin.php';
   </div>
 
   <div id="tab-users" class="admin-tab tab-hidden">
-  <h2>👥 Gestion des utilisateurs</h2>
+  <h2>ðŸ‘¥ Gestion des utilisateurs</h2>
   <div class="table-wrap">
   <table>
-    <tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Réservations</th><th>Actions</th></tr>
+    <tr><th>Nom</th><th>Email</th><th>RÃ´le</th><th>RÃ©servations</th><th>Actions</th></tr>
     <?php foreach ($users as $u): ?>
     <tr>
       <td data-label="Nom"><?= htmlspecialchars($u['nom']) ?></td>
       <td data-label="Email"><?= htmlspecialchars($u['email']) ?></td>
-      <td data-label="Rôle"><span class="statut-<?= htmlspecialchars($u['role']) ?>"><?= htmlspecialchars($u['role']) ?></span></td>
-      <td data-label="Réservations"><?= (int)$u['reservation_count'] ?></td>
+      <td data-label="RÃ´le"><span class="statut-<?= htmlspecialchars($u['role']) ?>"><?= htmlspecialchars($u['role']) ?></span></td>
+      <td data-label="RÃ©servations"><?= (int)$u['reservation_count'] ?></td>
       <td data-label="Actions">
         <form method="POST" class="form-inline">
           <input type="hidden" name="csrf_token" value="<?= $token ?>">
           <input type="hidden" name="user_id" value="<?= (int)$u['id_utilisateur'] ?>">
           <input type="hidden" name="toggle_role" value="1">
-          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Changer le rôle de <?= htmlspecialchars($u['nom']) ?> ?')">
-            <?= $u['role'] === 'admin' ? '→ Client' : '→ Admin' ?>
+          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Changer le rÃ´le de <?= htmlspecialchars($u['nom']) ?> ?')">
+            <?= $u['role'] === 'admin' ? 'â†’ Client' : 'â†’ Admin' ?>
           </button>
         </form>
       </td>

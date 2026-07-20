@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 $loggedIn = isset($_SESSION['user']);
@@ -38,14 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             emailPasswordReset($email, $token, $scheme, $_SERVER['HTTP_HOST']);
         }
 
-        $message = 'Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.';
+        $message = 'Si un compte existe avec cet email, vous recevrez un lien de rÃ©initialisation.';
         $messageType = 'success';
     }
 }
 ?>
 <?php
-$page_title = 'Mot de passe oublié | EcoDrive';
-$page_desc = 'Réinitialisez votre mot de passe EcoDrive. Entrez votre email pour recevoir un lien de réinitialisation.';
+$page_title = 'Mot de passe oubliÃ© | EcoDrive';
+$page_desc = 'RÃ©initialisez votre mot de passe EcoDrive. Entrez votre email pour recevoir un lien de rÃ©initialisation.';
 $page_url = 'php/mot-de-passe-oublie.php';
 ?>
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ $page_url = 'php/mot-de-passe-oublie.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E" />
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -68,18 +68,18 @@ $page_url = 'php/mot-de-passe-oublie.php';
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
       <div class="login-visual-quote">
-        Un problème de mot de passe ?
+        Un problÃ¨me de mot de passe ?
         <strong>On s'en occupe.</strong>
       </div>
-      <div class="login-visual-sub">Réinitialisation sécurisée</div>
+      <div class="login-visual-sub">RÃ©initialisation sÃ©curisÃ©e</div>
     </div>
   </div>
 
   <div class="login-form-col">
     <div class="login-form-wrap">
-      <div class="login-eyebrow">Mot de passe oublié</div>
-      <h2>Réinitialisez<br>votre mot de passe.</h2>
-      <p class="login-sub">Saisissez votre adresse e-mail, nous vous enverrons un lien pour le réinitialiser.</p>
+      <div class="login-eyebrow">Mot de passe oubliÃ©</div>
+      <h2>RÃ©initialisez<br>votre mot de passe.</h2>
+      <p class="login-sub">Saisissez votre adresse e-mail, nous vous enverrons un lien pour le rÃ©initialiser.</p>
 
       <?php if ($message): ?>
         <div class="login-error" style="background:<?= $messageType === 'success' ? 'rgba(var(--green-rgb),0.1)' : 'rgba(var(--danger-rgb),0.1)' ?>;color:<?= $messageType === 'success' ? 'var(--green)' : 'var(--danger)' ?>"><?= htmlspecialchars($message) ?></div>
@@ -91,12 +91,12 @@ $page_url = 'php/mot-de-passe-oublie.php';
           <label class="field-label" for="email">Adresse e-mail</label>
           <input type="email" id="email" name="email" placeholder="votre@email.com" autocomplete="email" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide." />
         </div>
-        <button type="submit" class="btn-primary">Envoyer le lien →</button>
+        <button type="submit" class="btn-primary">Envoyer le lien â†’</button>
       </form>
 
       <div class="login-divider"></div>
       <div class="login-footer-links">
-        <span><a href="connexion.php">← Retour à la connexion</a></span>
+        <span><a href="connexion.php">â† Retour Ã  la connexion</a></span>
       </div>
     </div>
   </div>

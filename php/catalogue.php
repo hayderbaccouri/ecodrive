@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 $user = $_SESSION['user'] ?? null;
 $loggedIn = $user !== null;
 
-// ── Récupération des filtres ──────────────────────────────────
+// â”€â”€ RÃ©cupÃ©ration des filtres â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $search    = trim($_GET['q'] ?? '');
 $brand     = trim($_GET['brand'] ?? '');
 $price_min = trim($_GET['price_min'] ?? '');
@@ -22,7 +22,7 @@ switch ($sort) {
     case 'year':       $orderSql = 'annee DESC'; break;
 }
 
-// ── Construction dynamique de la requête ────────────────────
+// â”€â”€ Construction dynamique de la requÃªte â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $conditions = [];
 $params = [];
 $types = '';
@@ -58,7 +58,7 @@ if ($conditions) {
     $where = ' WHERE ' . implode(' AND ', $conditions);
 }
 
-// ── Pagination ──────────────────────────────────────────────
+// â”€â”€ Pagination â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $page  = max(1, (int) ($_GET['page'] ?? 1));
 $limit = 7;
 $offset = ($page - 1) * $limit;
@@ -79,13 +79,13 @@ $params[] = $offset;
 $types .= 'ii';
 
 $stmt = $conn->prepare($dataSql);
-if ($stmt === false) die('Erreur de requête SQL.');
+if ($stmt === false) die('Erreur de requÃªte SQL.');
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $voitures = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
-// ── Récupérer la liste des marques pour le filtre ──────────
+// â”€â”€ RÃ©cupÃ©rer la liste des marques pour le filtre â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 $brands = $conn->query("SELECT DISTINCT marque FROM voiture ORDER BY marque")->fetch_all(MYSQLI_ASSOC);
 
 $allCars = $conn->query("SELECT marque, modele FROM voiture ORDER BY marque, modele")->fetch_all(MYSQLI_ASSOC);
@@ -100,8 +100,8 @@ while ($row = $specsStmt->fetch_assoc()) {
 $specsStmt->free();
 ?>
 <?php
-$page_title = 'Catalogue des voitures électriques | EcoDrive';
-$page_desc = 'Découvrez notre catalogue complet de voitures électriques en Tunisie. Tesla, BMW, Mercedes, Peugeot et plus — comparez les modèles, prix et autonomies.';
+$page_title = 'Catalogue des voitures Ã©lectriques | EcoDrive';
+$page_desc = 'DÃ©couvrez notre catalogue complet de voitures Ã©lectriques en Tunisie. Tesla, BMW, Mercedes, Peugeot et plus â€” comparez les modÃ¨les, prix et autonomies.';
 $page_url = 'php/catalogue.php';
 ?>
 <!DOCTYPE html>
@@ -113,7 +113,7 @@ $page_url = 'php/catalogue.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
   <?php $jsonld_type = 'localbusiness'; include __DIR__ . '/partials/jsonld.php'; ?>
 </head>
 
@@ -122,14 +122,14 @@ $page_url = 'php/catalogue.php';
 
 
   <section id="results" class="showroom reveal reveal-up">
-    <h2 class="section-title">Notre sélection de véhicules électriques</h2>
+    <h2 class="section-title">Notre sÃ©lection de vÃ©hicules Ã©lectriques</h2>
     <div class="blue-bar"></div>
 
     <form id="catalogue-search" action="catalogue.php" method="get" class="controls-form">
       <div class="showroom-controls">
         <div class="controls-left">
           <label class="search-input">
-            <input type="search" name="q" value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>" placeholder="Rechercher un modèle, marque..." aria-label="Recherche">
+            <input type="search" name="q" value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>" placeholder="Rechercher un modÃ¨le, marque..." aria-label="Recherche">
           </label>
           <div class="filter-field">
             <select name="brand" aria-label="Marque">
@@ -146,21 +146,21 @@ $page_url = 'php/catalogue.php';
             <input type="number" name="price_max" value="<?= htmlspecialchars($price_max, ENT_QUOTES, 'UTF-8') ?>" placeholder="Prix max" aria-label="Prix max" step="1000">
           </div>
           <div class="filter-field">
-            <input type="number" name="year" value="<?= htmlspecialchars($year, ENT_QUOTES, 'UTF-8') ?>" placeholder="Année" aria-label="Année" min="2010" max="2026">
+            <input type="number" name="year" value="<?= htmlspecialchars($year, ENT_QUOTES, 'UTF-8') ?>" placeholder="AnnÃ©e" aria-label="AnnÃ©e" min="2010" max="2026">
           </div>
           <div class="sort-select">
             <select aria-label="Trier" name="sort">
               <option value="popular"<?= $sort === 'popular' ? ' selected' : '' ?>>Trier : Populaire</option>
-              <option value="price-asc"<?= $sort === 'price-asc' ? ' selected' : '' ?>>Prix : Bas → Haut</option>
-              <option value="price-desc"<?= $sort === 'price-desc' ? ' selected' : '' ?>>Prix : Haut → Bas</option>
-              <option value="year"<?= $sort === 'year' ? ' selected' : '' ?>>Année : Récent</option>
+              <option value="price-asc"<?= $sort === 'price-asc' ? ' selected' : '' ?>>Prix : Bas â†’ Haut</option>
+              <option value="price-desc"<?= $sort === 'price-desc' ? ' selected' : '' ?>>Prix : Haut â†’ Bas</option>
+              <option value="year"<?= $sort === 'year' ? ' selected' : '' ?>>AnnÃ©e : RÃ©cent</option>
             </select>
           </div>
         </div>
         <div class="controls-right">
           <button class="btn-primary" type="submit">Filtrer</button>
           <?php if ($search !== '' || $brand !== '' || $price_min !== '' || $price_max !== '' || $year !== ''): ?>
-            <a href="catalogue.php" class="btn-reset">✕ Réinitialiser</a>
+            <a href="catalogue.php" class="btn-reset">âœ• RÃ©initialiser</a>
           <?php endif; ?>
         </div>
       </div>
@@ -169,9 +169,9 @@ $page_url = 'php/catalogue.php';
     <div class="grid reveal reveal-up reveal-delay-2">
       <?php if (count($voitures) === 0): ?>
         <div style="text-align:center;padding:3rem 1rem;grid-column:1/-1">
-          <div style="font-size:3rem;margin-bottom:1rem">🔍</div>
-          <h3 style="margin-bottom:.5rem">Aucune voiture trouvée</h3>
-          <p style="color:var(--gray);margin-bottom:1rem">Essayez de modifier vos filtres ou <a href="catalogue.php" style="color:var(--accent)">réinitialisez la recherche</a>.</p>
+          <div style="font-size:3rem;margin-bottom:1rem">ðŸ”</div>
+          <h3 style="margin-bottom:.5rem">Aucune voiture trouvÃ©e</h3>
+          <p style="color:var(--gray);margin-bottom:1rem">Essayez de modifier vos filtres ou <a href="catalogue.php" style="color:var(--accent)">rÃ©initialisez la recherche</a>.</p>
         </div>
       <?php else: ?>
         <?php foreach ($voitures as $voiture): ?>
@@ -193,12 +193,12 @@ $page_url = 'php/catalogue.php';
                   <?php if ($s['battery_kwh']): ?><span class="spec-chip"><?= htmlspecialchars($s['battery_kwh']) ?> kWh</span><?php endif; ?>
                   <?php if ($s['range_km']): ?><span class="spec-chip"><?= (int)$s['range_km'] ?> km</span><?php endif; ?>
                 <?php else: ?>
-                  <span class="spec-chip">Électrique</span>
+                  <span class="spec-chip">Ã‰lectrique</span>
                 <?php endif; ?>
               </div>
               <div class="card-actions">
                 <?php if ($loggedIn): ?>
-                  <a class="btn-primary" href="reservation.php?car=<?= (int) $voiture['id_voiture'] ?>">Réserver un essai</a>
+                  <a class="btn-primary" href="reservation.php?car=<?= (int) $voiture['id_voiture'] ?>">RÃ©server un essai</a>
                 <?php else: ?>
                   <a class="btn-ghost" href="connexion.php">Connectez-vous</a>
                 <?php endif; ?>

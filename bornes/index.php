@@ -1,11 +1,11 @@
-<?php
+﻿<?php
 include __DIR__ . '/../php/bootstrap.php';
 
 $user = $_SESSION['user'] ?? null;
 $loggedIn = $user !== null;
 
 $page_title = 'Bornes de recharge | EcoDrive Tunisie';
-$page_desc = 'Découvrez notre gamme de bornes de recharge Exicom pour voitures électriques en Tunisie. Installation à domicile, bureau ou flotte.';
+$page_desc = 'DÃ©couvrez notre gamme de bornes de recharge Exicom pour voitures Ã©lectriques en Tunisie. Installation Ã  domicile, bureau ou flotte.';
 $page_url = 'bornes/index.php';
 
 $bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all(MYSQLI_ASSOC);
@@ -18,7 +18,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
 </head>
 
 <body class="has-topbar">
@@ -53,9 +53,9 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all
       </div>
 
       <div class="about-values" style="max-width:700px;margin:0 auto">
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Installation professionnelle à domicile ou en entreprise</div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text">Installation professionnelle Ã  domicile ou en entreprise</div></div>
         <div class="value-item"><div class="value-dot"></div><div class="value-text">Pilotage et suivi via application mobile</div></div>
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Compatible toutes voitures électriques</div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text">Compatible toutes voitures Ã©lectriques</div></div>
         <div class="value-item"><div class="value-dot"></div><div class="value-text">Garantie constructeur incluse</div></div>
       </div>
 

@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 $page_title    = $page_title    ?? 'EcoDrive';
-$page_desc     = $page_desc     ?? 'Premier showroom électrique de Tunisie. Découvrez notre catalogue de voitures électriques et bornes de recharge.';
+$page_desc     = $page_desc     ?? 'Premier showroom Ã©lectrique de Tunisie. DÃ©couvrez notre catalogue de voitures Ã©lectriques et bornes de recharge.';
 $page_image    = !empty($page_image) ? $page_image : '';
-$page_keywords = $page_keywords ?? 'voiture électrique, borne recharge, Tunisie, EcoDrive, showroom électrique';
+$page_keywords = $page_keywords ?? 'voiture Ã©lectrique, borne recharge, Tunisie, EcoDrive, showroom Ã©lectrique';
 $site_name     = 'EcoDrive';
 $base_url      = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
 $page_url      = $base_url . '/' . ltrim($page_url ?? '', '/');

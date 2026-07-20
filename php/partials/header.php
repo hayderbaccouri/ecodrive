@@ -1,17 +1,17 @@
-<?php
-// Partial header — expect $asset_base (e.g. '' or '../'), $loggedIn, $user, $prenom
+﻿<?php
+// Partial header â€” expect $asset_base (e.g. '' or '../'), $loggedIn, $user, $prenom
 $asset_base = $asset_base ?? '';
 $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
 ?>
 
   <!-- Top announcement bar -->
-  <div class="topbar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><path d="M13 2L3 14h6l-2 8 10-12h-6l2-8z"/></svg> Premier showroom de voitures électriques en Tunisie — Essai gratuit disponible</div>
+  <div class="topbar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px"><path d="M13 2L3 14h6l-2 8 10-12h-6l2-8z"/></svg> Premier showroom de voitures Ã©lectriques en Tunisie â€” Essai gratuit disponible</div>
 
   <!-- Header -->
   <header class="site-header">
     <a class="logo-link" href="<?= $asset_base ?>index.php" aria-label="Accueil EcoDrive">
       <div class="logo-text">eco<span>drive</span></div>
-      <div class="brand-tagline">Premier showroom électrique de Tunisie</div>
+      <div class="brand-tagline">Premier showroom Ã©lectrique de Tunisie</div>
     </a>
 
     <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
@@ -29,14 +29,14 @@ $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
           <div class="user-badge">
             <div class="avatar"><?= mb_strtoupper(mb_substr($prenom, 0, 1)) ?></div>
             <span class="user-name"><?= htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8') ?></span>
-            <span class="chevron">▾</span>
+            <span class="chevron">â–¾</span>
           </div>
           <div class="user-dropdown" role="menu">
             <?php $dashboardPage = ($user['role'] ?? 'client') === 'admin' ? $asset_base . 'php/admin.php' : $asset_base . 'php/tableau-de-bord.php'; ?>
-            <a href="<?= $dashboardPage ?>" role="menuitem">👤 Mon espace</a>
-            <a href="<?= $asset_base ?>php/mes-essais.php" role="menuitem">🚗 Mes essais</a>
+            <a href="<?= $dashboardPage ?>" role="menuitem">ðŸ‘¤ Mon espace</a>
+            <a href="<?= $asset_base ?>php/mes-essais.php" role="menuitem">ðŸš— Mes essais</a>
             <hr role="separator">
-            <a href="<?= $asset_base ?>php/deconnexion.php" class="logout" role="menuitem">🚪 Se déconnecter</a>
+            <a href="<?= $asset_base ?>php/deconnexion.php" class="logout" role="menuitem">ðŸšª Se dÃ©connecter</a>
           </div>
         </div>
       <?php else: ?>

@@ -1,11 +1,11 @@
-<?php
+﻿<?php
 $uri = htmlspecialchars($_SERVER['REQUEST_URI'] ?? '', ENT_QUOTES, 'UTF-8');
 session_start();
 $loggedIn = isset($_SESSION['user']);
 
 $page_url = '404.php';
-$page_title = '404 — Page introuvable | EcoDrive';
-$page_desc = 'La page que vous recherchez n\'existe pas ou a été déplacée. Retournez à l\'accueil EcoDrive.';
+$page_title = '404 â€” Page introuvable | EcoDrive';
+$page_desc = 'La page que vous recherchez n\'existe pas ou a Ã©tÃ© dÃ©placÃ©e. Retournez Ã  l\'accueil EcoDrive.';
 $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -15,7 +15,7 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="stylesheet" href="css/style.css?v=15">
   <style>
     .page-404{color:var(--dark);min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;flex:1}
     .page-404 h1{font-family:var(--font-display);font-size:clamp(6rem,12vw,10rem);font-weight:300;color:var(--accent);line-height:1;margin-bottom:.5rem}
@@ -30,8 +30,8 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 <main class="page-404">
   <h1>404</h1>
   <h2>Page introuvable</h2>
-  <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
-  <a href="index.php" class="btn btn-404">Retour à l'accueil</a>
+  <p>La page que vous cherchez n'existe pas ou a Ã©tÃ© dÃ©placÃ©e.</p>
+  <a href="index.php" class="btn btn-404">Retour Ã  l'accueil</a>
   <div class="path"><?= $uri ?></div>
 </main>
 

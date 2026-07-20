@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include 'bootstrap.php';
 
 $loggedIn = isset($_SESSION['user']);
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $attempts->close();
 
         if ($count >= 5) {
-            $error = 'Trop de tentatives. Réessayez dans 15 minutes.';
+            $error = 'Trop de tentatives. RÃ©essayez dans 15 minutes.';
         } else {
         $stmt = $conn->prepare('SELECT id_utilisateur, nom, email, mot_de_passe, role FROM utilisateur WHERE email = ? LIMIT 1');
 
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <?php
 $page_title = 'Connexion | EcoDrive';
-$page_desc = 'Connectez-vous à votre compte EcoDrive pour gérer vos réservations d\'essais, votre profil et vos voitures favorites.';
+$page_desc = 'Connectez-vous Ã  votre compte EcoDrive pour gÃ©rer vos rÃ©servations d\'essais, votre profil et vos voitures favorites.';
 $page_url = 'php/connexion.php';
 ?>
 <!DOCTYPE html>
@@ -85,7 +85,7 @@ $page_url = 'php/connexion.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=14">
+  <link rel="stylesheet" href="../css/style.css?v=15">
 </head>
 <body>
 
@@ -109,9 +109,9 @@ $page_url = 'php/connexion.php';
 
       <div class="login-visual-quote">
         L'avenir de la route,
-        <strong>sans émissions.</strong>
+        <strong>sans Ã©missions.</strong>
       </div>
-      <div class="login-visual-sub">Premier showroom électrique · Tunisie</div>
+      <div class="login-visual-sub">Premier showroom Ã©lectrique Â· Tunisie</div>
     </div>
   </div>
 
@@ -121,11 +121,11 @@ $page_url = 'php/connexion.php';
 
       <div class="login-eyebrow">Espace client</div>
       <h2>Bon retour<br>parmi nous.</h2>
-      <p class="login-sub">Connectez-vous pour accéder à votre espace EcoDrive et gérer vos essais.</p>
+      <p class="login-sub">Connectez-vous pour accÃ©der Ã  votre espace EcoDrive et gÃ©rer vos essais.</p>
 
       <?php if ($error): ?>
         <div class="login-error">
-          ⚠ <?= htmlspecialchars($error) ?>
+          âš  <?= htmlspecialchars($error) ?>
         </div>
       <?php endif; ?>
 
@@ -143,17 +143,17 @@ $page_url = 'php/connexion.php';
           <label class="field-label" for="password">Mot de passe</label>
           <div class="pwd-wrap">
             <input type="password" id="password" name="password"
-                   placeholder="••••••••"
+                   placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                    autocomplete="current-password" required data-msg-required="Veuillez entrer votre mot de passe." />
-            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
+            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">ðŸ‘</button>
           </div>
         </div>
 
-        <button type="submit" class="btn-primary">Se connecter →</button>
+        <button type="submit" class="btn-primary">Se connecter â†’</button>
       </form>
 
       <div class="login-footer-links" style="margin-top:0.5rem">
-        <span><a href="mot-de-passe-oublie.php" style="font-weight:400;font-size:0.8rem">Mot de passe oublié ?</a></span>
+        <span><a href="mot-de-passe-oublie.php" style="font-weight:400;font-size:0.8rem">Mot de passe oubliÃ© ?</a></span>
       </div>
 
       <div class="login-divider"></div>
