@@ -10,3 +10,4 @@
 Thumbs.db
 /.cache
 /.phpunit.result.cache
+private/logs/
