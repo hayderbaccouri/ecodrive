@@ -13,7 +13,7 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
 </head>
 <body class="page-legal">
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
@@ -57,9 +57,9 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
       <h2>Base légale du traitement</h2>
       <p>Le traitement de vos données repose sur les bases légales suivantes :</p>
       <ul>
-        <li><strong>Consentement :</strong> pour l'envoi de communications et l'utilisation de cookies non essentiels</li>
-        <li><strong>Exécution contractuelle :</strong> pour la gestion de votre compte et des services associés</li>
-        <li><strong>Intérêt légitime :</strong> pour l'amélioration du site et la sécurité</li>
+        <li><em>Consentement :</em> pour l'envoi de communications et l'utilisation de cookies non essentiels</li>
+        <li><em>Exécution contractuelle :</em> pour la gestion de votre compte et des services associés</li>
+        <li><em>Intérêt légitime :</em> pour l'amélioration du site et la sécurité</li>
       </ul>
     </div>
 
@@ -132,8 +132,8 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
     <div class="content-section">
       <h2>Contact</h2>
       <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits :</p>
-      <p><strong>Email :</strong> <a href="mailto:info@ecodrive.tn">info@ecodrive.tn</a></p>
-      <p><strong>Contact :</strong> <a href="contact.php">Formulaire de contact</a></p>
+      <p><em>Email :</em> <a href="mailto:info@ecodrive.tn">info@ecodrive.tn</a></p>
+      <p><em>Contact :</em> <a href="contact.php">Formulaire de contact</a></p>
     </div>
   </div>
 </main>

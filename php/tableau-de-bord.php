@@ -72,7 +72,7 @@ $page_url = 'php/tableau-de-bord.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -98,19 +98,19 @@ $page_url = 'php/tableau-de-bord.php';
     <!-- Cartes résumé -->
     <div class="dashboard-summary reveal reveal-up">
       <div class="summary-card">
-        <strong>En attente</strong>
+        <em>En attente</em>
         <span><?= $counts['pending'] ?></span>
       </div>
       <div class="summary-card">
-        <strong>Confirmées</strong>
+        <em>Confirmées</em>
         <span><?= $counts['confirmed'] ?></span>
       </div>
       <div class="summary-card">
-        <strong>Annulées</strong>
+        <em>Annulées</em>
         <span><?= $counts['cancelled'] ?></span>
       </div>
       <div class="summary-card">
-        <strong>Total</strong>
+        <em>Total</em>
         <span><?= array_sum($counts) ?></span>
       </div>
     </div>

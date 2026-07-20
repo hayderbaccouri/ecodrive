@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription - EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
   <?php include __DIR__ . '/partials/meta.php'; ?>
 </head>
 <body>
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
       <div class="login-visual-quote">
-        Rejoignez<br><strong>la révolution électrique.</strong>
+        Rejoignez<br><em>la révolution électrique.</em>
       </div>
       <div class="login-visual-sub">Premier showroom électrique · Tunisie</div>
     </div>

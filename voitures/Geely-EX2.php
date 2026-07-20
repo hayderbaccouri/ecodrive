@@ -14,7 +14,7 @@ $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geely EX2 — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'Geely EX2', 'description' => htmlspecialchars($page_desc, ENT_QUOTES, 'UTF-8'), 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'Geely', 'price' => '52000']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
 </head>

@@ -111,7 +111,7 @@ $page_url = 'php/reservation.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
 </head>
 <body>
   <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
@@ -166,9 +166,9 @@ $page_url = 'php/reservation.php';
         <div class="step-panel tab-hidden">
           <div class="summary-card" style="margin-bottom:var(--space-lg)">
             <h3 class="mb-lg">Récapitulatif</h3>
-            <p class="summary-line"><strong>Voiture :</strong> <span id="summary-car">—</span></p>
-            <p class="summary-line"><strong>Date :</strong> <span id="summary-date">—</span></p>
-            <p class="summary-line"><strong>Heure :</strong> <span id="summary-time">—</span></p>
+            <p class="summary-line"><em>Voiture :</em> <span id="summary-car">—</span></p>
+            <p class="summary-line"><em>Date :</em> <span id="summary-date">—</span></p>
+            <p class="summary-line"><em>Heure :</em> <span id="summary-time">—</span></p>
           </div>
 
           <label for="notes">Notes (optionnel)</label>

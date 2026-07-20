@@ -13,7 +13,7 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
 </head>
 <body class="page-legal">
 <?php $asset_base = '../'; include __DIR__ . '/../php/partials/header.php'; ?>
@@ -26,9 +26,9 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
     <div class="content-section">
       <h2>Éditeur du site</h2>
       <h3>EcoDrive — Premier Showroom Électrique de Tunisie</h3>
-      <p><strong>Nom du responsable :</strong> Hayder Baccouri</p>
-      <p><strong>Type :</strong> Projet de fin de formation — Année 2026</p>
-      <p><strong>Objet :</strong> Plateforme de présentation et de commercialisation de véhicules électriques en Tunisie.</p>
+      <p><em>Nom du responsable :</em> Hayder Baccouri</p>
+      <p><em>Type :</em> Projet de fin de formation — Année 2026</p>
+      <p><em>Objet :</em> Plateforme de présentation et de commercialisation de véhicules électriques en Tunisie.</p>
     </div>
 
     <div class="content-section">
@@ -48,7 +48,7 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
     <div class="content-section">
       <h2>Propriété intellectuelle</h2>
       <p>Tous les contenus présents sur ce site (textes, images, logos, vidéos, icônes, structure, mise en page, code source) sont la propriété exclusive ou sont utilisés avec autorisation. Toute reproduction, distribution, modification ou utilisation sans autorisation est strictement interdite.</p>
-      <p><strong>© 2026 EcoDrive. Tous droits réservés.</strong></p>
+      <p><em>© 2026 EcoDrive. Tous droits réservés.</em></p>
       <h3>Utilisation autorisée</h3>
       <p>Vous êtes autorisé à consulter et télécharger des copies pour votre usage personnel et non commercial uniquement.</p>
     </div>
@@ -132,12 +132,12 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
     <div class="content-section">
       <h2>Contact</h2>
       <h3>Pour toute question concernant ces mentions légales :</h3>
-      <p><strong>Email :</strong> <a href="mailto:info@ecodrive.tn">info@ecodrive.tn</a></p>
-      <p><strong>Formulaire de contact :</strong> Accessible via la <a href="contact.php">page contact</a></p>
+      <p><em>Email :</em> <a href="mailto:info@ecodrive.tn">info@ecodrive.tn</a></p>
+      <p><em>Formulaire de contact :</em> Accessible via la <a href="contact.php">page contact</a></p>
       <h3>Responsable du projet</h3>
-      <p><strong>Nom :</strong> Hayder Baccouri</p>
-      <p><strong>Formation :</strong> Projet de fin de formation 2026</p>
-      <p><strong>Date de mise à jour :</strong> 13 juin 2026</p>
+      <p><em>Nom :</em> Hayder Baccouri</p>
+      <p><em>Formation :</em> Projet de fin de formation 2026</p>
+      <p><em>Date de mise à jour :</em> 13 juin 2026</p>
     </div>
   </div>
 </main>

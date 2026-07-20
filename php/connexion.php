@@ -85,7 +85,7 @@ $page_url = 'php/connexion.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/style.css?v=17">
 </head>
 <body>
 
@@ -109,7 +109,7 @@ $page_url = 'php/connexion.php';
 
       <div class="login-visual-quote">
         L'avenir de la route,
-        <strong>sans émissions.</strong>
+        <em>sans émissions.</em>
       </div>
       <div class="login-visual-sub">Premier showroom électrique · Tunisie</div>
     </div>
