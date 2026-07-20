@@ -18,7 +18,7 @@ $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-$sql = "SELECT r.id_reservation, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut
+$sql = "SELECT r.id_reservation, r.voiture_id, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut
         FROM reservation r JOIN voiture v ON r.voiture_id = v.id_voiture
         WHERE r.utilisateur_id = ? ORDER BY r.date_essai DESC";
 $stmt = $conn->prepare($sql);
@@ -52,7 +52,6 @@ $page_url = 'php/mes-essais.php';
       <p>Consultez l'historique et le statut de toutes vos réservations d'essai.</p>
       <div class="hero-actions">
         <a href="reservation.php" class="btn btn-primary">Réserver un essai</a>
-        <a href="catalogue.php" class="btn btn-ghost">Parcourir le catalogue</a>
       </div>
     </div>
 
@@ -94,7 +93,7 @@ $page_url = 'php/mes-essais.php';
             </td>
             <td data-label="Actions">
               <?php if (in_array($r['statut'], ['pending','confirmed'])): ?>
-                <a href="reservation.php" class="btn btn-sm btn-ghost">Revoir</a>
+                <a href="reservation.php?car=<?= (int)$r['voiture_id'] ?>" class="btn btn-sm btn-ghost">Revoir</a>
               <?php endif; ?>
             </td>
           </tr>
