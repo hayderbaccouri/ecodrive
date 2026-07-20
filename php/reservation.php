@@ -19,10 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $voitureId     = (int)($_POST['voiture_id'] ?? 0);
     $dateEssai     = $_POST['date_essai'] ?? '';
     $heureDebut    = $_POST['heure_debut'] ?? '';
-    $heureFin      = $_POST['heure_fin'] ?? '';
     $notes         = trim($_POST['notes'] ?? '');
 
-    if (!$voitureId || !$dateEssai || !$heureDebut || !$heureFin) {
+    if (!$voitureId || !$dateEssai || !$heureDebut) {
         $message = 'Veuillez remplir tous les champs obligatoires.';
         $messageType = 'error';
     }
@@ -48,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$message) {
+        $heureFin = date('H:i', strtotime($heureDebut . ' +1 hour'));
         if ($heureDebut >= $heureFin) {
             $message = 'L\'heure de fin doit être après l\'heure de début.';
             $messageType = 'error';
@@ -158,11 +158,8 @@ $page_url = 'php/reservation.php';
             <label for="date_essai">Date de l'essai</label>
             <input type="date" id="date_essai" name="date_essai" value="<?= htmlspecialchars($_POST['date_essai'] ?? '') ?>" required min="<?= date('Y-m-d') ?>" data-msg-required="Veuillez choisir une date.">
 
-            <label for="heure_debut">Heure de début</label>
+            <label for="heure_debut">Heure de l'essai (1 heure)</label>
             <input type="time" id="heure_debut" name="heure_debut" value="<?= htmlspecialchars($_POST['heure_debut'] ?? '') ?>" required data-msg-required="Veuillez choisir un horaire.">
-
-            <label for="heure_fin">Heure de fin</label>
-            <input type="time" id="heure_fin" name="heure_fin" value="<?= htmlspecialchars($_POST['heure_fin'] ?? '') ?>" required>
 
             <div class="btn-row">
               <button type="button" class="btn btn-primary step-next">Suivant</button>
@@ -214,15 +211,16 @@ $page_url = 'php/reservation.php';
         var voiture = document.getElementById('voiture_id');
         var date = document.getElementById('date_essai');
         var hDebut = document.getElementById('heure_debut');
-        var hFin = document.getElementById('heure_fin');
-        if (!voiture.value || !date.value || !hDebut.value || !hFin.value) {
+        if (!voiture.value || !date.value || !hDebut.value) {
           alert('Veuillez remplir tous les champs avant de continuer.');
           return;
         }
+        var hFin = hDebut.value.split(':');
+        hFin = String(parseInt(hFin[0]) + 1).padStart(2,'0') + ':' + hFin[1];
         var carText = voiture.options[voiture.selectedIndex].text;
         document.getElementById('summary-car').textContent = carText;
         document.getElementById('summary-date').textContent = date.value;
-        document.getElementById('summary-time').textContent = hDebut.value + ' — ' + hFin.value;
+        document.getElementById('summary-time').textContent = hDebut.value + ' — ' + hFin;
         if(current < panels.length - 1) showStep(current + 1);
       });
     });
