@@ -2,8 +2,12 @@
 include 'bootstrap.php';
 
 // Vérifier que l'utilisateur est connecté et est client
-if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
+if (!isset($_SESSION['user']['id'])) {
     header('Location: connexion.php');
+    exit;
+}
+if (($_SESSION['user']['role'] ?? '') === 'admin') {
+    header('Location: admin.php');
     exit;
 }
 
@@ -85,11 +89,6 @@ $page_url = 'php/mes-essais.php';
         <?php endforeach; ?>
       </table>
       </div>
-    <?php endif; ?>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </table>
     <?php endif; ?>
   </section>
   </main>

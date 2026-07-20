@@ -1,8 +1,12 @@
 <?php
 include 'bootstrap.php';
 
-if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
+if (!isset($_SESSION['user']['id'])) {
     header('Location: connexion.php');
+    exit;
+}
+if (($_SESSION['user']['role'] ?? '') === 'admin') {
+    header('Location: admin.php');
     exit;
 }
 
@@ -14,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel'])) {
         $message = 'Session invalide.';
     } else {
     $reservationId = (int)$_POST['reservation_id'];
-    $stmt = $conn->prepare("UPDATE reservation SET statut='cancelled' WHERE id_reservation=? AND utilisateur_id=?");
+    $stmt = $conn->prepare("UPDATE reservation SET statut='cancelled' WHERE id_reservation=? AND utilisateur_id=? AND statut IN ('pending','confirmed')");
     $stmt->bind_param("ii", $reservationId, $userId);
-    $stmt->execute() ? $message = 'Réservation annulée avec succès.' : $message = 'Erreur lors de l\'annulation.';
+    $stmt->execute() && $stmt->affected_rows > 0 ? $message = 'Réservation annulée avec succès.' : $message = 'Impossible d\'annuler cette réservation.';
     $stmt->close();
     }
 }
@@ -86,7 +90,7 @@ $page_url = 'php/tableau-de-bord.php';
         <div class="hero-eyebrow">Tableau de bord</div>
         <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
         <p>Consultez vos réservations, gérez vos essais et réservez de nouveaux modèles.</p>
-        <p><a href="catalogue.php" class="cta">Parcourir le catalogue</a> <a href="mes-essais.php" class="cta">Mes essais</a></p>
+        <p><a href="catalogue.php" class="btn btn-primary">Parcourir le catalogue</a> <a href="reservation.php" class="btn btn-ghost">Réserver un essai</a></p>
       </div>
     </div>
   </section>
@@ -180,7 +184,7 @@ $page_url = 'php/tableau-de-bord.php';
             <?php endif; ?>
           </td>
           <td data-label="Action">
-            <?php if ($r['statut'] === 'pending'): ?>
+            <?php if (in_array($r['statut'], ['pending', 'confirmed'])): ?>
               <form method="POST" class="form-inline">
                 <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 <input type="hidden" name="reservation_id" value="<?= (int)$r['id_reservation'] ?>">
