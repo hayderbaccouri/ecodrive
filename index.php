@@ -67,7 +67,7 @@ $page_url = '';
           Découvrez une sélection premium, testez avant d'acheter, et rejoignez la révolution verte.
         </p>
         <div class="hero-actions">
-          <a href="#showroom" class="btn-primary cta">Explorer le catalogue</a>
+          <a href="php/catalogue.php" class="btn-primary cta">Explorer le catalogue</a>
           <a href="bornes/index.php" class="btn-primary cta">Explorer les bornes</a>
         </div>
       </div>
