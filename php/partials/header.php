@@ -26,7 +26,7 @@ $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
 
       <?php if (!empty($loggedIn)): ?>
         <div class="user-menu">
-          <div class="user-badge">
+          <div class="user-badge" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
             <div class="avatar"><?= mb_strtoupper(mb_substr($prenom, 0, 1)) ?></div>
             <span class="user-name"><?= htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8') ?></span>
             <span class="chevron">▾</span>
