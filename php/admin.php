@@ -505,19 +505,23 @@ $page_url = 'php/admin.php';
       <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
       <td data-label="Statut"><span class="statut-<?= htmlspecialchars($r['statut']) ?>"><?= htmlspecialchars($r['statut']) ?></span></td>
       <td data-label="Actions">
+        <?php if ($r['statut'] === 'pending'): ?>
         <form method="POST" class="form-inline">
           <?php $token = csrf_token(); ?>
           <input type="hidden" name="csrf_token" value="<?= $token ?>">
           <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
           <input type="hidden" name="action" value="confirmed">
-          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Êtes-vous sûr de vouloir confirmer cette réservation ?')">Confirmer</button>
+          <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Confirmer cette réservation ?')">Confirmer</button>
         </form>
+        <?php endif; ?>
+        <?php if ($r['statut'] !== 'cancelled'): ?>
         <form method="POST" class="form-inline">
-          <input type="hidden" name="csrf_token" value="<?= $token ?>">
+          <input type="hidden" name="csrf_token" value="<?= $token ?? csrf_token() ?>">
           <input type="hidden" name="reservation_id" value="<?= (int) $r['id_reservation'] ?>">
           <input type="hidden" name="action" value="cancelled">
-          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')">Annuler</button>
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Annuler cette réservation ?')">Annuler</button>
         </form>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
