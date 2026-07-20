@@ -780,14 +780,6 @@ $page_url = 'php/admin.php';
             <?= $u['role'] === 'admin' ? '→ Client' : '→ Admin' ?>
           </button>
         </form>
-        <?php if ((int)$u['id_utilisateur'] !== $_SESSION['user']['id']): ?>
-        <form method="POST" class="form-inline">
-          <input type="hidden" name="csrf_token" value="<?= $token ?>">
-          <input type="hidden" name="user_id" value="<?= (int)$u['id_utilisateur'] ?>">
-          <input type="hidden" name="delete_user" value="1">
-          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer <?= htmlspecialchars($u['nom']) ?> ? Toutes ses réservations seront supprimées.')">🗑 Supprimer</button>
-        </form>
-        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
