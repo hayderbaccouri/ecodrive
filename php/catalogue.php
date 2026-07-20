@@ -58,29 +58,10 @@ if ($conditions) {
     $where = ' WHERE ' . implode(' AND ', $conditions);
 }
 
-// ── Pagination ──────────────────────────────────────────────
-$page  = max(1, (int) ($_GET['page'] ?? 1));
-$limit = 7;
-$offset = ($page - 1) * $limit;
-
-// Total count
-$countSql = 'SELECT COUNT(*) AS cnt FROM voiture' . $where;
-$stmt = $conn->prepare($countSql);
-if ($types) $stmt->bind_param($types, ...$params);
-$stmt->execute();
-$total = (int) $stmt->get_result()->fetch_assoc()['cnt'];
-$stmt->close();
-$totalPages = min(2, max(1, (int) ceil($total / $limit)));
-
-// Data query
-$dataSql = 'SELECT * FROM voiture' . $where . ' ORDER BY ' . $orderSql . ' LIMIT ? OFFSET ?';
-$params[] = $limit;
-$params[] = $offset;
-$types .= 'ii';
-
+// ── Requête ──────────────────────────────────────────────
+$dataSql = 'SELECT * FROM voiture' . $where . ' ORDER BY ' . $orderSql;
 $stmt = $conn->prepare($dataSql);
-if ($stmt === false) die('Erreur de requête SQL.');
-$stmt->bind_param($types, ...$params);
+if ($types) $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $voitures = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
@@ -206,19 +187,6 @@ $page_url = 'php/catalogue.php';
         <?php endforeach; ?>
       <?php endif; ?>
     </div>
-
-    <?php if ($totalPages > 1): ?>
-      <div class="pagination">
-        <?php
-        $qs = $_GET;
-        for ($i = 1; $i <= $totalPages; $i++):
-          $qs['page'] = $i;
-          $url = 'catalogue.php?' . http_build_query($qs);
-        ?>
-          <a href="<?= htmlspecialchars($url) ?>" class="pagination-link<?= $i === $page ? ' active' : '' ?>"><?= $i ?></a>
-        <?php endfor; ?>
-      </div>
-    <?php endif; ?>
   </section>
 
 <script>
