@@ -179,17 +179,15 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <!-- About -->
   <section id="about" class="about-strip">
     <div class="about-visual" aria-hidden="true">
-      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ecoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#0A7DA8"/>
-            <stop offset="100%" stop-color="#3C9ABE"/>
-          </linearGradient>
-        </defs>
-        <circle cx="60" cy="60" r="58" fill="url(#ecoGrad)" opacity="0.08"/>
-        <path d="M65 20C45 20 30 35 30 55C30 75 45 95 60 100C60 100 60 75 60 60C60 45 80 25 85 22C80 20 72 20 65 20Z" fill="url(#ecoGrad)" opacity="0.7"/>
-        <path d="M58 50L58 80M58 55L68 45M58 62L48 52" stroke="#0A7DA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
-      </svg>
+      <div class="about-logo">
+        <div class="about-logo-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <path d="M32 8C20 8 12 16 12 28C12 36 18 46 24 52L32 56L32 28C32 20 42 12 44 10C40 8 36 8 32 8Z" fill="#0A7DA8" opacity="0.85"/>
+            <path d="M30 24V48M30 28L38 20M30 34L22 26" stroke="#0A7DA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="about-logo-text">eco<span>drive</span></div>
+      </div>
     </div>
     <div class="about-content">
       <div class="section-eyebrow">Notre mission</div>
