@@ -27,6 +27,12 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all
   <section id="bornes-list" class="bornes-page">
     <div class="container" style="max-width:var(--wrap-max);margin:0 auto;padding:clamp(2rem,5vw,3rem) var(--wrap)">
 
+      <div class="section-header" style="text-align:center;margin-bottom:2.5rem">
+        <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);color:var(--dark);margin-bottom:.5rem">Nos bornes de recharge</h1>
+        <p style="color:var(--gray);font-size:1rem;max-width:500px;margin:0 auto">Des solutions de recharge fiables pour chaque besoin — à domicile, au bureau ou pour votre flotte.</p>
+        <div class="section-rule" style="margin:1rem auto 0"></div>
+      </div>
+
       <div class="bornes-grid">
         <?php foreach ($bornes as $b):
           $img = '../' . htmlspecialchars(ltrim($b['image'] ?? 'images/placeholder.png', '/'), ENT_QUOTES, 'UTF-8');
