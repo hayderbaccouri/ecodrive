@@ -393,6 +393,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_role'])) {
     }
 }
 
+// === Suppression utilisateur ===
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
+    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
+        $message = "Session invalide.";
+    } else {
+        $deleteId = (int) ($_POST['user_id'] ?? 0);
+        if ($deleteId > 0 && $deleteId !== $_SESSION['user']['id']) {
+            $stmt = $conn->prepare("DELETE FROM reservation WHERE utilisateur_id = ?");
+            $stmt->bind_param("i", $deleteId);
+            $stmt->execute();
+            $stmt->close();
+            $stmt = $conn->prepare("DELETE FROM utilisateur WHERE id_utilisateur = ?");
+            $stmt->bind_param("i", $deleteId);
+            $stmt->execute();
+            $stmt->close();
+            $message = "✅ Utilisateur supprimé.";
+        } elseif ($deleteId === $_SESSION['user']['id']) {
+            $message = "❌ Vous ne pouvez pas supprimer votre propre compte.";
+        }
+    }
+}
+
 $users = $conn->query("SELECT u.*, COUNT(r.id_reservation) AS reservation_count FROM utilisateur u LEFT JOIN reservation r ON u.id_utilisateur = r.utilisateur_id GROUP BY u.id_utilisateur ORDER BY u.nom")->fetch_all(MYSQLI_ASSOC);
 
 $totalVoitures = $conn->query("SELECT COUNT(*) AS cnt FROM voiture")->fetch_assoc()['cnt'] ?? 0;
@@ -758,6 +780,14 @@ $page_url = 'php/admin.php';
             <?= $u['role'] === 'admin' ? '→ Client' : '→ Admin' ?>
           </button>
         </form>
+        <?php if ((int)$u['id_utilisateur'] !== $_SESSION['user']['id']): ?>
+        <form method="POST" class="form-inline">
+          <input type="hidden" name="csrf_token" value="<?= $token ?>">
+          <input type="hidden" name="user_id" value="<?= (int)$u['id_utilisateur'] ?>">
+          <input type="hidden" name="delete_user" value="1">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer <?= htmlspecialchars($u['nom']) ?> ? Toutes ses réservations seront supprimées.')">🗑 Supprimer</button>
+        </form>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>

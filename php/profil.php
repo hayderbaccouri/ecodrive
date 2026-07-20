@@ -10,27 +10,6 @@ $userId = $_SESSION['user']['id'];
 $message = '';
 $messageType = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
-    if (!csrf_verify($_POST['csrf_token'] ?? '')) {
-        $message = 'Session invalide.';
-        $messageType = 'error';
-    } else {
-        $stmt = $conn->prepare("DELETE FROM reservation WHERE utilisateur_id = ?");
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $stmt->close();
-
-        $stmt = $conn->prepare("DELETE FROM utilisateur WHERE id_utilisateur = ?");
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $stmt->close();
-
-        session_destroy();
-        header('Location: ../index.php');
-        exit;
-    }
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $message = 'Session invalide.';
@@ -151,16 +130,6 @@ $page_url = 'php/profil.php';
           </div>
 
           <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-        </form>
-      </div>
-
-      <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
-        <h2>⚠️ Zone dangereuse</h2>
-        <p class="text-muted" style="font-size:.9rem;margin-bottom:1rem">La suppression de votre compte est irréversible. Toutes vos réservations seront supprimées.</p>
-        <form method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">
-          <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-          <input type="hidden" name="delete_account" value="1">
-          <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
         </form>
       </div>
     </div>
