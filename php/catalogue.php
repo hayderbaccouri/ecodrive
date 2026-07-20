@@ -199,8 +199,6 @@ $page_url = 'php/catalogue.php';
               <div class="card-actions">
                 <?php if ($loggedIn): ?>
                   <a class="btn-primary" href="reservation.php?car=<?= (int) $voiture['id_voiture'] ?>">Réserver un essai</a>
-                <?php else: ?>
-                  <a class="btn-ghost" href="connexion.php">Connectez-vous</a>
                 <?php endif; ?>
               </div>
             </div>
