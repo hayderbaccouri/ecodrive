@@ -32,7 +32,7 @@ $page_image = 'images/tesla-model-s-plaid/tesla-model-s-plaid.jpg';
         <span class="price-label">À partir de</span>
         <span class="price-value">359 400 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=14" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=12" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
@@ -106,7 +106,7 @@ $page_image = 'images/tesla-model-s-plaid/tesla-model-s-plaid.jpg';
       <div class="cta-box">
         <h2>Essayez la Tesla Model S Plaid 2026</h2>
         <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=14" class="cta-btn">Réserver un essai gratuit</a>
+        <a href="../php/reservation.php?car=12" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

@@ -32,7 +32,7 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
         <span class="price-label">À partir de</span>
         <span class="price-value">104 980 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=6" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=5" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
@@ -106,7 +106,7 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
       <div class="cta-box">
         <h2>Essayez la Kia EV3</h2>
         <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=6" class="cta-btn">Réserver un essai gratuit</a>
+        <a href="../php/reservation.php?car=5" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

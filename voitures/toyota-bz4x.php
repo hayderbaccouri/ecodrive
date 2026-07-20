@@ -32,7 +32,7 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
         <span class="price-label">À partir de</span>
         <span class="price-value">129 800 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=15" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=13" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
@@ -107,7 +107,7 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
       <div class="cta-box">
         <h2>Essayez la Toyota bZ4X 73.1 kWh</h2>
         <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=15" class="cta-btn">Réserver un essai gratuit</a>
+        <a href="../php/reservation.php?car=13" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

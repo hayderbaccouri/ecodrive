@@ -57,6 +57,18 @@ foreach ($reservations as $r) {
         break;
     }
 }
+$monthlyLabels = [];
+$monthlyData = [];
+$stmt = $conn->prepare("SELECT DATE_FORMAT(date_essai, '%Y-%m') AS ym, DATE_FORMAT(date_essai, '%b %Y') AS label, COUNT(*) AS total FROM reservation WHERE utilisateur_id = ? GROUP BY ym, label ORDER BY ym DESC LIMIT 6");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+foreach ($stmt->get_result()->fetch_all(MYSQLI_ASSOC) as $row) {
+    $monthlyLabels[] = $row['label'];
+    $monthlyData[] = (int)$row['total'];
+}
+$stmt->close();
+$monthlyLabels = array_reverse($monthlyLabels);
+$monthlyData = array_reverse($monthlyData);
 ?>
 <?php
 $page_title = 'Mon espace | EcoDrive';

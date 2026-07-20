@@ -33,7 +33,7 @@ $page_image = 'images/mercedes-classe-c-2026/1-Mercedes-Benz-Classe-C-2026.jpg';
         <span class="price-label">À partir de</span>
         <span class="price-value">320 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=7" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=6" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
@@ -107,7 +107,7 @@ $page_image = 'images/mercedes-classe-c-2026/1-Mercedes-Benz-Classe-C-2026.jpg';
       <div class="cta-box">
         <h2>Essayez la Mercedes-Benz Classe C 2026</h2>
         <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=7" class="cta-btn">Réserver un essai gratuit</a>
+        <a href="../php/reservation.php?car=6" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

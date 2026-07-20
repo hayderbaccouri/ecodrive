@@ -9,9 +9,9 @@ $asset_base = $asset_base ?? '';
           <div class="footer-logo">eco<span>drive</span></div>
           <p class="footer-tagline">Premier showroom électrique de Tunisie — la mobilité durable pour tous.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Facebook" class="social-link">Facebook</a>
-            <a href="#" aria-label="Instagram" class="social-link">Instagram</a>
-            <a href="#" aria-label="LinkedIn" class="social-link">LinkedIn</a>
+            <a href="https://facebook.com/ecodrive.tn" target="_blank" rel="noopener" aria-label="Facebook" class="social-link">Facebook</a>
+            <a href="https://instagram.com/ecodrive.tn" target="_blank" rel="noopener" aria-label="Instagram" class="social-link">Instagram</a>
+            <a href="https://linkedin.com/company/ecodrive" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link">LinkedIn</a>
           </div>
         </div>
         <div class="footer-col">

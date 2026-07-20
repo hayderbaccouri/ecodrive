@@ -88,7 +88,7 @@ $page_url = '';
       <div class="cars-grid reveal reveal-up reveal-delay-1">
 
         <?php foreach ($voitures as $v):
-          $img = htmlspecialchars(ltrim($v['image'] ?? 'images/placeholder.png', '/'), ENT_QUOTES, 'UTF-8');
+          $img = htmlspecialchars(ltrim($v['image'] ?? '', '/'), ENT_QUOTES, 'UTF-8');
           $details = htmlspecialchars(ltrim($v['details_page'] ?? '#', '/'), ENT_QUOTES, 'UTF-8');
           $nom = htmlspecialchars($v['marque'] . ' ' . $v['modele'], ENT_QUOTES, 'UTF-8');
           $prix = number_format((float)$v['prix'], 0, ',', ' ');

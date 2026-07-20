@@ -32,7 +32,7 @@ $page_image = 'images/peugeot-e-208/E-208_gallery_exterior_3_D_1920x1080.jpg';
         <span class="price-label">À partir de</span>
         <span class="price-value">80 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=10" class="btn-reserve">Réserver un essai</a>
+      <a href="../php/reservation.php?car=9" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
@@ -106,7 +106,7 @@ $page_image = 'images/peugeot-e-208/E-208_gallery_exterior_3_D_1920x1080.jpg';
       <div class="cta-box">
         <h2>Essayez la Peugeot e-208</h2>
         <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=10" class="cta-btn">Réserver un essai gratuit</a>
+        <a href="../php/reservation.php?car=9" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

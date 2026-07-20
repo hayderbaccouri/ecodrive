@@ -35,7 +35,7 @@ $bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all
 
       <div class="bornes-grid">
         <?php foreach ($bornes as $b):
-          $img = '../' . htmlspecialchars(ltrim($b['image'] ?? 'images/placeholder.png', '/'), ENT_QUOTES, 'UTF-8');
+          $img = '../' . htmlspecialchars(ltrim($b['image'] ?? '', '/'), ENT_QUOTES, 'UTF-8');
           $details = '../' . htmlspecialchars(ltrim($b['details_page'] ?? '#', '/'), ENT_QUOTES, 'UTF-8');
           $nom = htmlspecialchars($b['nom'] . ' ' . $b['modele'], ENT_QUOTES, 'UTF-8');
           $puissance = htmlspecialchars($b['puissance'], ENT_QUOTES, 'UTF-8');
