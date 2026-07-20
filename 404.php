@@ -1,11 +1,11 @@
-﻿<?php
+<?php
 $uri = htmlspecialchars($_SERVER['REQUEST_URI'] ?? '', ENT_QUOTES, 'UTF-8');
 session_start();
 $loggedIn = isset($_SESSION['user']);
 
 $page_url = '404.php';
-$page_title = '404 â€” Page introuvable | EcoDrive';
-$page_desc = 'La page que vous recherchez n\'existe pas ou a Ã©tÃ© dÃ©placÃ©e. Retournez Ã  l\'accueil EcoDrive.';
+$page_title = '404 — Page introuvable | EcoDrive';
+$page_desc = 'La page que vous recherchez n\'existe pas ou a été déplacée. Retournez à l\'accueil EcoDrive.';
 $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -30,8 +30,8 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 <main class="page-404">
   <h1>404</h1>
   <h2>Page introuvable</h2>
-  <p>La page que vous cherchez n'existe pas ou a Ã©tÃ© dÃ©placÃ©e.</p>
-  <a href="index.php" class="btn btn-404">Retour Ã  l'accueil</a>
+  <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+  <a href="index.php" class="btn btn-404">Retour à l'accueil</a>
   <div class="path"><?= $uri ?></div>
 </main>
 

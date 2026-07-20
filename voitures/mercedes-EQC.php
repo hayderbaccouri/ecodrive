@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Mercedes EQC â€” EcoDrive';
-$page_desc  = 'Mercedes EQC, premier SUV Ã©lectrique Mercedes. 419 km d autonomie, luxe et performance.';
+$page_title = 'Mercedes EQC — EcoDrive';
+$page_desc  = 'Mercedes EQC, premier SUV électrique Mercedes. 419 km d autonomie, luxe et performance.';
 $page_url   = 'voitures/mercedes-EQC.php';
 $page_image = 'images/mercedes-eqc/mercedes-eqc.jpg';
 ?>
@@ -12,7 +12,7 @@ $page_image = 'images/mercedes-eqc/mercedes-eqc.jpg';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercedes EQC 400 4MATIC â€” EcoDrive</title>
+  <title>Mercedes EQC 400 4MATIC — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
@@ -29,14 +29,14 @@ $page_image = 'images/mercedes-eqc/mercedes-eqc.jpg';
     <?php include '../php/car_slider.php'; renderCarSlider('images/mercedes-eqc/', 'mercedes-eqc.jpg', 'Mercedes EQC 400'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">Ã€ partir de</span>
+        <span class="price-label">À partir de</span>
         <span class="price-value">280 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=8" class="btn-reserve">RÃ©server un essai</a>
+      <a href="../php/reservation.php?car=8" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV premium Ã©lectrique Mercedes. 408 ch, transmission intÃ©grale 4MATIC, batterie 80 kWh, autonomie 432 km WLTP, recharge DC 112 kW. Confort absolu, systÃ¨me MBUX, design Ã©lÃ©gant.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>SUV premium électrique Mercedes. 408 ch, transmission intégrale 4MATIC, batterie 80 kWh, autonomie 432 km WLTP, recharge DC 112 kW. Confort absolu, système MBUX, design élégant.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -71,17 +71,17 @@ $page_image = 'images/mercedes-eqc/mercedes-eqc.jpg';
           <dl>
             <div class="spec-row"><dt>Puissance max</dt><dd>408 ch (300 kW)</dd></div>
             <div class="spec-row"><dt>Couple max</dt><dd>760 Nm</dd></div>
-            <div class="spec-row"><dt>Transmission</dt><dd>IntÃ©grale (4MATIC)</dd></div>
+            <div class="spec-row"><dt>Transmission</dt><dd>Intégrale (4MATIC)</dd></div>
             <div class="spec-row"><dt>Vitesse max</dt><dd>180 km/h</dd></div>
           </dl>
         </div>
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>80 kWh</dd></div>
+            <div class="spec-row"><dt>Capacité batterie</dt><dd>80 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Lithium-ion NMC</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>432 km</dd></div>
-            <div class="spec-row"><dt>Ã‰missions COâ‚‚</dt><dd>0 g/km COâ‚‚</dd></div>
+            <div class="spec-row"><dt>Émissions CO₂</dt><dd>0 g/km CO₂</dd></div>
           
             <div class="spec-row battery-visual"><dt>Niveau</dt><dd><div class="battery-bar"><div class="battery-track"><div class="battery-fill high" data-width="74%"></div></div><span class="battery-label">80 kWh</span></div></dd></div></dl>
         </div>
@@ -106,8 +106,8 @@ $page_image = 'images/mercedes-eqc/mercedes-eqc.jpg';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la Mercedes EQC 400 4MATIC</h2>
-        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=8" class="cta-btn">RÃ©server un essai gratuit</a>
+        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=8" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

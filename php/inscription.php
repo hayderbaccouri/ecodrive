@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include 'bootstrap.php';
 
 if (isset($_SESSION['user'])) {
@@ -9,8 +9,8 @@ if (isset($_SESSION['user'])) {
 $error = '';
 $fullname = '';
 $email = '';
-$page_title = 'Inscription â€” EcoDrive';
-$page_desc  = 'CrÃ©ez votre compte EcoDrive et rÃ©servez votre essai gratuit en voiture Ã©lectrique.';
+$page_title = 'Inscription — EcoDrive';
+$page_desc  = 'Créez votre compte EcoDrive et réservez votre essai gratuit en voiture électrique.';
 $page_url   = 'php/inscription.php';
 $page_image = '';
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($password !== ($_POST['password_confirm'] ?? '')) {
     $error = 'Les mots de passe ne correspondent pas.';
   } elseif (strlen($password) < 8) {
-    $error = 'Le mot de passe doit faire au moins 8 caractÃ¨res.';
+    $error = 'Le mot de passe doit faire au moins 8 caractères.';
   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $error = 'Adresse e-mail invalide.';
   } else {
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           header('Location: connexion.php?registered=1');
           exit;
         }
-        $error = 'Impossible de crÃ©er le compte. Veuillez rÃ©essayer.';
+        $error = 'Impossible de créer le compte. Veuillez réessayer.';
         $stmt->close();
       } else {
         $error = 'Erreur serveur. Veuillez reessayer plus tard.';
@@ -96,9 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
       <div class="login-visual-quote">
-        Rejoignez<br><strong>la rÃ©volution Ã©lectrique.</strong>
+        Rejoignez<br><strong>la révolution électrique.</strong>
       </div>
-      <div class="login-visual-sub">Premier showroom Ã©lectrique Â· Tunisie</div>
+      <div class="login-visual-sub">Premier showroom électrique · Tunisie</div>
     </div>
   </div>
 
@@ -106,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-form-wrap">
 
       <div class="login-eyebrow">Espace client</div>
-      <h2>CrÃ©er un compte.</h2>
-      <p class="login-sub">Rejoignez EcoDrive pour rÃ©server vos essais et suivre vos demandes.</p>
+      <h2>Créer un compte.</h2>
+      <p class="login-sub">Rejoignez EcoDrive pour réserver vos essais et suivre vos demandes.</p>
 
       <?php if ($error): ?>
         <div class="login-error">&#9888; <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
@@ -135,10 +135,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label class="field-label" for="password">Mot de passe</label>
           <div class="pwd-wrap">
             <input type="password" id="password" name="password"
-                   placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                   placeholder="••••••••"
                    autocomplete="new-password" required minlength="8"
-                   data-msg-required="Ce champ est requis" data-msg-minlength="8 caractÃ¨res minimum" />
-            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">ðŸ‘</button>
+                   data-msg-required="Ce champ est requis" data-msg-minlength="8 caractères minimum" />
+            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
           </div>
         </div>
 
@@ -146,14 +146,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label for="password_confirm">Confirmer le mot de passe</label>
           <div class="pwd-wrap">
             <input type="password" id="password_confirm" name="password_confirm" required data-match="password" data-msg-match="Les mots de passe ne correspondent pas" data-msg-required="Confirmez votre mot de passe">
-            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">ðŸ‘</button>
+            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
           </div>
         </div>
 
-        <button type="submit" class="auth-btn">CrÃ©er mon compte</button>
+        <button type="submit" class="auth-btn">Créer mon compte</button>
       </form>
 
-      <p class="login-switch">DÃ©jÃ  inscrit ? <a href="connexion.php">Se connecter</a></p>
+      <p class="login-switch">Déjà inscrit ? <a href="connexion.php">Se connecter</a></p>
     </div>
   </div>
 

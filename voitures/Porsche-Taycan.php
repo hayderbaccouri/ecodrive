@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Porsche Taycan â€” EcoDrive';
-$page_desc  = 'Porsche Taycan, berline Ã©lectrique de haute performance. 0-100 en 2,8s. RÃ©servez votre essai.';
+$page_title = 'Porsche Taycan — EcoDrive';
+$page_desc  = 'Porsche Taycan, berline électrique de haute performance. 0-100 en 2,8s. Réservez votre essai.';
 $page_url   = 'voitures/Porsche-Taycan.php';
 $page_image = 'images/porsche-taycan/porsche-taycan-taycan-91005.webp';
 ?>
@@ -12,7 +12,7 @@ $page_image = 'images/porsche-taycan/porsche-taycan-taycan-91005.webp';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Porsche Taycan 2026 â€” EcoDrive</title>
+  <title>Porsche Taycan 2026 — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
@@ -29,14 +29,14 @@ $page_image = 'images/porsche-taycan/porsche-taycan-taycan-91005.webp';
     <?php include '../php/car_slider.php'; renderCarSlider('images/porsche-taycan/', 'porsche-taycan-taycan-91005.webp', 'Porsche Taycan'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">Ã€ partir de</span>
+        <span class="price-label">À partir de</span>
         <span class="price-value">448 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=11" class="btn-reserve">RÃ©server un essai</a>
+      <a href="../php/reservation.php?car=11" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline sportive 100% Ã©lectrique Porsche. 408 ch propulsion, batterie 89 kWh, autonomie 503 km WLTP, architecture 800V, recharge 320 kW (10-80% en 18 min). BoÃ®te 2 rapports, design iconique.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>Berline sportive 100% électrique Porsche. 408 ch propulsion, batterie 89 kWh, autonomie 503 km WLTP, architecture 800V, recharge 320 kW (10-80% en 18 min). Boîte 2 rapports, design iconique.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -78,7 +78,7 @@ $page_image = 'images/porsche-taycan/porsche-taycan-taycan-91005.webp';
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>89 kWh</dd></div>
+            <div class="spec-row"><dt>Capacité batterie</dt><dd>89 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Lithium-ion NMC</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>503 km</dd></div>
             <div class="spec-row"><dt>Architecture</dt><dd>800V</dd></div>
@@ -107,8 +107,8 @@ $page_image = 'images/porsche-taycan/porsche-taycan-taycan-91005.webp';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la Porsche Taycan 2026</h2>
-        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=11" class="cta-btn">RÃ©server un essai gratuit</a>
+        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=11" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

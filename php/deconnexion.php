@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 session_start();
 
 // Supprime toutes les variables de session
 $_SESSION = [];
 
-// DÃ©truit le cookie de session si nÃ©cessaire
+// Détruit le cookie de session si nécessaire
 if (ini_get('session.use_cookies')) {
     $params = session_get_cookie_params();
     setcookie(

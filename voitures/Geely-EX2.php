@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Geely EX2 â€” EcoDrive';
-$page_desc  = 'Geely EX2, SUV Ã©lectrique compact au excellent rapport qualitÃ©-prix. Autonomie et confort garantis.';
+$page_title = 'Geely EX2 — EcoDrive';
+$page_desc  = 'Geely EX2, SUV électrique compact au excellent rapport qualité-prix. Autonomie et confort garantis.';
 $page_url   = 'voitures/Geely-EX2.php';
 $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
 ?>
@@ -12,7 +12,7 @@ $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Geely EX2 â€” EcoDrive</title>
+  <title>Geely EX2 — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
@@ -29,14 +29,14 @@ $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
     <?php include '../php/car_slider.php'; renderCarSlider('images/geely-ex2/', 'geely-ex2-39.4-kwh-max-101691.webp', 'Geely EX2'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">Ã€ partir de</span>
+        <span class="price-label">À partir de</span>
         <span class="price-value">52 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=16" class="btn-reserve">RÃ©server un essai</a>
+      <a href="../php/reservation.php?car=16" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV compact 100% Ã©lectrique Geely. 115 ch propulsion, batterie LFP 39,4 kWh, autonomie 325 km WLTP, recharge DC 30-80% en 21 min. Ã‰cran 14,6", Flyme Auto, idÃ©ale pour la ville.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>SUV compact 100% électrique Geely. 115 ch propulsion, batterie LFP 39,4 kWh, autonomie 325 km WLTP, recharge DC 30-80% en 21 min. Écran 14,6", Flyme Auto, idéale pour la ville.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -78,7 +78,7 @@ $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>39,4 kWh</dd></div>
+            <div class="spec-row"><dt>Capacité batterie</dt><dd>39,4 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>LFP</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>325 km</dd></div>
             <div class="spec-row"><dt>Consommation</dt><dd>12,1 kWh/100 km</dd></div>
@@ -106,8 +106,8 @@ $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la Geely EX2</h2>
-        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=16" class="cta-btn">RÃ©server un essai gratuit</a>
+        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=16" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

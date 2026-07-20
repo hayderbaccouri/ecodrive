@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (!function_exists('renderCarSlider')) {
 function renderCarSlider($folder, $heroImage, $carName) {
     $dir = __DIR__ . '/../' . $folder;
@@ -47,8 +47,8 @@ function renderCarSlider($folder, $heroImage, $carName) {
       <?php endforeach; ?>
     </div>
     <?php if (count($images) > 1): ?>
-    <button class="slider-arrow slider-prev" type="button" aria-label="PrÃ©cÃ©dent">â€¹</button>
-    <button class="slider-arrow slider-next" type="button" aria-label="Suivant">â€º</button>
+    <button class="slider-arrow slider-prev" type="button" aria-label="Précédent">‹</button>
+    <button class="slider-arrow slider-next" type="button" aria-label="Suivant">›</button>
     <?php endif; ?>
   </div>
   <?php if (count($images) > 1): ?>

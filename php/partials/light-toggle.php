@@ -1,18 +1,18 @@
-﻿<?php
-// light-toggle.php â€” LumiÃ¨re solaire toggle + simulateur trajet
+<?php
+// light-toggle.php — Lumière solaire toggle + simulateur trajet
 // Usage: include this in car detail pages after the car slider
 // Expected vars: $range_km (optional), $marque, $modele
 $range_km = $range_km ?? 500;
 ?>
 <div class="light-toggle">
-  <button class="light-toggle-btn active" data-light="morning" type="button">â˜€ï¸ Matin</button>
-  <button class="light-toggle-btn" data-light="noon" type="button">â˜€ï¸ Midi</button>
-  <button class="light-toggle-btn" data-light="sunset" type="button">ðŸŒ… Coucher</button>
+  <button class="light-toggle-btn active" data-light="morning" type="button">☀️ Matin</button>
+  <button class="light-toggle-btn" data-light="noon" type="button">☀️ Midi</button>
+  <button class="light-toggle-btn" data-light="sunset" type="button">🌅 Coucher</button>
 </div>
 
 <div class="route-simulator reveal reveal-up">
   <div class="route-header">
-    <span>âš¡</span>
+    <span>⚡</span>
     <h3>Simulateur d'autonomie</h3>
   </div>
   <div class="route-visual">
@@ -26,7 +26,7 @@ $range_km = $range_km ?? 500;
     </div>
     <div class="route-point">
       <div class="route-point-name">Djerba</div>
-      <div class="route-point-sub">ÃŽle du sud</div>
+      <div class="route-point-sub">Île du sud</div>
     </div>
   </div>
   <div class="route-stats">
@@ -36,17 +36,17 @@ $range_km = $range_km ?? 500;
     </div>
     <div class="route-stat">
       <div class="route-stat-value"><?= (int)$range_km ?> km</div>
-      <div class="route-stat-label">Autonomie vÃ©hicule</div>
+      <div class="route-stat-label">Autonomie véhicule</div>
     </div>
     <div class="route-stat">
-      <div class="route-stat-value">0 arrÃªt</div>
-      <div class="route-stat-label">Recharge nÃ©cessaire</div>
+      <div class="route-stat-value">0 arrêt</div>
+      <div class="route-stat-label">Recharge nécessaire</div>
     </div>
   </div>
   <?php if ($range_km >= 480): ?>
-    <div class="route-badge">âœ… Tunis â†’ Djerba sans recharge</div>
+    <div class="route-badge">✅ Tunis → Djerba sans recharge</div>
   <?php else: ?>
-    <div class="route-badge">âš¡ 1 arrÃªt recharge recommandÃ© (~20 min)</div>
+    <div class="route-badge">⚡ 1 arrêt recharge recommandé (~20 min)</div>
   <?php endif; ?>
 </div>
 

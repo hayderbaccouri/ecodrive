@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'BYD Dolphin â€” EcoDrive';
-$page_desc  = 'BYD Dolphin, citadine Ã©lectrique accessible et polyvalente. Autonomie jusqu Ã  427 km. DÃ©couvrez-la chez EcoDrive.';
+$page_title = 'BYD Dolphin — EcoDrive';
+$page_desc  = 'BYD Dolphin, citadine électrique accessible et polyvalente. Autonomie jusqu à 427 km. Découvrez-la chez EcoDrive.';
 $page_url   = 'voitures/BYD-Dolphin.php';
 $page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
 ?>
@@ -12,7 +12,7 @@ $page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BYD Dolphin Surf â€” EcoDrive</title>
+  <title>BYD Dolphin Surf — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
@@ -29,14 +29,14 @@ $page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
     <?php include '../php/car_slider.php'; renderCarSlider('images/byd-dolphin/', 'byd-dolphin-surf-38.88-kwh-102711.webp', 'BYD Dolphin Surf'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">Ã€ partir de</span>
+        <span class="price-label">À partir de</span>
         <span class="price-value">55 000 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=4" class="btn-reserve">RÃ©server un essai</a>
+      <a href="../php/reservation.php?car=4" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Citadine Ã©lectrique BYD batterie Blade LFP 43,2 kWh. 156 ch, autonomie 310 km WLTP, recharge DC 85 kW (10-80% en 30 min). Ã‰cran rotatif 10,1", V2L, idÃ©ale pour la ville.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>Citadine électrique BYD batterie Blade LFP 43,2 kWh. 156 ch, autonomie 310 km WLTP, recharge DC 85 kW (10-80% en 30 min). Écran rotatif 10,1", V2L, idéale pour la ville.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -78,7 +78,7 @@ $page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>43,2 kWh</dd></div>
+            <div class="spec-row"><dt>Capacité batterie</dt><dd>43,2 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Blade LFP</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>310 km</dd></div>
             <div class="spec-row"><dt>Consommation</dt><dd>13,8 kWh/100 km</dd></div>
@@ -106,8 +106,8 @@ $page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la BYD Dolphin Surf</h2>
-        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=4" class="cta-btn">RÃ©server un essai gratuit</a>
+        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=4" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

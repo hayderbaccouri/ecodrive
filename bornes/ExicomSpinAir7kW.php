@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 include '../php/bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Exicom Spin Air 7 kW â€” Borne de recharge rÃ©sidentielle | EcoDrive';
-$page_desc = 'Borne de recharge murale Exicom Spin Air 7 kW pour vÃ©hicules Ã©lectriques. Recharge rapide et intelligente pour la maison et l\'entreprise.';
+$page_title = 'Exicom Spin Air 7 kW — Borne de recharge résidentielle | EcoDrive';
+$page_desc = 'Borne de recharge murale Exicom Spin Air 7 kW pour véhicules électriques. Recharge rapide et intelligente pour la maison et l\'entreprise.';
 $page_url = 'bornes/ExicomSpinAir7kW.php';
 $page_image = 'images/bornes/SPIN-AIR-11-2.png';
 ?>
@@ -24,9 +24,9 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
 <main class="main-wrap page-fade-in">
   <div class="breadcrumb">
     <a href="../index.php">Accueil</a>
-    <span>â€º</span>
+    <span>›</span>
     <a href="../bornes/index.php">Bornes de recharge</a>
-    <span>â€º</span>
+    <span>›</span>
     <span style="color: var(--text)">Exicom Spin Air 7 kW</span>
   </div>
 
@@ -40,15 +40,15 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
         <div class="borne-img-box">
           <img src="../images/bornes/SPIN-AIR-11-2.png" alt="Exicom Spin Air 7 kW"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
-          <div class="borne-img-fallback" style="display:none;font-size:6rem;color:rgba(60,154,190,0.4);place-items:center">âš¡</div>
+          <div class="borne-img-fallback" style="display:none;font-size:6rem;color:rgba(60,154,190,0.4);place-items:center">⚡</div>
         </div>
-        <span class="borne-badge-portable">âš¡ RÃ©sidentiel Â· Smart Charging</span>
+        <span class="borne-badge-portable">⚡ Résidentiel · Smart Charging</span>
       </div>
       <div class="borne-glow-dot"></div>
     </div>
 
     <div class="borne-info">
-      <div class="borne-eyebrow">Chargeur rÃ©sidentiel Â· Exicom</div>
+      <div class="borne-eyebrow">Chargeur résidentiel · Exicom</div>
 
       <div class="borne-power-display">
         <span class="power-num">7.4</span>
@@ -60,43 +60,43 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
       <div class="borne-divider"></div>
 
       <p class="borne-desc-text">
-        Chargeur AC monophasÃ© conÃ§u pour la recharge rÃ©sidentielle quotidienne. DotÃ© d'un contrÃ´le intelligent via
-        Wi-Fi, Bluetooth ou 4G/LTE, il s'adapte Ã  votre mode de vie et optimise la consommation Ã©nergÃ©tique depuis votre
+        Chargeur AC monophasé conçu pour la recharge résidentielle quotidienne. Doté d'un contrôle intelligent via
+        Wi-Fi, Bluetooth ou 4G/LTE, il s'adapte à votre mode de vie et optimise la consommation énergétique depuis votre
         application mobile.
       </p>
 
       <div class="specs-list">
         <div class="spec-row">
-          <div class="spec-icon">âš¡</div>
+          <div class="spec-icon">⚡</div>
           <div class="spec-label">Puissance</div>
-          <div class="spec-value">7.4 kW (monophasÃ©)</div>
+          <div class="spec-value">7.4 kW (monophasé)</div>
         </div>
         <div class="spec-row">
-          <div class="spec-icon">ðŸ”Œ</div>
+          <div class="spec-icon">🔌</div>
           <div class="spec-label">Connecteur</div>
           <div class="spec-value">Type 2 (IEC 62196)</div>
         </div>
         <div class="spec-row">
-          <div class="spec-icon">ðŸ“</div>
-          <div class="spec-label">Longueur de cÃ¢ble</div>
-          <div class="spec-value">5 mÃ¨tres</div>
+          <div class="spec-icon">📏</div>
+          <div class="spec-label">Longueur de câble</div>
+          <div class="spec-value">5 mètres</div>
         </div>
         <div class="spec-row">
-          <div class="spec-icon">ðŸ“¶</div>
-          <div class="spec-label">ConnectivitÃ©</div>
+          <div class="spec-icon">📶</div>
+          <div class="spec-label">Connectivité</div>
           <div class="spec-value">Wi-Fi / Bluetooth / 4G/LTE</div>
         </div>
         <div class="spec-row">
-          <div class="spec-icon">ðŸ </div>
+          <div class="spec-icon">🏠</div>
           <div class="spec-label">Installation</div>
-          <div class="spec-value">IntÃ©rieure ou extÃ©rieure</div>
+          <div class="spec-value">Intérieure ou extérieure</div>
         </div>
       </div>
 
       <div class="borne-price-bar">
-      <span class="borne-price-label">Ã€ partir de</span>
+      <span class="borne-price-label">À partir de</span>
       <span class="borne-price-value">2 490 DT</span>
-      <span class="borne-price-tax">HT Â· Installation non incluse</span>
+      <span class="borne-price-tax">HT · Installation non incluse</span>
     </div>
     <div class="borne-cta">
       <a href="../pages/contact.php" class="btn-primary">Commander</a>
@@ -105,48 +105,48 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
     </div>
   </section>
 
-  <!-- COMMENT Ã‡A MARCHE -->
+  <!-- COMMENT ÇA MARCHE -->
   <section class="how-section reveal reveal-up">
     <div class="section-eyebrow">Mode d'emploi</div>
-    <h2 class="section-title">Recharge intelligente en 3 Ã©tapes</h2>
+    <h2 class="section-title">Recharge intelligente en 3 étapes</h2>
     <div class="blue-bar"></div>
     <div class="steps-grid stagger-children">
       <div class="step-card">
         <div class="step-num">01</div>
         <div class="step-title">Installation murale</div>
-        <p class="step-text">La borne est fixÃ©e au mur de votre domicile, garage ou bureau par un Ã©lectricien qualifiÃ©.
-          Compatible intÃ©rieur et extÃ©rieur grÃ¢ce Ã  sa protection IP.</p>
+        <p class="step-text">La borne est fixée au mur de votre domicile, garage ou bureau par un électricien qualifié.
+          Compatible intérieur et extérieur grâce à sa protection IP.</p>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
         <div class="step-title">Configuration intelligente</div>
-        <p class="step-text">Connectez la borne Ã  votre rÃ©seau Wi-Fi ou via 4G/LTE. Configurez vos horaires de recharge
-          et suivez votre consommation en temps rÃ©el depuis l'application.</p>
+        <p class="step-text">Connectez la borne à votre réseau Wi-Fi ou via 4G/LTE. Configurez vos horaires de recharge
+          et suivez votre consommation en temps réel depuis l'application.</p>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
         <div class="step-title">Rechargez chaque nuit</div>
-        <p class="step-text">Ã€ 7.4 kW, une nuit de recharge complÃ¨te votre batterie en 4 Ã  6 h selon votre vÃ©hicule.
-          RÃ©veillez-vous chaque matin avec une charge pleine.</p>
+        <p class="step-text">À 7.4 kW, une nuit de recharge complète votre batterie en 4 à 6 h selon votre véhicule.
+          Réveillez-vous chaque matin avec une charge pleine.</p>
       </div>
     </div>
   </section>
 
-  <!-- SPECS COMPLÃˆTES -->
+  <!-- SPECS COMPLÈTES -->
   <section class="specs-section reveal reveal-up reveal-delay-1">
     <div class="section-eyebrow">Fiche technique</div>
-    <h2 class="section-title">SpÃ©cifications complÃ¨tes</h2>
+    <h2 class="section-title">Spécifications complètes</h2>
     <div class="blue-bar"></div>
     <table class="specs-table">
       <thead>
         <tr>
-          <th>ParamÃ¨tre</th>
+          <th>Paramètre</th>
           <th>Valeur</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Marque / ModÃ¨le</td>
+          <td>Marque / Modèle</td>
           <td>Exicom Spin Air</td>
         </tr>
         <tr>
@@ -155,10 +155,10 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
         </tr>
         <tr>
           <td>Type de courant</td>
-          <td>AC monophasÃ©</td>
+          <td>AC monophasé</td>
         </tr>
         <tr>
-          <td>Tension d'entrÃ©e</td>
+          <td>Tension d'entrée</td>
           <td>230 V / 50 Hz</td>
         </tr>
         <tr>
@@ -166,15 +166,15 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
           <td>32 A</td>
         </tr>
         <tr>
-          <td>Connecteur cÃ´tÃ© vÃ©hicule</td>
+          <td>Connecteur côté véhicule</td>
           <td>Type 2 (IEC 62196-2)</td>
         </tr>
         <tr>
-          <td>Longueur de cÃ¢ble</td>
+          <td>Longueur de câble</td>
           <td>5 m</td>
         </tr>
         <tr>
-          <td>ConnectivitÃ©</td>
+          <td>Connectivité</td>
           <td>Wi-Fi / Bluetooth / 4G LTE</td>
         </tr>
         <tr>
@@ -182,12 +182,12 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
           <td>IP54</td>
         </tr>
         <tr>
-          <td>TempÃ©rature de fonctionnement</td>
-          <td>-20 Â°C Ã  +55 Â°C</td>
+          <td>Température de fonctionnement</td>
+          <td>-20 °C à +55 °C</td>
         </tr>
         <tr>
           <td>Installation</td>
-          <td>IntÃ©rieure ou extÃ©rieure</td>
+          <td>Intérieure ou extérieure</td>
         </tr>
         <tr>
           <td>Certifications</td>
@@ -201,43 +201,43 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
     </table>
   </section>
 
-  <!-- COMPATIBILITÃ‰ -->
+  <!-- COMPATIBILITÉ -->
   <section class="compat-section reveal reveal-up reveal-delay-2">
-    <div class="section-eyebrow">CompatibilitÃ© universelle</div>
+    <div class="section-eyebrow">Compatibilité universelle</div>
     <h2 class="section-title">Compatible avec tous les VE Type 2</h2>
     <div class="blue-bar"></div>
     <div class="compat-grid stagger-children">
       <div class="compat-card">
-        <div class="compat-icon">ðŸ”µ</div>
+        <div class="compat-icon">🔵</div>
         <div class="compat-name">Renault Megane E-Tech</div>
-        <div class="compat-sub">Type 2 Â· Compatible</div>
+        <div class="compat-sub">Type 2 · Compatible</div>
       </div>
       <div class="compat-card">
-        <div class="compat-icon">ðŸŸ¢</div>
+        <div class="compat-icon">🟢</div>
         <div class="compat-name">Volkswagen ID.4</div>
-        <div class="compat-sub">Type 2 Â· Compatible</div>
+        <div class="compat-sub">Type 2 · Compatible</div>
       </div>
       <div class="compat-card">
-        <div class="compat-icon">âšª</div>
+        <div class="compat-icon">⚪</div>
         <div class="compat-name">Hyundai IONIQ 6</div>
-        <div class="compat-sub">Type 2 Â· Compatible</div>
+        <div class="compat-sub">Type 2 · Compatible</div>
       </div>
       <div class="compat-card">
-        <div class="compat-icon">ðŸ”´</div>
-        <div class="compat-name">CitroÃ«n C3 Electric</div>
-        <div class="compat-sub">Type 2 Â· Compatible</div>
+        <div class="compat-icon">🔴</div>
+        <div class="compat-name">Citroën C3 Electric</div>
+        <div class="compat-sub">Type 2 · Compatible</div>
       </div>
     </div>
     <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted); text-align: center;">
-      Compatible avec tous les vÃ©hicules Ã©lectriques Ã©quipÃ©s d'un port Type 2 â€” la norme europÃ©enne universelle.
+      Compatible avec tous les véhicules électriques équipés d'un port Type 2 — la norme européenne universelle.
     </p>
   </section>
 
   <!-- CTA BANNER -->
   <section class="cta-banner hero-entrance">
     <div>
-      <div class="cta-banner-title">PrÃªt Ã  passer Ã  l'Ã©lectrique ?</div>
-      <div class="cta-banner-sub">Commandez votre Exicom Spin Air ou obtenez un devis personnalisÃ©.</div>
+      <div class="cta-banner-title">Prêt à passer à l'électrique ?</div>
+      <div class="cta-banner-sub">Commandez votre Exicom Spin Air ou obtenez un devis personnalisé.</div>
     </div>
     <a href="../pages/contact.php#contact" class="btn-white">Contacter EcoDrive</a>
   </section>

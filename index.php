@@ -1,4 +1,4 @@
-﻿
+
 <?php
 include 'php/bootstrap.php';
 $user = $_SESSION['user'] ?? null;
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
       // Sanitize and prevent header injection
       $safeName = substr(preg_replace('/[\r\n]+/', ' ', $name), 0, 100);
       $subject = "Contact EcoDrive - " . $safeName;
-      $body = "Nom: $safeName\nEmail: $email\nModÃ¨le: $model\n\nMessage:\n$message";
+      $body = "Nom: $safeName\nEmail: $email\nModèle: $model\n\nMessage:\n$message";
 
       // Use a fixed From header and set Reply-To only if the user email is valid
       $from = 'noreply@ecodrive.tn';
@@ -29,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
 
       $sent = @mail('contact@ecodrive.tn', $subject, $body, $headers);
       $contactSuccess = true;
-      $contactMessage = $sent ? 'Message envoyÃ©. Notre Ã©quipe vous rÃ©pondra rapidement.' : 'Merci ! Votre message a bien Ã©tÃ© transmis.';
+      $contactMessage = $sent ? 'Message envoyé. Notre équipe vous répondra rapidement.' : 'Merci ! Votre message a bien été transmis.';
     } else {
         $contactMessage = 'Veuillez remplir tous les champs obligatoires.';
     }
 }
 
-// RÃ©cupÃ©rer les voitures vedettes pour l'accueil
+// Récupérer les voitures vedettes pour l'accueil
 $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, details_page FROM voiture WHERE is_featured = 1 ORDER BY marque")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -53,16 +53,16 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
 <?php $asset_base = ''; include 'php/partials/header.php'; ?>
 
   <!-- Hero -->
-  <section class="hero" aria-label="PrÃ©sentation EcoDrive">
+  <section class="hero" aria-label="Présentation EcoDrive">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="hero-eyebrow">MobilitÃ© durable en Tunisie</div>
+        <div class="hero-eyebrow">Mobilité durable en Tunisie</div>
         <h1 class="hero-title">
-          L'avenir de la route, <strong>sans Ã©missions.</strong>
+          L'avenir de la route, <strong>sans émissions.</strong>
         </h1>
         <p class="hero-desc">
-          EcoDrive est le premier showroom spÃ©cialisÃ© en vÃ©hicules Ã©lectriques en Tunisie.
-          DÃ©couvrez une sÃ©lection premium, testez avant d'acheter, et rejoignez la rÃ©volution verte.
+          EcoDrive est le premier showroom spécialisé en véhicules électriques en Tunisie.
+          Découvrez une sélection premium, testez avant d'acheter, et rejoignez la révolution verte.
         </p>
         <div class="hero-actions">
           <a href="#showroom" class="btn-primary cta">Explorer le catalogue</a>
@@ -75,8 +75,8 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <!-- Showroom -->
   <section id="showroom" class="showroom-section">
     <div class="section-header">
-      <div class="section-eyebrow">Nouvelles arrivÃ©es</div>
-      <h2 class="section-title">Notre sÃ©lection premium</h2>
+      <div class="section-eyebrow">Nouvelles arrivées</div>
+      <h2 class="section-title">Notre sélection premium</h2>
       <div class="section-rule"></div>
     </div>
 
@@ -88,22 +88,22 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
           $details = htmlspecialchars(ltrim($v['details_page'] ?? '#', '/'), ENT_QUOTES, 'UTF-8');
           $nom = htmlspecialchars($v['marque'] . ' ' . $v['modele'], ENT_QUOTES, 'UTF-8');
           $prix = number_format((float)$v['prix'], 0, ',', ' ');
-          $placeholders = ['ðŸš—', 'ðŸš™', 'ðŸš˜', 'ðŸŽï¸'];
+          $placeholders = ['🚗', '🚙', '🚘', '🏎️'];
         ?>
         <article class="car-card">
           <div class="car-img-wrap">
             <img src="<?= $img ?>" alt="<?= $nom ?>" loading="lazy"
               onerror="this.onerror=null; this.parentNode.innerHTML='<div class=&quot;car-placeholder&quot;><?= $placeholders[array_rand($placeholders)] ?></div>';" />
             <div class="car-overlay">
-              <a href="<?= $details ?>">Voir dÃ©tails</a>
+              <a href="<?= $details ?>">Voir détails</a>
             </div>
           </div>
           <div class="car-info">
-            <div class="car-badge">Nouveau modÃ¨le</div>
+            <div class="car-badge">Nouveau modèle</div>
             <div class="car-name"><?= $nom ?></div>
             <div class="car-meta">
-              <span class="car-range">Ã€ partir de <?= $prix ?> DT</span>
-              <a href="<?= $details ?>" class="car-arrow" aria-label="Aller aux dÃ©tails">â†’</a>
+              <span class="car-range">À partir de <?= $prix ?> DT</span>
+              <a href="<?= $details ?>" class="car-arrow" aria-label="Aller aux détails">→</a>
             </div>
           </div>
         </article>
@@ -112,7 +112,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
       </div>
 
       <div class="showroom-all">
-        <a href="php/catalogue.php" class="btn-ghost">Voir tout le catalogue â†’</a>
+        <a href="php/catalogue.php" class="btn-ghost">Voir tout le catalogue →</a>
       </div>
     </div>
   </section>
@@ -121,7 +121,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <section class="brands-section">
     <div class="section-header">
       <div class="section-eyebrow">Explorer par marque</div>
-      <h2 class="section-title">Les meilleures marques Ã©lectriques</h2>
+      <h2 class="section-title">Les meilleures marques électriques</h2>
       <div class="section-rule"></div>
     </div>
     <div class="brands-grid">
@@ -130,8 +130,8 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
           <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600" letter-spacing="3">TESLA</text></svg>
         </div>
         <div class="brand-info">
-          <span class="brand-count">2 modÃ¨les</span>
-          <span class="brand-arrow">â†’</span>
+          <span class="brand-count">2 modèles</span>
+          <span class="brand-arrow">→</span>
         </div>
       </a>
       <a href="php/catalogue.php?brand=BMW" class="brand-card">
@@ -139,8 +139,8 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
           <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600" letter-spacing="3">BMW</text></svg>
         </div>
         <div class="brand-info">
-          <span class="brand-count">1 modÃ¨le</span>
-          <span class="brand-arrow">â†’</span>
+          <span class="brand-count">1 modèle</span>
+          <span class="brand-arrow">→</span>
         </div>
       </a>
       <a href="php/catalogue.php?brand=Mercedes" class="brand-card">
@@ -148,8 +148,8 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
           <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="22" font-weight="600" letter-spacing="2">MERCEDES-BENZ</text></svg>
         </div>
         <div class="brand-info">
-          <span class="brand-count">2 modÃ¨les</span>
-          <span class="brand-arrow">â†’</span>
+          <span class="brand-count">2 modèles</span>
+          <span class="brand-arrow">→</span>
         </div>
       </a>
       <a href="php/catalogue.php?brand=Porsche" class="brand-card">
@@ -157,8 +157,8 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
           <svg viewBox="0 0 200 30" fill="currentColor"><text x="50%" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" font-weight="600" letter-spacing="3">PORSCHE</text></svg>
         </div>
         <div class="brand-info">
-          <span class="brand-count">1 modÃ¨le</span>
-          <span class="brand-arrow">â†’</span>
+          <span class="brand-count">1 modèle</span>
+          <span class="brand-arrow">→</span>
         </div>
       </a>
     </div>
@@ -170,28 +170,28 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
       <div class="bornes-cta-text">
         <div class="section-eyebrow">Infrastructure</div>
         <h2 class="section-title">Bornes de recharge Exicom</h2>
-        <p>Rechargez votre vÃ©hicule Ã  domicile, au bureau ou en dÃ©placement. EcoDrive propose une gamme complÃ¨te de bornes murales et autonomes, adaptÃ©es Ã  chaque besoin â€” du rÃ©sidentiel au professionnel.</p>
+        <p>Rechargez votre véhicule à domicile, au bureau ou en déplacement. EcoDrive propose une gamme complète de bornes murales et autonomes, adaptées à chaque besoin — du résidentiel au professionnel.</p>
       </div>
-      <a href="bornes/index.php" class="btn-primary">DÃ©couvrir nos bornes</a>
+      <a href="bornes/index.php" class="btn-primary">Découvrir nos bornes</a>
     </div>
   </section>
 
   <!-- About -->
   <section id="about" class="about-strip">
-    <div class="about-visual" aria-hidden="true">ðŸŒ¿</div>
+    <div class="about-visual" aria-hidden="true">🌿</div>
     <div class="about-content">
       <div class="section-eyebrow">Notre mission</div>
       <h2 class="section-title">Un avenir plus vert pour la Tunisie</h2>
       <p class="about-text">
-        Chez EcoDrive, nous croyons que la mobilitÃ© durable doit Ãªtre accessible Ã  tous.
-        Notre mission est d'accÃ©lÃ©rer la transition vers le vÃ©hicule Ã©lectrique en Tunisie,
-        en proposant une expÃ©rience d'achat irrÃ©prochable et un accompagnement sur-mesure.
+        Chez EcoDrive, nous croyons que la mobilité durable doit être accessible à tous.
+        Notre mission est d'accélérer la transition vers le véhicule électrique en Tunisie,
+        en proposant une expérience d'achat irréprochable et un accompagnement sur-mesure.
       </p>
       <div class="about-values">
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">VÃ©hicules certifiÃ©s zÃ©ro Ã©mission</div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text">Véhicules certifiés zéro émission</div></div>
         <div class="value-item"><div class="value-dot"></div><div class="value-text">Financement flexible disponible</div></div>
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Service aprÃ¨s-vente dÃ©diÃ©</div></div>
-        <div class="value-item"><div class="value-dot"></div><div class="value-text">Installation de borne Ã  domicile</div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text">Service après-vente dédié</div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text">Installation de borne à domicile</div></div>
       </div>
     </div>
   </section>
@@ -200,26 +200,26 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <section id="contact" class="contact-section">
     <div class="contact-left">
       <div class="section-eyebrow">Contact</div>
-      <h2 class="section-title">Parlons de votre prochain vÃ©hicule</h2>
-      <p>Notre Ã©quipe est disponible pour rÃ©pondre Ã  toutes vos questions et organiser votre essai gratuit.</p>
+      <h2 class="section-title">Parlons de votre prochain véhicule</h2>
+      <p>Notre équipe est disponible pour répondre à toutes vos questions et organiser votre essai gratuit.</p>
       <div class="contact-details">
         <div class="contact-item">
-          <div class="contact-icon">ðŸ“ž</div>
-          <div><div class="contact-label">TÃ©lÃ©phone</div><div class="contact-value">+216 90 311 428</div></div>
+          <div class="contact-icon">📞</div>
+          <div><div class="contact-label">Téléphone</div><div class="contact-value">+216 90 311 428</div></div>
         </div>
         <div class="contact-item">
-          <div class="contact-icon">âœ‰ï¸</div>
+          <div class="contact-icon">✉️</div>
           <div><div class="contact-label">Email</div><div class="contact-value">contact@ecodrive.tn</div></div>
         </div>
         <div class="contact-item">
-          <div class="contact-icon">ðŸ“</div>
-          <div><div class="contact-label">Adresse</div><div class="contact-value">123 Rue de la LibertÃ©, Tunis</div></div>
+          <div class="contact-icon">📍</div>
+          <div><div class="contact-label">Adresse</div><div class="contact-value">123 Rue de la Liberté, Tunis</div></div>
         </div>
       </div>
     </div>
 
     <div class="contact-form">
-      <!-- Formulaire PHP avec prÃ©-remplissage automatique -->
+      <!-- Formulaire PHP avec pré-remplissage automatique -->
       <?php if ($contactMessage): ?>
         <div class="contact-success"><?= htmlspecialchars($contactMessage) ?></div>
       <?php endif; ?>
@@ -230,7 +230,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
                value="<?= $prenom ?>" autocomplete="name" required />
         <input type="email" name="email" placeholder="Adresse e-mail"
                value="<?= $email ?>" autocomplete="email" required />
-        <input type="text" name="model" placeholder="ModÃ¨le qui vous intÃ©resse" />
+        <input type="text" name="model" placeholder="Modèle qui vous intéresse" />
         <textarea name="message" placeholder="Votre message ou demande d'essai..." required></textarea>
         <button class="btn-primary" type="submit">Envoyer le message</button>
       </form>

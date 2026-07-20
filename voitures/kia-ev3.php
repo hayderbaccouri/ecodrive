@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 include '../php/configuration.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Kia EV3 â€” EcoDrive';
-$page_desc  = 'Kia EV3, crossover Ã©lectrique avec design futuriste et autonomie impressionnante. RÃ©servez votre essai.';
+$page_title = 'Kia EV3 — EcoDrive';
+$page_desc  = 'Kia EV3, crossover électrique avec design futuriste et autonomie impressionnante. Réservez votre essai.';
 $page_url   = 'voitures/kia-ev3.php';
 $page_image = 'images/kia-ev3/kia-ev3.png';
 ?>
@@ -12,7 +12,7 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kia EV3 â€” EcoDrive</title>
+  <title>Kia EV3 — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../css/style.css?v=15">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
@@ -29,14 +29,14 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
     <?php include '../php/car_slider.php'; renderCarSlider('images/kia-ev3/', 'kia-ev3.png', 'Kia EV3'); ?>
     <div class="car-actions-bar">
       <div class="price-block">
-        <span class="price-label">Ã€ partir de</span>
+        <span class="price-label">À partir de</span>
         <span class="price-value">104 980 <small>DT</small></span>
       </div>
-      <a href="../php/reservation.php?car=6" class="btn-reserve">RÃ©server un essai</a>
+      <a href="../php/reservation.php?car=6" class="btn-reserve">Réserver un essai</a>
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV compact corÃ©en 100% Ã©lectrique plateforme E-GMP. 204 ch traction avant, batterie 81,4 kWh, autonomie 605 km WLTP, recharge DC 128 kW (10-80% en 31 min). Garantie 7 ans.</p></div></div>
+      <div class="overview-desc"><div class="desc-card"><p>SUV compact coréen 100% électrique plateforme E-GMP. 204 ch traction avant, batterie 81,4 kWh, autonomie 605 km WLTP, recharge DC 128 kW (10-80% en 31 min). Garantie 7 ans.</p></div></div>
       <div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
@@ -78,10 +78,10 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
         <div class="spec-group">
           <h3>Batterie & Autonomie</h3>
           <dl>
-            <div class="spec-row"><dt>CapacitÃ© batterie</dt><dd>81,4 kWh</dd></div>
+            <div class="spec-row"><dt>Capacité batterie</dt><dd>81,4 kWh</dd></div>
             <div class="spec-row"><dt>Type de batterie</dt><dd>Lithium-ion NMC</dd></div>
             <div class="spec-row"><dt>Autonomie WLTP</dt><dd>605 km</dd></div>
-            <div class="spec-row"><dt>Ã‰missions COâ‚‚</dt><dd>0 g/km COâ‚‚</dd></div>
+            <div class="spec-row"><dt>Émissions CO₂</dt><dd>0 g/km CO₂</dd></div>
           
             <div class="spec-row battery-visual"><dt>Niveau</dt><dd><div class="battery-bar"><div class="battery-track"><div class="battery-fill high" data-width="75%"></div></div><span class="battery-label">81.4 kWh</span></div></dd></div></dl>
         </div>
@@ -106,8 +106,8 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
 <section class="reservation-cta reveal reveal-up reveal-delay-2">
       <div class="cta-box">
         <h2>Essayez la Kia EV3</h2>
-        <p>RÃ©servez votre essai gratuit dÃ¨s maintenant et dÃ©couvrez l'expÃ©rience de conduite Ã©lectrique EcoDrive.</p>
-        <a href="../php/reservation.php?car=6" class="cta-btn">RÃ©server un essai gratuit</a>
+        <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
+        <a href="../php/reservation.php?car=6" class="cta-btn">Réserver un essai gratuit</a>
       </div>
     </section>
   </main>

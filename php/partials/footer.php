@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $asset_base = $asset_base ?? '';
 ?>
   <footer class="site-footer">
@@ -7,7 +7,7 @@ $asset_base = $asset_base ?? '';
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="footer-logo">eco<span>drive</span></div>
-          <p class="footer-tagline">Premier showroom Ã©lectrique de Tunisie â€” la mobilitÃ© durable pour tous.</p>
+          <p class="footer-tagline">Premier showroom électrique de Tunisie — la mobilité durable pour tous.</p>
           <div class="footer-social">
             <a href="#" aria-label="Facebook" class="social-link">Facebook</a>
             <a href="#" aria-label="Instagram" class="social-link">Instagram</a>
@@ -26,24 +26,24 @@ $asset_base = $asset_base ?? '';
         <div class="footer-col">
           <h4>Informations</h4>
           <nav class="footer-nav">
-            <a href="<?= $asset_base ?>pages/mentions-legales.php" class="footer-link">Mentions lÃ©gales</a>
+            <a href="<?= $asset_base ?>pages/mentions-legales.php" class="footer-link">Mentions légales</a>
             <a href="<?= $asset_base ?>pages/cgv.php" class="footer-link">CGV</a>
             <a href="<?= $asset_base ?>pages/cgu.php" class="footer-link">CGU</a>
-            <a href="<?= $asset_base ?>pages/confidentialite.php" class="footer-link">ConfidentialitÃ©</a>
+            <a href="<?= $asset_base ?>pages/confidentialite.php" class="footer-link">Confidentialité</a>
           </nav>
         </div>
         <div class="footer-col">
           <h4>Newsletter</h4>
-          <p class="footer-newsletter-text">Restez informÃ© des nouveautÃ©s et offres exclusives.</p>
+          <p class="footer-newsletter-text">Restez informé des nouveautés et offres exclusives.</p>
           <form method="post" action="<?= $asset_base ?>php/newsletter.php" class="footer-newsletter-form">
             <input type="email" name="email" placeholder="votre@email.com" required>
             <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-            <button type="submit" class="btn-newsletter">â†’</button>
+            <button type="submit" class="btn-newsletter">→</button>
           </form>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Â© 2026 EcoDrive Tunisie. Tous droits rÃ©servÃ©s.</span>
+        <span>© 2026 EcoDrive Tunisie. Tous droits réservés.</span>
         <span class="footer-bottom-right">Fait par Hayder Baccouri</span>
       </div>
     </div>

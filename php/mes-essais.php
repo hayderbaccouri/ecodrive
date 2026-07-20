@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 include 'bootstrap.php';
 
-// VÃ©rifier que l'utilisateur est connectÃ© et est client
+// Vérifier que l'utilisateur est connecté et est client
 if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
     header('Location: connexion.php');
     exit;
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'cl
 
 $userId = $_SESSION['user']['id'];
 
-// RÃ©cupÃ©rer les infos utilisateur
+// Récupérer les infos utilisateur
 $stmt = $conn->prepare("SELECT nom, email FROM utilisateur WHERE id_utilisateur = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -17,7 +17,7 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
 
-// RÃ©cupÃ©rer toutes les rÃ©servations du client
+// Récupérer toutes les réservations du client
 $sql = "SELECT r.id_reservation, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut
         FROM reservation r
         JOIN voiture v ON r.voiture_id = v.id_voiture
@@ -31,7 +31,7 @@ $stmt->close();
 ?>
 <?php
 $page_title = 'Mes essais | EcoDrive';
-$page_desc = 'Consultez l\'historique de vos essais de voitures Ã©lectriques et suivez le statut de vos rÃ©servations EcoDrive.';
+$page_desc = 'Consultez l\'historique de vos essais de voitures électriques et suivez le statut de vos réservations EcoDrive.';
 $page_url = 'php/mes-essais.php';
 ?>
 <!DOCTYPE html>
@@ -51,9 +51,9 @@ $page_url = 'php/mes-essais.php';
     <h1>Mes essais</h1>
 
   <section>
-    <h2>ðŸ“Œ Historique de mes essais</h2>
+    <h2>📌 Historique de mes essais</h2>
     <?php if (count($reservations) === 0): ?>
-      <p>Vous n'avez pas encore rÃ©servÃ© d'essai.</p>
+      <p>Vous n'avez pas encore réservé d'essai.</p>
     <?php else: ?>
       <div class="table-wrap">
       <table>
@@ -61,7 +61,7 @@ $page_url = 'php/mes-essais.php';
           <th>ID</th>
           <th>Voiture</th>
           <th>Date</th>
-          <th>Heure dÃ©but</th>
+          <th>Heure début</th>
           <th>Heure fin</th>
           <th>Statut</th>
         </tr>
@@ -70,15 +70,15 @@ $page_url = 'php/mes-essais.php';
           <td data-label="ID"><?= (int)$r['id_reservation'] ?></td>
           <td data-label="Voiture"><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
           <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
-          <td data-label="Heure dÃ©but"><?= htmlspecialchars($r['heure_debut']) ?></td>
+          <td data-label="Heure début"><?= htmlspecialchars($r['heure_debut']) ?></td>
           <td data-label="Heure fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
           <td data-label="Statut">
             <?php if ($r['statut'] === 'pending'): ?>
-              â³ En attente
+              ⏳ En attente
             <?php elseif ($r['statut'] === 'confirmed'): ?>
-              âœ… ConfirmÃ©e
+              ✅ Confirmée
             <?php else: ?>
-              âŒ AnnulÃ©e
+              ❌ Annulée
             <?php endif; ?>
           </td>
         </tr>

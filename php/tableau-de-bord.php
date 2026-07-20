@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include 'bootstrap.php';
 
 if (!isset($_SESSION['user']['id']) || ($_SESSION['user']['role'] ?? '') !== 'client') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel'])) {
     $reservationId = (int)$_POST['reservation_id'];
     $stmt = $conn->prepare("UPDATE reservation SET statut='cancelled' WHERE id_reservation=? AND utilisateur_id=?");
     $stmt->bind_param("ii", $reservationId, $userId);
-    $stmt->execute() ? $message = 'RÃ©servation annulÃ©e avec succÃ¨s.' : $message = 'Erreur lors de l\'annulation.';
+    $stmt->execute() ? $message = 'Réservation annulée avec succès.' : $message = 'Erreur lors de l\'annulation.';
     $stmt->close();
     }
 }
@@ -46,7 +46,7 @@ $stmt->execute();
 $reservations = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
-// DonnÃ©es pour les graphiques : rÃ©servations par mois (6 derniers mois)
+// Données pour les graphiques : réservations par mois (6 derniers mois)
 $monthlyLabels = [];
 $monthlyData = [];
 for ($i = 5; $i >= 0; $i--) {
@@ -61,7 +61,7 @@ for ($i = 5; $i >= 0; $i--) {
 ?>
 <?php
 $page_title = 'Tableau de bord | EcoDrive';
-$page_desc = 'GÃ©rez vos essais, modifiez votre profil et suivez votre activitÃ© EcoDrive depuis votre tableau de bord.';
+$page_desc = 'Gérez vos essais, modifiez votre profil et suivez votre activité EcoDrive depuis votre tableau de bord.';
 $page_url = 'php/tableau-de-bord.php';
 ?>
 <!DOCTYPE html>
@@ -84,8 +84,8 @@ $page_url = 'php/tableau-de-bord.php';
     <div class="hero-inner">
       <div>
         <div class="hero-eyebrow">Tableau de bord</div>
-        <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> ðŸ‘‹</h1>
-        <p>Consultez vos rÃ©servations, gÃ©rez vos essais et rÃ©servez de nouveaux modÃ¨les.</p>
+        <h1>Bonjour <?= htmlspecialchars($user['nom']) ?> 👋</h1>
+        <p>Consultez vos réservations, gérez vos essais et réservez de nouveaux modèles.</p>
         <p><a href="catalogue.php" class="cta">Parcourir le catalogue</a> <a href="mes-essais.php" class="cta">Mes essais</a></p>
       </div>
     </div>
@@ -95,18 +95,18 @@ $page_url = 'php/tableau-de-bord.php';
       <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
-    <!-- Cartes rÃ©sumÃ© -->
+    <!-- Cartes résumé -->
     <div class="dashboard-summary reveal reveal-up">
       <div class="summary-card">
         <strong>En attente</strong>
         <span><?= $counts['pending'] ?></span>
       </div>
       <div class="summary-card">
-        <strong>ConfirmÃ©es</strong>
+        <strong>Confirmées</strong>
         <span><?= $counts['confirmed'] ?></span>
       </div>
       <div class="summary-card">
-        <strong>AnnulÃ©es</strong>
+        <strong>Annulées</strong>
         <span><?= $counts['cancelled'] ?></span>
       </div>
       <div class="summary-card">
@@ -118,11 +118,11 @@ $page_url = 'php/tableau-de-bord.php';
     <!-- Graphiques -->
     <div class="chart-row reveal reveal-up reveal-delay-1">
       <div class="chart-card">
-        <h3>RÃ©servations par mois</h3>
+        <h3>Réservations par mois</h3>
         <canvas id="chartMonthly" width="300" height="180"></canvas>
       </div>
       <div class="chart-card">
-        <h3>Statut des rÃ©servations</h3>
+        <h3>Statut des réservations</h3>
         <canvas id="chartStatus" width="300" height="180"></canvas>
       </div>
     </div>
@@ -132,24 +132,24 @@ $page_url = 'php/tableau-de-bord.php';
       type: 'bar',
       data: {
         labels: <?= json_encode($monthlyLabels) ?>,
-        datasets: [{ label: 'RÃ©servations', data: <?= json_encode($monthlyData) ?>, backgroundColor: 'rgba(60,154,190,0.6)', borderColor: '#3C9ABE', borderWidth: 1, borderRadius: 4 }]
+        datasets: [{ label: 'Réservations', data: <?= json_encode($monthlyData) ?>, backgroundColor: 'rgba(60,154,190,0.6)', borderColor: '#3C9ABE', borderWidth: 1, borderRadius: 4 }]
       },
       options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
     });
     new Chart(document.getElementById('chartStatus'), {
       type: 'doughnut',
       data: {
-        labels: ['En attente', 'ConfirmÃ©es', 'AnnulÃ©es'],
+        labels: ['En attente', 'Confirmées', 'Annulées'],
         datasets: [{ data: [<?= (int)$counts['pending'] ?>, <?= (int)$counts['confirmed'] ?>, <?= (int)$counts['cancelled'] ?>], backgroundColor: ['#f59e0b', '#22c55e', '#ef4444'], borderWidth: 0 }]
       },
       options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
     });
     </script>
 
-    <h2>ðŸ“Œ Mes rÃ©servations</h2>
+    <h2>📌 Mes réservations</h2>
 
     <?php if (count($reservations) === 0): ?>
-      <p class="mt-lg text-muted">Vous n'avez pas encore rÃ©servÃ© d'essai.</p>
+      <p class="mt-lg text-muted">Vous n'avez pas encore réservé d'essai.</p>
       <a href="catalogue.php" class="btn btn-primary">Parcourir le catalogue</a>
     <?php else: ?>
       <div class="table-wrap">
@@ -157,7 +157,7 @@ $page_url = 'php/tableau-de-bord.php';
         <tr>
           <th>Voiture</th>
           <th>Date</th>
-          <th>DÃ©but</th>
+          <th>Début</th>
           <th>Fin</th>
           <th>Notes</th>
           <th>Statut</th>
@@ -167,16 +167,16 @@ $page_url = 'php/tableau-de-bord.php';
         <tr>
           <td data-label="Voiture"><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
           <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
-          <td data-label="DÃ©but"><?= htmlspecialchars($r['heure_debut']) ?></td>
+          <td data-label="Début"><?= htmlspecialchars($r['heure_debut']) ?></td>
           <td data-label="Fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
-          <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: 'â€”' ?></td>
+          <td data-label="Notes"><?= htmlspecialchars($r['notes'] ?? '') ?: '—' ?></td>
           <td data-label="Statut">
             <?php if ($r['statut'] === 'pending'): ?>
-              <span class="statut-pending">â³ En attente</span>
+              <span class="statut-pending">⏳ En attente</span>
             <?php elseif ($r['statut'] === 'confirmed'): ?>
-              <span class="statut-confirmed">âœ… ConfirmÃ©e</span>
+              <span class="statut-confirmed">✅ Confirmée</span>
             <?php else: ?>
-              <span class="statut-cancelled">âŒ AnnulÃ©e</span>
+              <span class="statut-cancelled">❌ Annulée</span>
             <?php endif; ?>
           </td>
           <td data-label="Action">
@@ -184,10 +184,10 @@ $page_url = 'php/tableau-de-bord.php';
               <form method="POST" class="form-inline">
                 <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 <input type="hidden" name="reservation_id" value="<?= (int)$r['id_reservation'] ?>">
-                <button type="submit" name="cancel" class="btn btn-sm btn-danger" onclick="return confirm('Annuler cette rÃ©servation ?')">Annuler</button>
+                <button type="submit" name="cancel" class="btn btn-sm btn-danger" onclick="return confirm('Annuler cette réservation ?')">Annuler</button>
               </form>
             <?php else: ?>
-              <em class="text-muted">â€”</em>
+              <em class="text-muted">—</em>
             <?php endif; ?>
           </td>
         </tr>

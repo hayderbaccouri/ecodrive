@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 session_start();
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Mentions LÃ©gales | EcoDrive';
-$page_desc = 'Mentions lÃ©gales du site EcoDrive â€” showroom de voitures Ã©lectriques en Tunisie.';
+$page_title = 'Mentions Légales | EcoDrive';
+$page_desc = 'Mentions légales du site EcoDrive — showroom de voitures électriques en Tunisie.';
 $page_url = 'pages/mentions-legales.php';
 $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 ?><!DOCTYPE html>
@@ -20,42 +20,42 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
 
 <main class="page-fade-in">
   <div class="container">
-    <h1 class="hero-entrance">Mentions LÃ©gales</h1>
-    <div class="legal-meta">DerniÃ¨re mise Ã  jour : 13 juin 2026</div>
+    <h1 class="hero-entrance">Mentions Légales</h1>
+    <div class="legal-meta">Dernière mise à jour : 13 juin 2026</div>
 
     <div class="content-section">
-      <h2>Ã‰diteur du site</h2>
-      <h3>EcoDrive â€” Premier Showroom Ã‰lectrique de Tunisie</h3>
+      <h2>Éditeur du site</h2>
+      <h3>EcoDrive — Premier Showroom Électrique de Tunisie</h3>
       <p><strong>Nom du responsable :</strong> Hayder Baccouri</p>
-      <p><strong>Type :</strong> Projet de fin de formation â€” AnnÃ©e 2026</p>
-      <p><strong>Objet :</strong> Plateforme de prÃ©sentation et de commercialisation de vÃ©hicules Ã©lectriques en Tunisie.</p>
+      <p><strong>Type :</strong> Projet de fin de formation — Année 2026</p>
+      <p><strong>Objet :</strong> Plateforme de présentation et de commercialisation de véhicules électriques en Tunisie.</p>
     </div>
 
     <div class="content-section">
-      <h2>CaractÃ©ristiques du site</h2>
-      <h3>Description gÃ©nÃ©rale</h3>
-      <p>EcoDrive est un showroom Ã©lectrique en ligne offrant un catalogue complet de vÃ©hicules Ã©lectriques et de solutions de recharge. Le site propose la visualisation de nos produits, des informations dÃ©taillÃ©es et une interface utilisateur dÃ©diÃ©e Ã  l'expÃ©rience client.</p>
-      <h3>FonctionnalitÃ©s principales</h3>
+      <h2>Caractéristiques du site</h2>
+      <h3>Description générale</h3>
+      <p>EcoDrive est un showroom électrique en ligne offrant un catalogue complet de véhicules électriques et de solutions de recharge. Le site propose la visualisation de nos produits, des informations détaillées et une interface utilisateur dédiée à l'expérience client.</p>
+      <h3>Fonctionnalités principales</h3>
       <ul>
-        <li>Catalogue interactif de voitures Ã©lectriques</li>
-        <li>PrÃ©sentation des bornes de recharge</li>
+        <li>Catalogue interactif de voitures électriques</li>
+        <li>Présentation des bornes de recharge</li>
         <li>Inscription et connexion utilisateur</li>
         <li>Recherche et filtrage des produits</li>
-        <li>Formulaires de contact et d'intÃ©rÃªt</li>
+        <li>Formulaires de contact et d'intérêt</li>
       </ul>
     </div>
 
     <div class="content-section">
-      <h2>PropriÃ©tÃ© intellectuelle</h2>
-      <p>Tous les contenus prÃ©sents sur ce site (textes, images, logos, vidÃ©os, icÃ´nes, structure, mise en page, code source) sont la propriÃ©tÃ© exclusive ou sont utilisÃ©s avec autorisation. Toute reproduction, distribution, modification ou utilisation sans autorisation est strictement interdite.</p>
-      <p><strong>Â© 2026 EcoDrive. Tous droits rÃ©servÃ©s.</strong></p>
-      <h3>Utilisation autorisÃ©e</h3>
-      <p>Vous Ãªtes autorisÃ© Ã  consulter et tÃ©lÃ©charger des copies pour votre usage personnel et non commercial uniquement.</p>
+      <h2>Propriété intellectuelle</h2>
+      <p>Tous les contenus présents sur ce site (textes, images, logos, vidéos, icônes, structure, mise en page, code source) sont la propriété exclusive ou sont utilisés avec autorisation. Toute reproduction, distribution, modification ou utilisation sans autorisation est strictement interdite.</p>
+      <p><strong>© 2026 EcoDrive. Tous droits réservés.</strong></p>
+      <h3>Utilisation autorisée</h3>
+      <p>Vous êtes autorisé à consulter et télécharger des copies pour votre usage personnel et non commercial uniquement.</p>
     </div>
 
     <div class="content-section">
-      <h2>ResponsabilitÃ© de l'hÃ©bergeur</h2>
-      <p>Ce site est hÃ©bergÃ© sur un serveur local (XAMPP) Ã  des fins Ã©ducatives et de formation. L'hÃ©bergeur ne peut Ãªtre tenu responsable des interruptions d'accÃ¨s, des pertes de donnÃ©es ou des dommages directs ou indirects rÃ©sultant de l'accÃ¨s Ã  ce site.</p>
+      <h2>Responsabilité de l'hébergeur</h2>
+      <p>Ce site est hébergé sur un serveur local (XAMPP) à des fins éducatives et de formation. L'hébergeur ne peut être tenu responsable des interruptions d'accès, des pertes de données ou des dommages directs ou indirects résultant de l'accès à ce site.</p>
     </div>
 
     <div class="content-section">
@@ -64,80 +64,80 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
     </div>
 
     <div class="content-section">
-      <h2>DonnÃ©es personnelles et protection</h2>
-      <h3>Collecte de donnÃ©es</h3>
+      <h2>Données personnelles et protection</h2>
+      <h3>Collecte de données</h3>
       <p>Le site peut collecter les informations suivantes :</p>
       <ul>
-        <li>Nom et prÃ©nom</li>
+        <li>Nom et prénom</li>
         <li>Adresse e-mail</li>
-        <li>Mot de passe (hachÃ© et sÃ©curisÃ©)</li>
+        <li>Mot de passe (haché et sécurisé)</li>
         <li>Historique de navigation</li>
         <li>Informations de formulaires</li>
       </ul>
-      <h3>Utilisation des donnÃ©es</h3>
-      <p>Les donnÃ©es personnelles collectÃ©es sont utilisÃ©es uniquement pour :</p>
+      <h3>Utilisation des données</h3>
+      <p>Les données personnelles collectées sont utilisées uniquement pour :</p>
       <ul>
-        <li>GÃ©rer votre compte utilisateur</li>
-        <li>AmÃ©liorer l'expÃ©rience utilisateur</li>
+        <li>Gérer votre compte utilisateur</li>
+        <li>Améliorer l'expérience utilisateur</li>
         <li>Envoyer des communications pertinentes</li>
         <li>Analyser les statistiques d'utilisation</li>
       </ul>
-      <h3>SÃ©curitÃ©</h3>
-      <p>EcoDrive s'engage Ã  protÃ©ger vos donnÃ©es personnelles. Cependant, aucune transmission sur Internet n'est totalement sÃ©curisÃ©e. Vous utilisez ce site Ã  vos risques et pÃ©rils.</p>
+      <h3>Sécurité</h3>
+      <p>EcoDrive s'engage à protéger vos données personnelles. Cependant, aucune transmission sur Internet n'est totalement sécurisée. Vous utilisez ce site à vos risques et périls.</p>
     </div>
 
     <div class="content-section">
       <h2>Cookies</h2>
-      <p>Ce site peut utiliser des cookies pour amÃ©liorer votre expÃ©rience de navigation. Les cookies sont de petits fichiers stockÃ©s sur votre appareil. Vous pouvez dÃ©sactiver les cookies via les paramÃ¨tres de votre navigateur.</p>
+      <p>Ce site peut utiliser des cookies pour améliorer votre expérience de navigation. Les cookies sont de petits fichiers stockés sur votre appareil. Vous pouvez désactiver les cookies via les paramètres de votre navigateur.</p>
     </div>
 
     <div class="content-section">
-      <h2>Limitations de responsabilitÃ©</h2>
-      <p>Le site est fourni Â« tel quel Â» sans garantie d'aucune sorte, expresse ou implicite. EcoDrive ne garantit pas :</p>
+      <h2>Limitations de responsabilité</h2>
+      <p>Le site est fourni « tel quel » sans garantie d'aucune sorte, expresse ou implicite. EcoDrive ne garantit pas :</p>
       <ul>
-        <li>L'exactitude, l'exhaustivitÃ© ou la fiabilitÃ© des contenus</li>
+        <li>L'exactitude, l'exhaustivité ou la fiabilité des contenus</li>
         <li>L'absence d'interruption ou d'erreurs</li>
-        <li>La conformitÃ© aux besoins spÃ©cifiques de l'utilisateur</li>
+        <li>La conformité aux besoins spécifiques de l'utilisateur</li>
         <li>L'absence de virus ou de codes malveillants</li>
       </ul>
-      <p>En aucun cas, EcoDrive ne sera responsable de dommages directs, indirects, accidentels, spÃ©ciaux ou consÃ©cutifs rÃ©sultant de l'utilisation ou de l'impossibilitÃ© d'utiliser ce site.</p>
+      <p>En aucun cas, EcoDrive ne sera responsable de dommages directs, indirects, accidentels, spéciaux ou consécutifs résultant de l'utilisation ou de l'impossibilité d'utiliser ce site.</p>
     </div>
 
     <div class="content-section">
       <h2>Conditions d'utilisation</h2>
-      <h3>ConformitÃ© lÃ©gale</h3>
-      <p>En accÃ©dant et en utilisant ce site, vous acceptez de vous conformer Ã  toutes les lois et rÃ©glementations applicables en Tunisie et internationalement.</p>
+      <h3>Conformité légale</h3>
+      <p>En accédant et en utilisant ce site, vous acceptez de vous conformer à toutes les lois et réglementations applicables en Tunisie et internationalement.</p>
       <h3>Comportement interdit</h3>
       <p>Il est strictement interdit de :</p>
       <ul>
-        <li>AccÃ©der au site de maniÃ¨re non autorisÃ©e</li>
-        <li>Utiliser le site pour des activitÃ©s illÃ©gales</li>
+        <li>Accéder au site de manière non autorisée</li>
+        <li>Utiliser le site pour des activités illégales</li>
         <li>Transmettre des virus ou codes malveillants</li>
         <li>Harceler ou menacer d'autres utilisateurs</li>
         <li>Reproduire, distribuer ou modifier le contenu sans autorisation</li>
-        <li>Surcharger les serveurs avec des requÃªtes automatiques</li>
+        <li>Surcharger les serveurs avec des requêtes automatiques</li>
       </ul>
     </div>
 
     <div class="content-section">
       <h2>Modifications des conditions</h2>
-      <p>EcoDrive se rÃ©serve le droit de modifier ces mentions lÃ©gales Ã  tout moment. Les modifications entrent en vigueur dÃ¨s leur publication sur le site. Votre utilisation continue du site aprÃ¨s les modifications constitue votre acceptation des nouvelles conditions.</p>
+      <p>EcoDrive se réserve le droit de modifier ces mentions légales à tout moment. Les modifications entrent en vigueur dès leur publication sur le site. Votre utilisation continue du site après les modifications constitue votre acceptation des nouvelles conditions.</p>
     </div>
 
     <div class="content-section">
       <h2>Droit applicable et juridiction</h2>
-      <p>Ces mentions lÃ©gales sont rÃ©gies par les lois de la Tunisie. Tout litige ou diffÃ©rend dÃ©coulant de ces conditions sera soumis Ã  la juridiction exclusive des tribunaux tunisiens.</p>
+      <p>Ces mentions légales sont régies par les lois de la Tunisie. Tout litige ou différend découlant de ces conditions sera soumis à la juridiction exclusive des tribunaux tunisiens.</p>
     </div>
 
     <div class="content-section">
       <h2>Contact</h2>
-      <h3>Pour toute question concernant ces mentions lÃ©gales :</h3>
+      <h3>Pour toute question concernant ces mentions légales :</h3>
       <p><strong>Email :</strong> <a href="mailto:info@ecodrive.tn">info@ecodrive.tn</a></p>
       <p><strong>Formulaire de contact :</strong> Accessible via la <a href="contact.php">page contact</a></p>
       <h3>Responsable du projet</h3>
       <p><strong>Nom :</strong> Hayder Baccouri</p>
       <p><strong>Formation :</strong> Projet de fin de formation 2026</p>
-      <p><strong>Date de mise Ã  jour :</strong> 13 juin 2026</p>
+      <p><strong>Date de mise à jour :</strong> 13 juin 2026</p>
     </div>
   </div>
 </main>
