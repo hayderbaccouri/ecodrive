@@ -36,8 +36,7 @@ $page_image = 'images/byd-dolphin/byd-dolphin-surf-38.88-kwh-102711.webp';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Citadine électrique BYD batterie Blade LFP 43,2 kWh. 156 ch, autonomie 310 km WLTP, recharge DC 85 kW (10-80% en 30 min). Écran rotatif 10,1", V2L, idéale pour la ville.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">156 ch<small>115 kW</small></div>

@@ -36,8 +36,7 @@ $page_image = 'images/toyota-bz4x-73.1-kwh/toyota-bz4x-73.1-kwh-109445.webp';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV 100% électrique Toyota plateforme e-TNGA. 227 ch traction avant, batterie NMC 73,1 kWh, autonomie 573 km WLTP, recharge DC (10-80% en 28 min). Design futuriste, fiabilité légendaire.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">227 ch<small>167 kW</small></div>

@@ -36,8 +36,7 @@ $page_image = 'images/mercedes-eqc/mercedes-eqc.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV premium électrique Mercedes. 408 ch, transmission intégrale 4MATIC, batterie 80 kWh, autonomie 432 km WLTP, recharge DC 112 kW. Confort absolu, système MBUX, design élégant.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">408 ch<small>300 kW</small></div>

@@ -36,8 +36,7 @@ $page_image = 'images/geely-ex2/geely-ex2-39.4-kwh-max-101691.webp';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV compact 100% électrique Geely. 115 ch propulsion, batterie LFP 39,4 kWh, autonomie 325 km WLTP, recharge DC 30-80% en 21 min. Écran 14,6", Flyme Auto, idéale pour la ville.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">115 ch<small>85 kW</small></div>

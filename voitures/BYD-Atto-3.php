@@ -36,8 +36,7 @@ $page_image = 'images/byd-atto-3/byd-atto-3.webp';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV compact 100% électrique BYD e-Platform 3.0. 313 ch propulsion, batterie Blade LFP 74,8 kWh, autonomie 510 km WLTP, architecture 800V, recharge DC 220 kW (10-80% en 25 min).</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">313 ch<small>230 kW</small></div>

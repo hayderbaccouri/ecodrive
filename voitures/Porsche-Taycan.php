@@ -36,8 +36,7 @@ $page_image = 'images/porsche-taycan/porsche-taycan-taycan-91005.webp';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline sportive 100% électrique Porsche. 408 ch propulsion, batterie 89 kWh, autonomie 503 km WLTP, architecture 800V, recharge 320 kW (10-80% en 18 min). Boîte 2 rapports, design iconique.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">408 ch<small>300 kW</small></div>

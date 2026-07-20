@@ -36,8 +36,7 @@ $page_image = 'images/bmw-ix3/BMW-iX3.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV électrique premium sur plateforme Neue Klasse. 469 ch, transmission intégrale xDrive, batterie 108,7 kWh, autonomie 805 km WLTP, recharge 400 kW (10-80% en 21 min). Écran Panoramic iDrive 18".</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">469 ch<small>345 kW</small></div>

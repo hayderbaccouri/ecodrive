@@ -986,9 +986,6 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
    =================================================== */
 
 .car-overview{max-width:var(--max);margin:2.5rem auto 0;padding:2rem var(--wrap);background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);display:grid;grid-template-columns:1fr;gap:2rem}
-.car-overview .overview-desc{order:1}
-.car-overview .desc-card{background:rgba(10,125,168,0.03);border:1px solid rgba(10,125,168,0.1);border-radius:var(--radius-md);padding:1.5rem}
-.car-overview .desc-card p{color:var(--gray);font-size:.95rem;line-height:1.8}
 .car-overview .specs-highlight{order:2;display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
 @media(max-width:900px){.car-overview .specs-highlight{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.car-overview .specs-highlight{grid-template-columns:repeat(2,1fr)}}

@@ -36,8 +36,7 @@ $page_image = 'images/kia-ev3/kia-ev3.png';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>SUV compact coréen 100% électrique plateforme E-GMP. 204 ch traction avant, batterie 81,4 kWh, autonomie 605 km WLTP, recharge DC 128 kW (10-80% en 31 min). Garantie 7 ans.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">204 ch<small>150 kW</small></div>

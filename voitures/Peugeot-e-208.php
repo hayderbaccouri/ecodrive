@@ -36,8 +36,7 @@ $page_image = 'images/peugeot-e-208/E-208_gallery_exterior_3_D_1920x1080.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Citadine électrique française au design affirmé. 156 ch, batterie 54 kWh, autonomie 433 km WLTP, recharge DC 100 kW (20-80% en 27 min). i-Cockpit, agrément de conduite.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">156 ch<small>115 kW</small></div>

@@ -36,8 +36,7 @@ $page_image = 'images/audi-a6-sportback-e-tron-electrique/essai-audi-a6-sportbac
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline premium 100% électrique sur plateforme PPE. 367 ch, batterie 100 kWh NMC, autonomie 757 km WLTP, architecture 800V, recharge 10-80% en 21 min (270 kW). Double écran MMI, Cx 0,21.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">367 ch<small>270 kW</small></div>

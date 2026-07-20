@@ -36,8 +36,7 @@ $page_image = 'images/tesla-model-s-plaid/tesla-model-s-plaid.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline électrique la plus rapide au monde : 1 020 ch, 0-100 km/h en 2,1 s. Autonomie 600 km WLTP, volant yoke, 3 moteurs, transmission intégrale.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">1 020 ch<small>760 kW</small></div>

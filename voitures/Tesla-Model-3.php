@@ -36,8 +36,7 @@ $page_image = 'images/tesla-model-3/tesla-model3.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline électrique la plus vendue au monde. Autonomie jusqu'à 702 km WLTP, accès réseau Superchargeur, mises à jour OTA, performances exceptionnelles, minimalisme technologique.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">498 ch<small>366 kW</small></div>

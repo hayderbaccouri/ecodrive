@@ -37,8 +37,7 @@ $page_image = 'images/mercedes-classe-c-2026/1-Mercedes-Benz-Classe-C-2026.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline premium électrique Mercedes. 489 ch, transmission intégrale 4MATIC, batterie 94,5 kWh, autonomie 753 km WLTP, architecture 800V, recharge 330 kW (10-80% en 22 min). MBUX Hyperscreen.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">489 ch<small>360 kW</small></div>

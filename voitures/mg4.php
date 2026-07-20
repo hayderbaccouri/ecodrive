@@ -36,8 +36,7 @@ $page_image = 'images/mg4/mg-4-urban.jpg';
     </div>
 
     <section class="car-overview reveal reveal-up">
-      <div class="overview-desc"><div class="desc-card"><p>Berline compacte électrique MG plateforme MSP. 149 ch propulsion, batterie LFP 43 kWh, autonomie 335 km WLTP, recharge DC 88 kW (10-80% en 28 min). Écran 12,8", garantie 7 ans.</p></div></div>
-      <div class="specs-highlight">
+<div class="specs-highlight">
       <div class="spec-card">
         <div class="spec-label">Puissance</div>
         <div class="spec-value">160 ch<small>118 kW</small></div>
