@@ -32,9 +32,12 @@ $prenom = $prenom ?? ($user['prenom'] ?? 'Visiteur');
             <span class="chevron">▾</span>
           </div>
           <div class="user-dropdown" role="menu">
-            <?php $dashboardPage = ($user['role'] ?? 'client') === 'admin' ? $asset_base . 'php/admin.php' : $asset_base . 'php/tableau-de-bord.php'; ?>
-            <a href="<?= $dashboardPage ?>" role="menuitem">👤 Mon espace</a>
-            <a href="<?= $asset_base ?>php/mes-essais.php" role="menuitem">🚗 Mes essais</a>
+            <?php $isAdmin = ($user['role'] ?? 'client') === 'admin'; ?>
+            <a href="<?= $asset_base ?><?= $isAdmin ? 'php/admin.php' : 'php/tableau-de-bord.php' ?>" role="menuitem">👤 Mon espace</a>
+            <?php if (!$isAdmin): ?>
+              <a href="<?= $asset_base ?>php/mes-essais.php" role="menuitem">🚗 Mes essais</a>
+            <?php endif; ?>
+            <a href="<?= $asset_base ?>php/profil.php" role="menuitem">⚙️ Profil</a>
             <hr role="separator">
             <a href="<?= $asset_base ?>php/deconnexion.php" class="logout" role="menuitem">🚪 Se déconnecter</a>
           </div>
