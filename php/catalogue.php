@@ -104,7 +104,7 @@ $page_url = 'php/catalogue.php';
 
   <section id="results" class="showroom reveal reveal-up">
     <div style="max-width:var(--wrap-max);margin:0 auto">
-      <h2 class="section-title">Rechercher un modèle</h2>
+      <h2 class="section-title">Trouvez votre voiture idéale</h2>
       <div class="blue-bar"></div>
     </div>
 
