@@ -47,6 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$message) {
+        $dayOfWeek = (int)date('w', strtotime($dateEssai));
+        if ($dayOfWeek === 0) {
+            $message = 'Les essais ne sont pas disponibles le dimanche.';
+            $messageType = 'error';
+        }
+    }
+
+    if (!$message) {
+        if ($heureDebut < '08:00' || $heureDebut > '17:00') {
+            $message = 'Les essais sont disponibles uniquement entre 8h00 et 17h00.';
+            $messageType = 'error';
+        }
+    }
+
+    if (!$message) {
         $heureFin = date('H:i', strtotime($heureDebut . ' +1 hour'));
         if ($heureDebut >= $heureFin) {
             $message = 'L\'heure de fin doit être après l\'heure de début.';
@@ -155,11 +170,11 @@ $page_url = 'php/reservation.php';
               <?php endforeach; ?>
             </select>
 
-            <label for="date_essai">Date de l'essai</label>
+            <label for="date_essai">Date de l'essai (Lun–Sam)</label>
             <input type="date" id="date_essai" name="date_essai" value="<?= htmlspecialchars($_POST['date_essai'] ?? '') ?>" required min="<?= date('Y-m-d') ?>" data-msg-required="Veuillez choisir une date.">
 
             <label for="heure_debut">Heure de l'essai (1 heure)</label>
-            <input type="time" id="heure_debut" name="heure_debut" value="<?= htmlspecialchars($_POST['heure_debut'] ?? '') ?>" required data-msg-required="Veuillez choisir un horaire.">
+            <input type="time" id="heure_debut" name="heure_debut" value="<?= htmlspecialchars($_POST['heure_debut'] ?? '') ?>" min="08:00" max="17:00" required data-msg-required="Veuillez choisir un horaire.">
 
             <div class="btn-row">
               <button type="button" class="btn btn-primary step-next">Suivant</button>
@@ -215,6 +230,15 @@ $page_url = 'php/reservation.php';
           alert('Veuillez remplir tous les champs avant de continuer.');
           return;
         }
+        var d = new Date(date.value);
+        if (d.getDay() === 0) {
+          alert('Les essais ne sont pas disponibles le dimanche. Veuillez choisir un autre jour.');
+          return;
+        }
+        if (hDebut.value < '08:00' || hDebut.value > '17:00') {
+          alert('Les essais sont disponibles uniquement entre 8h00 et 17h00.');
+          return;
+        }
         var hFin = hDebut.value.split(':');
         hFin = String(parseInt(hFin[0]) + 1).padStart(2,'0') + ':' + hFin[1];
         var carText = voiture.options[voiture.selectedIndex].text;
@@ -233,6 +257,14 @@ $page_url = 'php/reservation.php';
     });
 
     showStep(0);
+
+    document.getElementById('date_essai').addEventListener('change', function(){
+      var d = new Date(this.value);
+      if (d.getDay() === 0) {
+        alert('Les essais ne sont pas disponibles le dimanche. Veuillez choisir un autre jour.');
+        this.value = '';
+      }
+    });
   })();
   </script>
 
