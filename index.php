@@ -66,7 +66,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
         </p>
         <div class="hero-actions">
           <a href="#showroom" class="btn-primary cta">Explorer le catalogue</a>
-          <a href="php/inscription.php" class="btn-ghost">S'inscrire</a>
+          <a href="bornes/index.php" class="btn-primary cta">Explorer les bornes</a>
         </div>
       </div>
     </div>
