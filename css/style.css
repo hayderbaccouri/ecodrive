@@ -25,10 +25,6 @@
   --gray-mid:#9CAAB8;
   --green:#2D6A1E;
   --green-rgb:45,106,30;
-  --grey-1:var(--dark);
-  --grey-2:var(--gray);
-  --text:var(--dark);
-  --muted:var(--gray);
   --black:#0d1b2a;
   --off-black:#162d42;
   --border:rgba(10,27,42,0.08);
@@ -43,7 +39,6 @@
   --font-body:'DM Sans',system-ui,sans-serif;
   --wrap:clamp(1.5rem,4vw,3rem);
   --max:1400px;
-  --wrap-max:1400px;
   --radius-sm:8px;
   --radius-md:12px;
   --radius-lg:20px;
@@ -220,7 +215,6 @@ table td{color:var(--dark)}
 
 /* ---------- SECTION HELPERS ---------- */
 .section-rule{height:5px;width:70px;background:linear-gradient(90deg,var(--blue),var(--accent));border-radius:3px;margin:.5rem 0 1rem}
-.blue-bar{height:5px;width:70px;background:linear-gradient(90deg,var(--blue),var(--accent));border-radius:3px;margin:.5rem 0 1rem}
 
 /* ---------- BREADCRUMB ---------- */
 .breadcrumb{font-size:.88rem;color:var(--gray);margin-bottom:1rem}
@@ -246,7 +240,6 @@ table td{color:var(--dark)}
 
 /* ---------- SKELETON EXTRAS ---------- */
 .skeleton-img{height:180px;border-radius:var(--radius-md);margin-bottom:.75rem}
-.skeleton-text{height:16px;border-radius:var(--radius-sm);margin-bottom:.5rem}
 .skeleton-text.short{width:60%}
 
 /* ---------- COMPARE CHECKBOX ---------- */
@@ -301,7 +294,7 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
 
 /* ---------- CONTACT PAGE ---------- */
 .page-contact{color:var(--dark);flex:1}
-.page-contact .container{max-width:var(--wrap-max);width:100%;margin:0 auto;padding:clamp(2rem,5vw,3rem) var(--wrap)}
+.page-contact .container{max-width:var(--max);width:100%;margin:0 auto;padding:clamp(2rem,5vw,3rem) var(--wrap)}
 .page-contact h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--dark);margin-bottom:.5rem;letter-spacing:.02em}
 .page-contact .subtitle{font-size:1rem;color:var(--gray);margin-bottom:2rem;line-height:1.6}
 .page-contact .contact-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2rem}
@@ -420,8 +413,6 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
 .cars-grid{display:grid;grid-template-columns:repeat(3,minmax(240px,1fr));gap:1.25rem}
 .car-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 32px rgba(0,0,0,0.10);transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;transform-style:preserve-3d}
 .car-card::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 20%,rgba(10,125,168,0.08),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none;z-index:1}
-.car-card:hover{box-shadow:0 16px 48px rgba(10,125,168,0.15);border-color:rgba(10,125,168,0.2);transform:translateY(-8px) rotateX(2deg)}
-.car-card:hover::after{opacity:1}
 .car-card:hover{box-shadow:0 16px 48px rgba(10,125,168,0.15);border-color:rgba(10,125,168,0.25);transform:translateY(-8px) rotateX(2deg)}
 .car-card:hover::after{opacity:1}
 .car-img-wrap{position:relative;overflow:hidden}

@@ -14,7 +14,7 @@ $page_image = 'images/bornes/SPIN-AIR-11.png';
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
-  <link rel="stylesheet" href="../css/style.css?v=19">
+  <link rel="stylesheet" href="../css/style.css?v=<?= CACHE_VERSION ?>">
 
 </head>
 
@@ -27,7 +27,7 @@ $page_image = 'images/bornes/SPIN-AIR-11.png';
     <span>›</span>
     <a href="../bornes/index.php">Bornes de recharge</a>
     <span>›</span>
-    <span style="color: var(--text)">Exicom Spin Air 11 kW</span>
+    <span style="color: var(--dark)">Exicom Spin Air 11 kW</span>
   </div>
 
   <!-- HERO -->
@@ -228,7 +228,7 @@ $page_image = 'images/bornes/SPIN-AIR-11.png';
         <div class="compat-sub">Type 2 · Compatible</div>
       </div>
     </div>
-    <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted); text-align: center;">
+    <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--gray); text-align: center;">
       Compatible avec tous les véhicules électriques équipés d'un port Type 2 acceptant la charge triphasée.
     </p>
   </section>

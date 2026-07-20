@@ -7,7 +7,6 @@ $email = htmlspecialchars($user['email'] ?? '', ENT_QUOTES, 'UTF-8');
 $loggedIn = $user !== null;
 
 $contactMessage = '';
-$contactSuccess = false;
 
 // Traitement du formulaire de contact
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
@@ -28,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact'])) {
       $headers = "From: EcoDrive <{$from}>\r\nReply-To: {$replyTo}\r\nX-Mailer: PHP/" . phpversion();
 
       $sent = @mail('contact@ecodrive.tn', $subject, $body, $headers);
-      $contactSuccess = true;
       $contactMessage = $sent ? 'Message envoyé. Notre équipe vous répondra rapidement.' : 'Merci ! Votre message a bien été transmis.';
     } else {
         $contactMessage = 'Veuillez remplir tous les champs obligatoires.';
@@ -50,7 +48,7 @@ $page_url = '';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="css/style.css?v=19">
+  <link rel="stylesheet" href="css/style.css?v=<?= CACHE_VERSION ?>">
   <?php $jsonld_type = 'localbusiness'; $jsonld_products = array_map(fn($v) => $v['marque'].' '.$v['modele'], $voitures); include __DIR__ . '/php/partials/jsonld.php'; ?>
 </head>
 <body>

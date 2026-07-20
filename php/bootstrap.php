@@ -1,5 +1,6 @@
 <?php
 // Central bootstrap: load env, start session, DB connection and helpers
+define('CACHE_VERSION', '20');
 if (session_status() === PHP_SESSION_NONE) {
     $isSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
     session_set_cookie_params([

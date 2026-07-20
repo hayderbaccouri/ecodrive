@@ -32,7 +32,7 @@ else {
     $body .= "Téléphone : " . ($phone ?: 'Non renseigné') . "\n";
     $body .= "Sujet : " . ($sujet ?: 'Non renseigné') . "\n\n";
     $body .= "Message :\n$message\n";
-    $headers  = "From: no-reply@ecodrive.tn\r\n";
+    $headers  = "From: noreply@ecodrive.tn\r\n";
     $headers .= "Reply-To: $email\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
