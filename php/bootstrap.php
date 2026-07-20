@@ -57,4 +57,9 @@ function e($s) {
     return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 }
 
+// Global user state — available to all pages that include bootstrap.php
+$user     = $_SESSION['user'] ?? null;
+$loggedIn = $user !== null;
+$prenom   = $user['prenom'] ?? 'Visiteur';
+
 ?>
