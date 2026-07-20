@@ -10,7 +10,7 @@ $sp = $car['specs_batterie'];
 $sr = $car['specs_recharge'];
 $sd = $car['specs_dimensions'];
 $sm = $car['specs_motorisation'];
-$carName = $car['jsonld']['name'];
+$carName = $car['jsonld']['name'] ?? $car['breadcrumb'] ?? ($car['marque'] . ' ' . $car['modele']);
 $carId   = $car['car_id'];
 ?>
 <!DOCTYPE html>
