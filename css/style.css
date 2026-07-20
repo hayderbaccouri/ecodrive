@@ -289,11 +289,11 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
 /* ---------- CONFIRMATION PAGE ---------- */
 .confirmation-icon{width:80px;height:80px;border-radius:50%;background:rgba(var(--accent-rgb),0.12);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem}
 .confirmation-icon svg{width:40px;height:40px}
-.confirmation-details{max-width:560px;margin:2rem auto;padding:2rem;background:rgba(var(--white-rgb),0.03);border:1px solid rgba(var(--white-rgb),0.08);border-radius:var(--radius-lg)}
-.confirmation-details .detail-row{display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid rgba(var(--white-rgb),0.05)}
+.confirmation-details{max-width:560px;margin:2rem auto;padding:2rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:0 4px 16px rgba(0,0,0,0.04)}
+.confirmation-details .detail-row{display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border)}
 .confirmation-details .detail-row:last-child{border-bottom:none}
-.detail-label{color:var(--grey-2);font-size:var(--text-sm)}
-.detail-value{color:var(--grey-1);font-weight:400;font-size:.9rem;text-align:right}
+.detail-label{color:var(--gray);font-size:var(--text-sm)}
+.detail-value{color:var(--dark);font-weight:400;font-size:.9rem;text-align:right}
 .confirmation-actions{display:flex;gap:var(--space-md);justify-content:center;flex-wrap:wrap;margin-top:var(--space-xl)}
 
 /* ---------- COMPARE PAGE ---------- */
@@ -972,8 +972,23 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
 .dashboard-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
 .summary-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.06);transition:transform .3s cubic-bezier(.25,.46,.45,.94),box-shadow .3s ease}
 .summary-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.1)}
-.summary-card strong{display:block;font-size:.82rem;color:var(--gray);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
+.summary-card em{display:block;font-size:.82rem;color:var(--gray);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;font-style:normal}
 .summary-card span{font-size:2rem;font-weight:400;color:var(--accent)}
+
+.client-nav{display:flex;gap:.25rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.35rem;margin-bottom:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.03);overflow-x:auto}
+.client-nav a{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;border:none;background:transparent;color:var(--gray);border-radius:calc(var(--radius-lg) - 4px);font-family:var(--font-body);font-size:.88rem;font-weight:400;cursor:pointer;transition:all .25s;white-space:nowrap;text-decoration:none}
+.client-nav a:hover{color:var(--dark);background:rgba(var(--blue-rgb),0.04)}
+.client-nav a.active{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(var(--blue-rgb),0.25)}
+
+.client-section{max-width:900px;margin:0 auto}
+.client-section h2{font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--dark);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.client-empty{text-align:center;padding:3rem 1.5rem;color:var(--gray)}
+.client-empty p{margin-bottom:1.5rem;font-size:1rem}
+
+.client-hero{background:linear-gradient(135deg,rgba(10,125,168,0.06),rgba(60,154,190,0.03),var(--white));border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(1.5rem,3vw,2.5rem);margin-bottom:2rem}
+.client-hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:400;color:var(--dark);margin-bottom:.5rem}
+.client-hero p{color:var(--gray);font-size:1rem;margin-bottom:1rem}
+.client-hero .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem}
 
 /* ===================================================
    CHARTS

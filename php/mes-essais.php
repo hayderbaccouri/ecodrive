@@ -1,7 +1,6 @@
 <?php
 include 'bootstrap.php';
 
-// Vérifier que l'utilisateur est connecté et est client
 if (!isset($_SESSION['user']['id'])) {
     header('Location: connexion.php');
     exit;
@@ -13,20 +12,15 @@ if (($_SESSION['user']['role'] ?? '') === 'admin') {
 
 $userId = $_SESSION['user']['id'];
 
-// Récupérer les infos utilisateur
 $stmt = $conn->prepare("SELECT nom, email FROM utilisateur WHERE id_utilisateur = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$user = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-// Récupérer toutes les réservations du client
 $sql = "SELECT r.id_reservation, v.marque, v.modele, r.date_essai, r.heure_debut, r.heure_fin, r.statut
-        FROM reservation r
-        JOIN voiture v ON r.voiture_id = v.id_voiture
-        WHERE r.utilisateur_id = ?
-        ORDER BY r.date_essai DESC";
+        FROM reservation r JOIN voiture v ON r.voiture_id = v.id_voiture
+        WHERE r.utilisateur_id = ? ORDER BY r.date_essai DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -46,51 +40,71 @@ $page_url = 'php/mes-essais.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=18">
+  <link rel="stylesheet" href="../css/style.css?v=19">
 </head>
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap page-fade-in">
-    <h1>Mes essais</h1>
 
-  <section>
-    <h2>📌 Historique de mes essais</h2>
-    <?php if (count($reservations) === 0): ?>
-      <p>Vous n'avez pas encore réservé d'essai.</p>
-    <?php else: ?>
-      <div class="table-wrap">
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Voiture</th>
-          <th>Date</th>
-          <th>Heure début</th>
-          <th>Heure fin</th>
-          <th>Statut</th>
-        </tr>
-        <?php foreach ($reservations as $r): ?>
-        <tr>
-          <td data-label="ID"><?= (int)$r['id_reservation'] ?></td>
-          <td data-label="Voiture"><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
-          <td data-label="Date"><?= htmlspecialchars($r['date_essai']) ?></td>
-          <td data-label="Heure début"><?= htmlspecialchars($r['heure_debut']) ?></td>
-          <td data-label="Heure fin"><?= htmlspecialchars($r['heure_fin']) ?></td>
-          <td data-label="Statut">
-            <?php if ($r['statut'] === 'pending'): ?>
-              ⏳ En attente
-            <?php elseif ($r['statut'] === 'confirmed'): ?>
-              ✅ Confirmée
-            <?php else: ?>
-              ❌ Annulée
-            <?php endif; ?>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </table>
+    <div class="client-hero">
+      <h1>Mes essais</h1>
+      <p>Consultez l'historique et le statut de toutes vos réservations d'essai.</p>
+      <div class="hero-actions">
+        <a href="reservation.php" class="btn btn-primary">Réserver un essai</a>
+        <a href="catalogue.php" class="btn btn-ghost">Parcourir le catalogue</a>
       </div>
-    <?php endif; ?>
-  </section>
+    </div>
+
+    <nav class="client-nav">
+      <a href="tableau-de-bord.php">📊 Tableau de bord</a>
+      <a href="mes-essais.php" class="active">🚗 Mes essais</a>
+      <a href="profil.php">👤 Mon profil</a>
+    </nav>
+
+    <div class="client-section">
+      <?php if (count($reservations) === 0): ?>
+        <div class="client-empty">
+          <p>Vous n'avez pas encore réservé d'essai.</p>
+          <a href="catalogue.php" class="btn btn-primary">Parcourir le catalogue</a>
+        </div>
+      <?php else: ?>
+        <div class="table-wrap">
+        <table>
+          <tr>
+            <th>Voiture</th>
+            <th>Date</th>
+            <th>Horaire</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+          <?php foreach ($reservations as $r): ?>
+          <tr>
+            <td data-label="Voiture" style="font-weight:400"><?= htmlspecialchars($r['marque'].' '.$r['modele']) ?></td>
+            <td data-label="Date"><?= date('d/m/Y', strtotime($r['date_essai'])) ?></td>
+            <td data-label="Horaire"><?= htmlspecialchars($r['heure_debut']) ?> → <?= htmlspecialchars($r['heure_fin']) ?></td>
+            <td data-label="Statut">
+              <?php if ($r['statut'] === 'pending'): ?>
+                <span class="statut-pending">⏳ En attente</span>
+              <?php elseif ($r['statut'] === 'confirmed'): ?>
+                <span class="statut-confirmed">✅ Confirmée</span>
+              <?php else: ?>
+                <span class="statut-cancelled">❌ Annulée</span>
+              <?php endif; ?>
+            </td>
+            <td data-label="Actions">
+              <?php if (in_array($r['statut'], ['pending','confirmed'])): ?>
+                <a href="reservation.php" class="btn btn-sm btn-ghost">Revoir</a>
+              <?php endif; ?>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </table>
+        </div>
+      <?php endif; ?>
+    </div>
   </main>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
+</body>
+</html>

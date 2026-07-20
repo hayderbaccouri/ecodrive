@@ -42,67 +42,79 @@ $page_url = 'php/confirmation-reservation.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=18">
+  <link rel="stylesheet" href="../css/style.css?v=19">
 </head>
 <body>
-  <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
+<?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap page-fade-in">
-    <div class="confirmation-icon hero-entrance">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
+
+    <div class="client-hero" style="text-align:center">
+      <div class="confirmation-icon hero-entrance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h1 class="hero-entrance">Réservation confirmée !</h1>
+      <p class="hero-entrance" style="color:var(--gray)">Votre demande d'essai a bien été enregistrée.</p>
     </div>
 
-    <h1 class="hero-entrance text-center">Réservation confirmée !</h1>
-    <p class="hero-entrance text-center" style="color:var(--grey-2);">Votre demande d'essai a bien été enregistrée.</p>
+    <nav class="client-nav">
+      <a href="tableau-de-bord.php">📊 Tableau de bord</a>
+      <a href="mes-essais.php">🚗 Mes essais</a>
+      <a href="profil.php">👤 Mon profil</a>
+    </nav>
 
-    <div class="confirmation-details reveal reveal-up">
-      <div class="detail-row">
-        <span class="detail-label">Voiture</span>
-        <span class="detail-value"><?= htmlspecialchars($reservation['marque'] . ' ' . $reservation['modele']) ?></span>
+    <div class="client-section">
+      <div class="confirmation-details reveal reveal-up">
+        <div class="detail-row">
+          <span class="detail-label">Voiture</span>
+          <span class="detail-value"><?= htmlspecialchars($reservation['marque'] . ' ' . $reservation['modele']) ?></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Date</span>
+          <span class="detail-value"><?= date('d/m/Y', strtotime($reservation['date_essai'])) ?></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Horaire</span>
+          <span class="detail-value"><?= htmlspecialchars($reservation['heure_debut']) ?> → <?= htmlspecialchars($reservation['heure_fin']) ?></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Statut</span>
+          <span class="detail-value">
+            <?php if ($reservation['statut'] === 'pending'): ?>
+              <span class="statut-pending">⏳ En attente de confirmation</span>
+            <?php elseif ($reservation['statut'] === 'confirmed'): ?>
+              <span class="statut-confirmed">✅ Confirmée</span>
+            <?php else: ?>
+              <span class="statut-cancelled">❌ Annulée</span>
+            <?php endif; ?>
+          </span>
+        </div>
+        <?php if (!empty($reservation['notes'])): ?>
+        <div class="detail-row">
+          <span class="detail-label">Notes</span>
+          <span class="detail-value"><?= htmlspecialchars($reservation['notes']) ?></span>
+        </div>
+        <?php endif; ?>
       </div>
-      <div class="detail-row">
-        <span class="detail-label">Date</span>
-        <span class="detail-value"><?= htmlspecialchars($reservation['date_essai']) ?></span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Horaire</span>
-        <span class="detail-value"><?= htmlspecialchars($reservation['heure_debut']) ?> &rarr; <?= htmlspecialchars($reservation['heure_fin']) ?></span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Statut</span>
-        <span class="detail-value">
-          <?php if ($reservation['statut'] === 'pending'): ?>
-            <span style="color:var(--accent);">&#9203; En attente de confirmation</span>
-          <?php elseif ($reservation['statut'] === 'confirmed'): ?>
-            <span style="color:var(--green);">&#9989; Confirm&eacute;e</span>
-          <?php else: ?>
-            <span style="color:var(--danger);">&#10060; Annul&eacute;e</span>
-          <?php endif; ?>
-        </span>
-      </div>
-      <?php if (!empty($reservation['notes'])): ?>
-      <div class="detail-row">
-        <span class="detail-label">Notes</span>
-        <span class="detail-value"><?= htmlspecialchars($reservation['notes']) ?></span>
-      </div>
-      <?php endif; ?>
-    </div>
 
-    <div class="next-steps reveal reveal-up reveal-delay-1 text-center">
-      <h2>Prochaines &eacute;tapes</h2>
-      <p style="color:var(--grey-2);max-width:500px;margin:0 auto;">
-        Notre &eacute;quipe examinera votre demande et vous confirmera le rendez-vous.<br>
-        Vous pouvez suivre l'&eacute;tat de votre r&eacute;servation dans votre tableau de bord.
-      </p>
-    </div>
+      <div class="next-steps reveal reveal-up reveal-delay-1 text-center" style="margin-top:2rem">
+        <h2 style="font-family:var(--font-display);font-weight:400">Prochaines étapes</h2>
+        <p style="color:var(--gray);max-width:500px;margin:0 auto">
+          Notre équipe examinera votre demande et vous confirmera le rendez-vous.<br>
+          Vous pouvez suivre l'état de votre réservation dans votre tableau de bord.
+        </p>
+      </div>
 
-    <div class="confirmation-actions">
-      <a href="export-ics.php?id=<?= $reservationId ?>" class="btn-primary" style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;font-size:.85rem">📅 Ajouter au calendrier</a>
-      <a href="tableau-de-bord.php" class="btn-primary">Voir mes r&eacute;servations</a>
-      <a href="catalogue.php" class="btn-ghost">Retour au catalogue</a>
+      <div class="confirmation-actions" style="margin-top:2rem;text-align:center;display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center">
+        <a href="export-ics.php?id=<?= $reservationId ?>" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.5rem">📅 Ajouter au calendrier</a>
+        <a href="tableau-de-bord.php" class="btn btn-primary">Voir mes réservations</a>
+        <a href="catalogue.php" class="btn btn-ghost">Retour au catalogue</a>
+      </div>
     </div>
   </main>
 
-  <?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>
+<?php include __DIR__ . '/partials/footer.php'; ?>
+</body>
+</html>

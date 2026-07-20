@@ -10,7 +10,6 @@ $userId = $_SESSION['user']['id'];
 $message = '';
 $messageType = '';
 
-// Delete account
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $message = 'Session invalide.';
@@ -32,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
     }
 }
 
-// Mise à jour du profil
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     if (!csrf_verify($_POST['csrf_token'] ?? '')) {
         $message = 'Session invalide.';
@@ -103,59 +101,71 @@ $page_url = 'php/profil.php';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/partials/meta.php'; ?>
-  <link rel="stylesheet" href="../css/style.css?v=18">
+  <link rel="stylesheet" href="../css/style.css?v=19">
 </head>
 <body>
-  <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
+<?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
   <main class="main-wrap page-fade-in">
-    <h1>Mon profil</h1>
+
+    <div class="client-hero">
+      <h1>Mon profil</h1>
+      <p>Modifiez vos informations personnelles et votre mot de passe.</p>
+    </div>
+
+    <nav class="client-nav">
+      <a href="tableau-de-bord.php">📊 Tableau de bord</a>
+      <a href="mes-essais.php">🚗 Mes essais</a>
+      <a href="profil.php" class="active">👤 Mon profil</a>
+    </nav>
 
     <?php if ($message): ?>
       <div class="alert alert-<?= $messageType === 'success' ? 'success' : 'error' ?>"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
-    <div class="form-card" style="max-width:500px">
-      <form method="POST" action="profil.php" data-validate>
-        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-        <input type="hidden" name="update_profile" value="1">
+    <div class="client-section">
+      <div class="form-card">
+        <form method="POST" action="profil.php" data-validate>
+          <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+          <input type="hidden" name="update_profile" value="1">
 
-        <label for="nom">Nom complet</label>
-        <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" required data-msg-required="Veuillez entrer votre nom.">
+          <label for="nom">Nom complet</label>
+          <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" required data-msg-required="Veuillez entrer votre nom.">
 
-        <label for="email">Adresse e-mail</label>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide.">
+          <label for="email">Adresse e-mail</label>
+          <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required data-msg-required="Veuillez entrer votre email." data-msg-email="Email invalide.">
 
-        <label for="telephone">Téléphone</label>
-        <input type="tel" id="telephone" name="telephone" value="<?= htmlspecialchars($user['telephone'] ?? '') ?>" placeholder="+216 XX XXX XXX">
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" value="<?= htmlspecialchars($user['telephone'] ?? '') ?>" placeholder="+216 XX XXX XXX">
 
-        <label for="password">Nouveau mot de passe <em class="text-muted" style="font-size:.75rem">(laisser vide pour conserver)</em></label>
-        <div class="pwd-wrap">
-          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password">
-          <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
-        </div>
+          <label for="password">Nouveau mot de passe <em class="text-muted" style="font-size:.75rem">(laisser vide pour conserver)</em></label>
+          <div class="pwd-wrap">
+            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="new-password">
+            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
+          </div>
 
-        <label for="password_confirm">Confirmer le mot de passe</label>
-        <div class="pwd-wrap">
-          <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••" autocomplete="new-password" data-match="password">
-          <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
-        </div>
+          <label for="password_confirm">Confirmer le mot de passe</label>
+          <div class="pwd-wrap">
+            <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••" autocomplete="new-password" data-match="password">
+            <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
+          </div>
 
-        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-      </form>
+          <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        </form>
+      </div>
+
+      <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+        <h2>⚠️ Zone dangereuse</h2>
+        <p class="text-muted" style="font-size:.9rem;margin-bottom:1rem">La suppression de votre compte est irréversible. Toutes vos réservations seront supprimées.</p>
+        <form method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">
+          <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+          <input type="hidden" name="delete_account" value="1">
+          <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
+        </form>
+      </div>
     </div>
-
-    <section class="mt-lg" style="padding-top:1.5rem;border-top:1px solid var(--border)">
-      <h3 style="color:var(--danger)">Zone dangereuse</h3>
-      <p class="text-muted" style="font-size:.9rem;margin-bottom:1rem">La suppression de votre compte est irréversible.</p>
-      <form method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">
-        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-        <input type="hidden" name="delete_account" value="1">
-        <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
-      </form>
-    </section>
-
-    <p class="mt-lg"><a href="tableau-de-bord.php" class="btn-ghost">← Retour au tableau de bord</a></p>
   </main>
 
-<?php $asset_base = '../'; include __DIR__ . '/partials/footer.php'; ?>
+<?php include __DIR__ . '/partials/footer.php'; ?>
+</body>
+</html>
