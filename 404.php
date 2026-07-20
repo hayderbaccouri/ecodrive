@@ -15,7 +15,7 @@ $page_image = 'images/tesla-model-3/Tesla_Model_3_Standard_2026-01@2x.jpg';
   <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
   <?php include __DIR__ . '/php/partials/meta.php'; ?>
-  <link rel="stylesheet" href="css/style.css?v=15">
+  <link rel="stylesheet" href="css/style.css?v=16">
   <style>
     .page-404{color:var(--dark);min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;flex:1}
     .page-404 h1{font-family:var(--font-display);font-size:clamp(6rem,12vw,10rem);font-weight:300;color:var(--accent);line-height:1;margin-bottom:.5rem}

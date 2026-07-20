@@ -14,7 +14,7 @@ $page_image = 'images/mg4/mg-4-urban.jpg';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MG4 Urban — EcoDrive</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%26%23x26A1%3B%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../css/style.css?v=15">
+  <link rel="stylesheet" href="../css/style.css?v=16">
   <?php include __DIR__ . '/../php/partials/meta.php'; ?>
   <?php $jsonld_type = 'product'; $jsonld_product = ['name' => 'MG 4 Urban', 'description' => htmlspecialchars($page_desc, ENT_QUOTES, 'UTF-8'), 'image' => 'https://ecodrive.tn/'.$page_image, 'brand' => 'MG', 'price' => '54950']; include __DIR__ . '/../php/partials/jsonld.php'; ?>
 </head>
