@@ -77,9 +77,9 @@ $page_url = 'php/reinitialiser-mot-de-passe.php';
     <div class="login-visual-glow"></div>
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
+      <div class="login-visual-divider"></div>
       <div class="login-visual-quote">
-        Nouveau mot de passe,
-        <em>nouveau départ.</em>
+        Nouveau mot de passe,<br><em>nouveau départ.</em>
       </div>
       <div class="login-visual-sub">Choisissez un mot de passe sécurisé</div>
     </div>
@@ -88,8 +88,8 @@ $page_url = 'php/reinitialiser-mot-de-passe.php';
   <div class="login-form-col">
     <div class="login-form-wrap">
       <?php if ($messageType === 'success'): ?>
-        <div class="login-error" style="background:rgba(var(--green-rgb),0.1);color:var(--green)"><?= htmlspecialchars($message) ?></div>
-        <div class="login-footer-links"><span><a href="connexion.php">→ Se connecter</a></span></div>
+        <div class="login-success">✓ <?= htmlspecialchars($message) ?></div>
+        <div class="login-footer-links"><a href="connexion.php">→ Se connecter</a></div>
       <?php elseif ($message): ?>
         <div class="login-error" style="background:rgba(var(--danger-rgb),0.1);color:var(--danger)"><?= htmlspecialchars($message) ?></div>
       <?php endif; ?>

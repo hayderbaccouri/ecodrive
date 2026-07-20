@@ -88,13 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
-<div class="login-page">
+<div class="login-page hero-entrance">
 
   <div class="login-visual">
     <div class="login-visual-grid"></div>
     <div class="login-visual-glow"></div>
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
+      <div class="login-visual-divider"></div>
       <div class="login-visual-quote">
         Rejoignez<br><em>la révolution électrique.</em>
       </div>
@@ -105,12 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="login-form-col">
     <div class="login-form-wrap">
 
-      <div class="login-eyebrow">Espace client</div>
-      <h2>Créer un compte.</h2>
-      <p class="login-sub">Rejoignez EcoDrive pour réserver vos essais et suivre vos demandes.</p>
+      <div class="login-eyebrow">Créer un compte</div>
+      <h2>Bienvenue<br>chez EcoDrive.</h2>
+      <p class="login-sub">Inscrivez-vous pour réserver vos essais gratuits et suivre vos demandes.</p>
 
       <?php if ($error): ?>
-        <div class="login-error">&#9888; <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+        <div class="login-error">⚠ <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
       <?php endif; ?>
 
       <form method="post" action="inscription.php" data-validate>
@@ -118,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
           <label class="field-label" for="fullname">Nom complet</label>
           <input type="text" id="fullname" name="fullname"
-                 placeholder="Votre nom"
+                 placeholder="Votre nom complet"
                  value="<?= htmlspecialchars($fullname, ENT_QUOTES, 'UTF-8') ?>"
                  autocomplete="name" required data-msg-required="Ce champ est requis" />
         </div>
@@ -135,25 +136,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label class="field-label" for="password">Mot de passe</label>
           <div class="pwd-wrap">
             <input type="password" id="password" name="password"
-                   placeholder="••••••••"
+                   placeholder="8 caractères minimum"
                    autocomplete="new-password" required minlength="8"
                    data-msg-required="Ce champ est requis" data-msg-minlength="8 caractères minimum" />
             <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="password_confirm">Confirmer le mot de passe</label>
+        <div>
+          <label class="field-label" for="password_confirm">Confirmer le mot de passe</label>
           <div class="pwd-wrap">
-            <input type="password" id="password_confirm" name="password_confirm" required data-match="password" data-msg-match="Les mots de passe ne correspondent pas" data-msg-required="Confirmez votre mot de passe">
+            <input type="password" id="password_confirm" name="password_confirm" placeholder="Retapez votre mot de passe" required data-match="password" data-msg-match="Les mots de passe ne correspondent pas" data-msg-required="Confirmez votre mot de passe">
             <button type="button" class="pwd-toggle" aria-label="Afficher le mot de passe">👁</button>
           </div>
         </div>
 
-        <button type="submit" class="auth-btn">Créer mon compte</button>
+        <button type="submit" class="auth-btn">Créer mon compte →</button>
       </form>
 
-      <p class="login-switch">Déjà inscrit ? <a href="connexion.php">Se connecter</a></p>
+      <div class="login-divider"></div>
+
+      <div class="login-footer-links">
+        Déjà inscrit ? <a href="connexion.php">Se connecter</a>
+      </div>
+
     </div>
   </div>
 

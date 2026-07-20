@@ -67,9 +67,9 @@ $page_url = 'php/mot-de-passe-oublie.php';
     <div class="login-visual-glow"></div>
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
+      <div class="login-visual-divider"></div>
       <div class="login-visual-quote">
-        Un problème de mot de passe ?
-        <em>On s'en occupe.</em>
+        Un problème de mot de passe ?<br><em>On s'en occupe.</em>
       </div>
       <div class="login-visual-sub">Réinitialisation sécurisée</div>
     </div>

@@ -88,45 +88,36 @@ $page_url = 'php/connexion.php';
   <link rel="stylesheet" href="../css/style.css?v=17">
 </head>
 <body>
-
-  <?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
+<?php $asset_base = '../'; include __DIR__ . '/partials/header.php'; ?>
 
 <div class="login-page hero-entrance">
 
-  <!-- Colonne gauche : visuel -->
   <div class="login-visual">
     <div class="login-visual-grid"></div>
     <div class="login-visual-glow"></div>
-
     <div class="login-visual-content">
       <a href="../index.php" class="login-visual-logo">eco<span>drive</span></a>
-
-      <div class="login-visual-energies">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 14h6l-2 8 10-12h-6l2-8z"/><path d="M18 10c2 2 2 5 0 7" opacity=".6"/></svg>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.78 10-10 10Z"/></svg>
-      </div>
-
+      <div class="login-visual-divider"></div>
       <div class="login-visual-quote">
-        L'avenir de la route,
-        <em>sans émissions.</em>
+        L'avenir de la route,<br><em>sans émissions.</em>
       </div>
       <div class="login-visual-sub">Premier showroom électrique · Tunisie</div>
     </div>
   </div>
 
-  <!-- Colonne droite : formulaire -->
   <div class="login-form-col">
     <div class="login-form-wrap">
 
       <div class="login-eyebrow">Espace client</div>
       <h2>Bon retour<br>parmi nous.</h2>
-      <p class="login-sub">Connectez-vous pour accéder à votre espace EcoDrive et gérer vos essais.</p>
+      <p class="login-sub">Accédez à votre espace EcoDrive pour gérer vos essais et réservations.</p>
+
+      <?php if (isset($_GET['registered'])): ?>
+        <div class="login-success">✓ Compte créé avec succès. Vous pouvez maintenant vous connecter.</div>
+      <?php endif; ?>
 
       <?php if ($error): ?>
-        <div class="login-error">
-          ⚠ <?= htmlspecialchars($error) ?>
-        </div>
+        <div class="login-error">⚠ <?= htmlspecialchars($error) ?></div>
       <?php endif; ?>
 
       <form method="post" action="connexion.php" data-validate>
@@ -149,17 +140,17 @@ $page_url = 'php/connexion.php';
           </div>
         </div>
 
-        <button type="submit" class="btn-primary">Se connecter →</button>
-      </form>
+        <div class="login-extra">
+          <a href="mot-de-passe-oublie.php">Mot de passe oublié ?</a>
+        </div>
 
-      <div class="login-footer-links" style="margin-top:0.5rem">
-        <span><a href="mot-de-passe-oublie.php" style="font-weight:400;font-size:0.8rem">Mot de passe oublié ?</a></span>
-      </div>
+        <button type="submit" class="auth-btn">Se connecter →</button>
+      </form>
 
       <div class="login-divider"></div>
 
       <div class="login-footer-links">
-        <span>Pas encore de compte ? <a href="inscription.php">S'inscrire gratuitement</a></span>
+        Pas encore de compte ? <a href="inscription.php">Créer un compte gratuit</a>
       </div>
 
     </div>
