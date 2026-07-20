@@ -852,12 +852,8 @@ button:disabled,.btn:disabled,a.btn:disabled{opacity:.5;cursor:not-allowed;point
    =================================================== */
 
 .about-strip{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
-.about-visual{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;min-height:300px;background:linear-gradient(135deg,rgba(var(--accent-rgb),0.08),rgba(var(--blue-rgb),0.04),var(--white));border-radius:var(--radius-lg);box-shadow:0 8px 32px rgba(0,0,0,0.06)}
-.about-logo{display:flex;flex-direction:column;align-items:center;gap:1rem}
-.about-logo-icon{width:100px;height:100px;border-radius:50%;background:rgba(var(--blue-rgb),0.08);display:grid;place-items:center;transition:transform .3s}
-.about-logo-icon:hover{transform:scale(1.05)}
-.about-logo-text{font-family:var(--font-display);font-size:2rem;color:var(--dark);font-weight:400;letter-spacing:-.02em}
-.about-logo-text span{color:var(--accent)}
+.about-visual{display:flex;align-items:center;justify-content:center;min-height:300px;background:linear-gradient(135deg,rgba(var(--accent-rgb),0.08),rgba(var(--blue-rgb),0.04),var(--white));border-radius:var(--radius-lg);box-shadow:0 8px 32px rgba(0,0,0,0.06);padding:2rem}
+.about-logo-img{max-width:280px;height:auto;object-fit:contain}
 .about-content{display:grid;gap:1rem}
 .about-text{font-size:1.05rem;color:var(--gray);line-height:1.7}
 .about-values{display:grid;gap:.85rem}

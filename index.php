@@ -179,15 +179,7 @@ $voitures = $conn->query("SELECT id_voiture, marque, modele, prix, image, detail
   <!-- About -->
   <section id="about" class="about-strip">
     <div class="about-visual" aria-hidden="true">
-      <div class="about-logo">
-        <div class="about-logo-icon">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-            <path d="M32 8C20 8 12 16 12 28C12 36 18 46 24 52L32 56L32 28C32 20 42 12 44 10C40 8 36 8 32 8Z" fill="#0A7DA8" opacity="0.85"/>
-            <path d="M30 24V48M30 28L38 20M30 34L22 26" stroke="#0A7DA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="about-logo-text">eco<span>drive</span></div>
-      </div>
+      <img src="<?= $asset_base ?>images/EcoDrive logo.png" alt="EcoDrive" class="about-logo-img">
     </div>
     <div class="about-content">
       <div class="section-eyebrow">Notre mission</div>
