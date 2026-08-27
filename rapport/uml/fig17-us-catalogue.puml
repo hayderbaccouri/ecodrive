@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+title Cas d'utilisation du catalogue
+
+actor "Visiteur" as V
+
+V --> (Consulter le catalogue)
+V --> (Consulter la fiche d'un véhicule)
+
+(Rechercher par mot-clé) ..> (Consulter le catalogue) : <<extend>>
+(Filtrer par marque, prix, année) ..> (Consulter le catalogue) : <<extend>>
+(Trier : popularité, prix, année) ..> (Consulter le catalogue) : <<extend>>
+(Naviguer par pagination) ..> (Consulter le catalogue) : <<extend>>
+(Consulter la fiche d'un véhicule) ..> (Consulter le catalogue) : <<extend>>
+@enduml

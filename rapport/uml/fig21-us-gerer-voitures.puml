@@ -1,0 +1,19 @@
+@startuml
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+title Cas d'utilisation « Gérer les voitures »
+
+actor "Administrateur" as A
+actor "Journal d'audit\n(admin_audit)" as J
+
+A --> (Gérer les voitures)
+
+(Ajouter une voiture) ..> (Gérer les voitures) : <<extend>>
+(Modifier une voiture) ..> (Gérer les voitures) : <<extend>>
+(Supprimer une voiture) ..> (Gérer les voitures) : <<extend>>
+(Mettre en avant sur l'accueil) ..> (Gérer les voitures) : <<extend>>
+(Générer la page détail <slug>.php) ..> (Gérer les voitures) : <<extend>>
+(Gérer les voitures) ..> (Journaliser l'action) : <<include>>
+(Journaliser l'action) -> J
+@enduml

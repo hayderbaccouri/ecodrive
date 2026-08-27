@@ -1,0 +1,18 @@
+@startuml
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+title Cas d'utilisation « Gérer les bornes »
+
+actor "Administrateur" as A
+actor "Journal d'audit\n(admin_audit)" as J
+
+A --> (Gérer les bornes)
+
+(Ajouter une borne) ..> (Gérer les bornes) : <<extend>>
+(Modifier une borne) ..> (Gérer les bornes) : <<extend>>
+(Supprimer une borne) ..> (Gérer les bornes) : <<extend>>
+(Générer la page détail <slug>.php) ..> (Gérer les bornes) : <<extend>>
+(Gérer les bornes) ..> (Journaliser l'action) : <<include>>
+(Journaliser l'action) -> J
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+title Cas d'utilisation « Contact et newsletter »
+
+actor "Visiteur" as V
+actor "Administrateur" as A
+actor "Système de messagerie" as M
+
+V --> (Envoyer un message de contact)
+V --> (S'abonner à la newsletter)
+V --> (Se désabonner de la newsletter)
+V --> (Consulter la carte du showroom)
+A --> (Consulter les messages reçus)
+
+(Envoyer un message de contact) ..> (S'abonner à la newsletter) : <<extend>>
+(Envoyer un message de contact) ..> (Notifier le showroom par e-mail) : <<include>>
+(Consulter les messages reçus) ..> (Envoyer un message de contact) : <<extend>>
+(Notifier le showroom par e-mail) -> M
+@enduml

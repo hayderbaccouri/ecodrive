@@ -1,0 +1,33 @@
+@startuml
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+title Diagramme de séquence d'authentification
+
+actor "Utilisateur" as U
+participant "Vue\nconnexion.php" as V
+participant "Contrôleur PHP" as C
+database "Base de données\n(utilisateur)" as B
+participant "Session\n(serveur HTTP)" as S
+
+U -> V : Saisit email + mot de passe\net clique « Connexion »
+V -> C : POST (email, password, csrf_token)
+C -> C : Vérifie le jeton CSRF
+C -> B : SELECT utilisateur (email)
+alt Utilisateur trouvé
+  B --> C : Hash bcrypt
+  C -> C : password_verify(password, hash)
+  alt Mot de passe correct
+    C -> S : session_regenerate_id(true)
+    C -> B : Met à jour (dernière connexion)
+    B --> C : OK
+    C --> U : Redirection vers l'accueil (session créée)
+  else Mot de passe incorrect
+    C -> B : Journalise l'échec (login_attempts)
+    B --> C : Compteur de tentatives
+    C --> U : Message « Identifiants invalides »
+  end
+else Utilisateur introuvable
+  C --> U : Message d'erreur
+end
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+skinparam componentStyle rectangle
+title Diagramme de déploiement d'EcoDrive
+
+node "PC Client" as C {
+  component "Navigateur web" as C1
+}
+
+node "Serveur Apache (XAMPP)" as S {
+  component "Interpréteur PHP" as S1
+  component "Scripts d'application (php/*.php)" as S2
+  component "Fichiers statiques (css, js, images, voitures, bornes)" as S3
+  component "Réécritures .htaccess et sécurité" as S4
+  component "Journal local de secours (private/logs)" as S5
+}
+
+node "SGBD MySQL / MariaDB" as D {
+  database "Base de données ecodrive" as D1
+}
+
+node "Serveur de messagerie" as M {
+  component "Envoi d'emails (mail())" as M1
+}
+
+C1 --> S : "HTTP / HTTPS"
+S --> D : "mysqli (requêtes préparées)"
+S --> M : "mail()"
+S1 --> S2
+S2 --> S1
+S3 --> S1
+S4 --> S1
+S5 --> S1
+@enduml

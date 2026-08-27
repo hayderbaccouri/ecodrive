@@ -1,0 +1,4 @@
+# Bloquer l'exécution de scripts PHP dans le dossier images
+<FilesMatch "\.php$">
+  Require all denied
+</FilesMatch>
