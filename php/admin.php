@@ -1,6 +1,7 @@
 <?php
 include 'bootstrap.php';
 include __DIR__ . '/car_data.php';
+require_once __DIR__ . '/email.php';
 
 // Journal d'audit : chaque action admin est enregistrée
 function logAdminAction($conn, $action, $details = '') {
@@ -140,14 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                     $messageEmail = "Bonjour {$info['nom']},\n\nVotre réservation pour {$info['marque']} {$info['modele']} le {$info['date_essai']} a été ANNULÉE.\n\nEcoDrive Team";
                 }
 
-                $headers = "From: noreply@ecodrive.tn\r\n" .
-                           "Reply-To: noreply@ecodrive.tn\r\n" .
-                           "X-Mailer: PHP/" . phpversion();
-
-                $logBody = "To: $to\nSubject: $subject\nHeaders: $headers\nBody:\n$messageEmail\n---\n";
-                $logDir = __DIR__ . '/../private/logs';
-                if (!is_dir($logDir)) { @mkdir($logDir, 0755, true); }
-                @file_put_contents($logDir . '/mail_log.txt', $logBody, FILE_APPEND | LOCK_EX);
+                $bodyHtml = nl2br(htmlspecialchars($messageEmail, ENT_QUOTES, 'UTF-8'));
+                $sent = function_exists('sendEmail') ? @sendEmail($to, $subject, $bodyHtml) : false;
+                if (!$sent) {
+                    $logDir = __DIR__ . '/../private/logs';
+                    if (!is_dir($logDir)) { @mkdir($logDir, 0755, true); }
+                    @file_put_contents($logDir . '/mail_log.txt', "To: $to\nSubject: $subject\nBody:\n$messageEmail\n---\n", FILE_APPEND | LOCK_EX);
+                }
             }
         } else {
             $message = "❌ Erreur lors de la mise à jour.";

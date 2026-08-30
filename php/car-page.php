@@ -111,6 +111,9 @@ $carId   = $car['car_id'];
         <h2><?= htmlspecialchars($car['page_title'], ENT_QUOTES, 'UTF-8') ?></h2>
         <p>Réservez votre essai gratuit dès maintenant et découvrez l'expérience de conduite électrique EcoDrive.</p>
         <a href="../php/reservation.php?car=<?= $carId ?>" class="cta-btn">Réserver un essai gratuit</a>
+        <a href="../php/comparer.php?toggle=<?= (int)$carId ?>&ret=<?= urlencode($_SERVER['REQUEST_URI'] ?? '') ?>" class="btn-compare<?= in_array($carId, $_SESSION['compare'] ?? [], true) ? ' is-active' : '' ?>">
+          <?= in_array($carId, $_SESSION['compare'] ?? [], true) ? '✓ Comparé' : 'Comparer' ?>
+        </a>
       </div>
     </section>
 </main>

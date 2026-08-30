@@ -62,6 +62,14 @@ $asset_base = $asset_base ?? '';
     </div>
   </footer>
 
+<?php if (!empty($_SESSION['compare'])): ?>
+  <div class="compare-bar">
+    <span class="compare-bar-count"><?= count($_SESSION['compare']) ?> véhicule<?= count($_SESSION['compare']) > 1 ? 's' : '' ?> sélectionné<?= count($_SESSION['compare']) > 1 ? 's' : '' ?></span>
+    <a href="<?= $asset_base ?>php/comparer.php" class="btn btn-sm btn-primary">Comparer</a>
+    <a href="<?= $asset_base ?>php/comparer.php?clear=1&ret=<?= urlencode($_SERVER['REQUEST_URI'] ?? '') ?>" class="compare-bar-clear">Vider</a>
+  </div>
+<?php endif; ?>
+
 <button class="back-to-top" aria-label="Retour en haut">&uarr;</button>
 <noscript><style>.reveal,.reveal-up,.reveal-down,.reveal-left,.reveal-right,.reveal-scale{opacity:1!important;transform:none!important}</style></noscript>
 <script src="<?= $asset_base ?>js/app.js?v=<?= CACHE_VERSION ?>" defer></script>

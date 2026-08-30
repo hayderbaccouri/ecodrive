@@ -59,7 +59,7 @@ if ($conditions) {
 }
 
 // ── Requête ──────────────────────────────────────────────
-$perPage = 9;
+$perPage = 12;
 
 // Total de résultats (pour la pagination)
 $totalStmt = $conn->prepare('SELECT COUNT(*) AS total FROM voiture' . $where);
@@ -195,6 +195,9 @@ $page_url = 'php/catalogue.php';
                 <?php endif; ?>
               </div>
               <div class="card-actions">
+                <a class="btn-compare<?= in_array($voiture['id_voiture'], $_SESSION['compare'] ?? [], true) ? ' is-active' : '' ?>" href="comparer.php?toggle=<?= (int)$voiture['id_voiture'] ?>&ret=<?= urlencode($_SERVER['REQUEST_URI'] ?? '') ?>">
+                  <?= in_array($voiture['id_voiture'], $_SESSION['compare'] ?? [], true) ? '✓ Comparé' : 'Comparer' ?>
+                </a>
                 <?php if ($loggedIn): ?>
                   <a class="btn-primary" href="reservation.php?car=<?= (int) $voiture['id_voiture'] ?>">Réserver un essai</a>
                 <?php endif; ?>
