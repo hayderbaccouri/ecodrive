@@ -39,6 +39,14 @@ $asset_base = $asset_base ?? '';
             <a href="<?= $asset_base ?>php/admin.php?tab=newsletter" class="btn btn-sm btn-ghost">Gérer les abonnés</a>
           <?php else: ?>
             <p class="footer-newsletter-text">Restez informé des nouveautés et offres exclusives.</p>
+            <?php if (isset($_SESSION['newsletter_flash'])): ?>
+              <div class="contact-success" style="margin-bottom:1rem">
+                <?= $_SESSION['newsletter_flash'] === 'success'
+                  ? '✓ Vous êtes abonné à la newsletter EcoDrive !'
+                  : 'ℹ Vous êtes déjà abonné à la newsletter.' ?>
+              </div>
+              <?php unset($_SESSION['newsletter_flash']); ?>
+            <?php endif; ?>
             <form method="post" action="<?= $asset_base ?>php/newsletter.php" class="footer-newsletter-form">
               <input type="email" name="email" placeholder="votre@email.com" required>
               <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">

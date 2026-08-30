@@ -1,5 +1,6 @@
 <?php
 // Shared car data — each entry drives the car-page.php template.
+// Les car_id CORRIGÉS correspondent désormais aux vrais id_voiture de la base de données.
 return [
     'Audi-A6-Sportback-e-tron' => [
         'filename' => 'Audi-A6-Sportback-e-tron',
@@ -37,7 +38,7 @@ return [
         'jsonld' => ['brand' => 'BMW', 'price' => '249900'],
         'breadcrumb' => 'BMW iX3 2026',
         'slider' => ['dir' => 'images/bmw-ix3/', 'img' => 'BMW-iX3.jpg', 'alt' => 'BMW iX3'],
-        'price_display' => '249 900',
+        'price_display' => '265 000',
         'car_id' => 2,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '469', 'unit' => 'ch', 'sub' => '345 kW'],
@@ -64,7 +65,7 @@ return [
         'jsonld' => ['brand' => 'BYD', 'price' => '123990'],
         'breadcrumb' => 'BYD Atto 3',
         'slider' => ['dir' => 'images/byd-atto-3/', 'img' => 'byd-atto-3.webp', 'alt' => 'BYD Atto 3'],
-        'price_display' => '123 990',
+        'price_display' => '149 000',
         'car_id' => 3,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '313', 'unit' => 'ch', 'sub' => '230 kW'],
@@ -91,7 +92,7 @@ return [
         'jsonld' => ['brand' => 'BYD', 'price' => '55000'],
         'breadcrumb' => 'BYD Dolphin Surf',
         'slider' => ['dir' => 'images/byd-dolphin/', 'img' => 'byd-dolphin-surf-38.88-kwh-102711.webp', 'alt' => 'BYD Dolphin Surf'],
-        'price_display' => '55 000',
+        'price_display' => '89 000',
         'car_id' => 4,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '156', 'unit' => 'ch', 'sub' => '115 kW'],
@@ -118,8 +119,8 @@ return [
         'jsonld' => ['brand' => 'Kia', 'price' => '104980'],
         'breadcrumb' => 'Kia EV3',
         'slider' => ['dir' => 'images/kia-ev3/', 'img' => 'kia-ev3.png', 'alt' => 'Kia EV3'],
-        'price_display' => '104 980',
-        'car_id' => 5,
+        'price_display' => '159 000',
+        'car_id' => 6,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '204', 'unit' => 'ch', 'sub' => '150 kW'],
             ['label' => 'Batterie',  'value' => '81,4', 'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -145,8 +146,8 @@ return [
         'jsonld' => ['brand' => 'Mercedes-Benz', 'price' => '320000'],
         'breadcrumb' => 'Mercedes-Benz Classe C 2026',
         'slider' => ['dir' => 'images/mercedes-classe-c-2026/', 'img' => '1-Mercedes-Benz-Classe-C-2026.jpg', 'alt' => 'Mercedes-Benz Classe C 2026'],
-        'price_display' => '320 000',
-        'car_id' => 6,
+        'price_display' => '289 000',
+        'car_id' => 7,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '489', 'unit' => 'ch', 'sub' => '360 kW'],
             ['label' => 'Batterie',  'value' => '94,5', 'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -172,8 +173,8 @@ return [
         'jsonld' => ['brand' => 'Mercedes-Benz', 'price' => '280000'],
         'breadcrumb' => 'Mercedes EQC 400 4MATIC',
         'slider' => ['dir' => 'images/mercedes-eqc/', 'img' => 'mercedes-eqc.jpg', 'alt' => 'Mercedes EQC 400'],
-        'price_display' => '280 000',
-        'car_id' => 7,
+        'price_display' => '219 000',
+        'car_id' => 8,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '408', 'unit' => 'ch', 'sub' => '300 kW'],
             ['label' => 'Batterie',  'value' => '80',  'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -199,8 +200,8 @@ return [
         'jsonld' => ['brand' => 'MG', 'price' => '54950'],
         'breadcrumb' => 'MG4 Urban',
         'slider' => ['dir' => 'images/mg4/', 'img' => 'mg-4-urban.jpg', 'alt' => 'MG4 Urban'],
-        'price_display' => '54 950',
-        'car_id' => 8,
+        'price_display' => '99 000',
+        'car_id' => 9,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '160', 'unit' => 'ch', 'sub' => '118 kW'],
             ['label' => 'Batterie',  'value' => '53,9', 'unit' => 'kWh', 'sub' => 'LFP'],
@@ -226,8 +227,8 @@ return [
         'jsonld' => ['brand' => 'Peugeot', 'price' => '80000'],
         'breadcrumb' => 'Peugeot e-208',
         'slider' => ['dir' => 'images/peugeot-e-208/', 'img' => 'E-208_gallery_exterior_3_D_1920x1080.jpg', 'alt' => 'Peugeot e-208'],
-        'price_display' => '80 000',
-        'car_id' => 9,
+        'price_display' => '109 000',
+        'car_id' => 10,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '156', 'unit' => 'ch', 'sub' => '115 kW'],
             ['label' => 'Batterie',  'value' => '54',  'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -253,8 +254,8 @@ return [
         'jsonld' => ['brand' => 'Porsche', 'price' => '448000'],
         'breadcrumb' => 'Porsche Taycan 2026',
         'slider' => ['dir' => 'images/porsche-taycan/', 'img' => 'porsche-taycan-taycan-91005.webp', 'alt' => 'Porsche Taycan'],
-        'price_display' => '448 000',
-        'car_id' => 10,
+        'price_display' => '359 000',
+        'car_id' => 11,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '408', 'unit' => 'ch', 'sub' => '300 kW'],
             ['label' => 'Batterie',  'value' => '89',  'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -280,8 +281,8 @@ return [
         'jsonld' => ['brand' => 'Tesla', 'price' => '147000'],
         'breadcrumb' => 'Tesla Model 3 2026',
         'slider' => ['dir' => 'images/tesla-model-3/', 'img' => 'tesla-model3.jpg', 'alt' => 'Tesla Model 3'],
-        'price_display' => '147 000',
-        'car_id' => 11,
+        'price_display' => '189 000',
+        'car_id' => 13,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '498', 'unit' => 'ch', 'sub' => '366 kW'],
             ['label' => 'Batterie',  'value' => '82',  'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -307,8 +308,8 @@ return [
         'jsonld' => ['brand' => 'Tesla', 'price' => '359400'],
         'breadcrumb' => 'Tesla Model S Plaid 2026',
         'slider' => ['dir' => 'images/tesla-model-s-plaid/', 'img' => 'tesla-model-s-plaid.jpg', 'alt' => 'Tesla Model S Plaid'],
-        'price_display' => '359 400',
-        'car_id' => 12,
+        'price_display' => '459 000',
+        'car_id' => 14,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '1 020','unit' => 'ch', 'sub' => '760 kW'],
             ['label' => 'Batterie',  'value' => '100',  'unit' => 'kWh', 'sub' => 'Lithium-ion NCA'],
@@ -334,8 +335,8 @@ return [
         'jsonld' => ['brand' => 'Toyota', 'price' => '129800'],
         'breadcrumb' => 'Toyota bZ4X 73.1 kWh',
         'slider' => ['dir' => 'images/toyota-bz4x-73.1-kwh/', 'img' => 'toyota-bz4x-73.1-kwh-109445.webp', 'alt' => 'Toyota bZ4X 73.1 kWh'],
-        'price_display' => '129 800',
-        'car_id' => 13,
+        'price_display' => '169 000',
+        'car_id' => 15,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '227', 'unit' => 'ch', 'sub' => '167 kW'],
             ['label' => 'Batterie',  'value' => '73,1', 'unit' => 'kWh', 'sub' => 'Lithium-ion NMC'],
@@ -361,8 +362,8 @@ return [
         'jsonld' => ['brand' => 'Geely', 'price' => '52000'],
         'breadcrumb' => 'Geely EX2',
         'slider' => ['dir' => 'images/geely-ex2/', 'img' => 'geely-ex2-39.4-kwh-max-101691.webp', 'alt' => 'Geely EX2'],
-        'price_display' => '52 000',
-        'car_id' => 14,
+        'price_display' => '79 000',
+        'car_id' => 16,
         'highlights' => [
             ['label' => 'Puissance', 'value' => '115', 'unit' => 'ch', 'sub' => '85 kW'],
             ['label' => 'Batterie',  'value' => '39,4', 'unit' => 'kWh', 'sub' => 'LFP'],

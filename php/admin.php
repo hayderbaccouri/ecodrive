@@ -426,7 +426,7 @@ $top_cars_data   = array_map(fn($v) => (int)$v['total'], $res_voitures);
 // Stats status (pour le pie)
 $status_stats = $conn->query("SELECT statut, COUNT(*) AS total FROM reservation GROUP BY statut")->fetch_all(MYSQLI_ASSOC);
 $status_labels = ['pending' => 'En attente', 'confirmed' => 'Confirmées', 'cancelled' => 'Annulées'];
-$status_colors = ['pending' => '#f59e0b', 'confirmed' => '#22c55e', 'cancelled' => '#ef4444'];
+$status_colors = ['pending' => '#f59e0b', 'confirmed' => '#00e5a0', 'cancelled' => '#ef4444'];
 $pie_labels = [];
 $pie_data   = [];
 $pie_colors = [];
@@ -769,7 +769,7 @@ $page_url = 'php/admin.php';
     type: 'bar',
     data: {
       labels: <?= json_encode($res_monthly_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(60,154,190,0.6)', borderColor: '#3C9ABE', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'Réservations', data: <?= json_encode($res_monthly_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
     },
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });
@@ -785,7 +785,7 @@ $page_url = 'php/admin.php';
     type: 'bar',
     data: {
       labels: <?= json_encode($top_cars_labels) ?>,
-      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(60,154,190,0.6)', borderColor: '#3C9ABE', borderWidth: 1, borderRadius: 4 }]
+      datasets: [{ label: 'Réservations', data: <?= json_encode($top_cars_data) ?>, backgroundColor: 'rgba(0,229,160,0.6)', borderColor: '#00e5a0', borderWidth: 1, borderRadius: 4 }]
     },
     options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
   });

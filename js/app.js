@@ -57,44 +57,29 @@ document.addEventListener('DOMContentLoaded', function () {
     revealElements.forEach(function (el) { revealObserver.observe(el); });
   }
 
-  /* ---------- BACK TO TOP ---------- */
+  /* ---------- BACK TO TOP + SCROLL PROGRESS (single listener) ---------- */
   var backToTop = document.querySelector('.back-to-top');
+  var progressBar = document.querySelector('.scroll-progress');
+  if (!progressBar) {
+    progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+  }
+  window.addEventListener('scroll', function () {
+    var scrollTop = window.scrollY;
+    // Back to top visibility
+    if (backToTop) backToTop.classList.toggle('visible', scrollTop > 400);
+    // Scroll progress width
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  });
   if (backToTop) {
-    window.addEventListener('scroll', function () {
-      backToTop.classList.toggle('visible', window.scrollY > 400);
-    });
     backToTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  /* ---------- TOAST SYSTEM ---------- */
-  window.showToast = function (message, type) {
-    type = type || 'info';
-    var container = document.querySelector('.toast-container');
-    if (!container) {
-      container = document.createElement('div');
-      container.className = 'toast-container';
-      document.body.appendChild(container);
-    }
-    var icons = { success: '\u2705', error: '\u274C', info: '\u2139\uFE0F' };
-    var toast = document.createElement('div');
-    toast.className = 'toast toast-' + type;
-    toast.innerHTML =
-      '<span class="toast-icon">' + (icons[type] || '') + '</span>' +
-      '<span>' + message + '</span>' +
-      '<button class="toast-close" aria-label="Fermer">&times;</button>';
-    container.appendChild(toast);
-    toast.querySelector('.toast-close').addEventListener('click', function () {
-      dismissToast(toast);
-    });
-    setTimeout(function () { dismissToast(toast); }, 4500);
-  };
-  function dismissToast(toast) {
-    if (!toast || toast.classList.contains('toast-leaving')) return;
-    toast.classList.add('toast-leaving');
-    setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
-  }
 
   /* ---------- SMOOTH SCROLL FOR ANCHOR LINKS ---------- */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
@@ -108,61 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
-
-  /* ---------- COUNTER ANIMATION ---------- */
-  var counterElements = document.querySelectorAll('.animate-counter');
-  if (counterElements.length) {
-    var counterObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var el = entry.target;
-          var target = parseFloat(el.getAttribute('data-target')) || 0;
-          var suffix = el.getAttribute('data-suffix') || '';
-          var prefix = el.getAttribute('data-prefix') || '';
-          var duration = parseInt(el.getAttribute('data-duration')) || 1500;
-          var start = performance.now();
-          function step(now) {
-            var progress = Math.min((now - start) / duration, 1);
-            var eased = 1 - Math.pow(1 - progress, 3);
-            var current = target * eased;
-            el.textContent = prefix + formatNumber(current) + suffix;
-            if (progress < 1) requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-          counterObserver.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-    counterElements.forEach(function (el) { counterObserver.observe(el); });
-  }
-  function formatNumber(n) {
-    if (Number.isInteger(n)) return n.toLocaleString('fr-FR');
-    return n.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  }
-
-  /* ---------- GLOW ON HOVER (mouse tracking) ---------- */
-  document.querySelectorAll('.glow-on-hover').forEach(function (el) {
-    el.addEventListener('mousemove', function (e) {
-      var rect = this.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width) * 100;
-      var y = ((e.clientY - rect.top) / rect.height) * 100;
-      this.style.setProperty('--mouse-x', x + '%');
-      this.style.setProperty('--mouse-y', y + '%');
-    });
-  });
-
-  /* ---------- SKELETON LOADING ---------- */
-  window.showSkeleton = function (container, items) {
-    items = items || 3;
-    var html = '';
-    for (var i = 0; i < items; i++) {
-      html += '<div class="skeleton skeleton-image" style="margin-bottom:12px"></div>' +
-              '<div class="skeleton skeleton-title"></div>' +
-              '<div class="skeleton skeleton-text"></div>' +
-              '<div class="skeleton skeleton-text" style="width:50%"></div>';
-    }
-    container.innerHTML = html;
-  };
 
   /* ---------- BATTERY ANIMATION ---------- */
   var batteryFills = document.querySelectorAll('.battery-fill[data-width]');
@@ -403,20 +333,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (input.type === 'password') { input.type = 'text'; this.textContent = '\uD83D\uDE48'; }
       else { input.type = 'password'; this.textContent = '\uD83D\uDC41'; }
     });
-  });
-
-  /* ---------- SCROLL PROGRESS BAR ---------- */
-  var progressBar = document.querySelector('.scroll-progress');
-  if (!progressBar) {
-    progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress';
-    document.body.appendChild(progressBar);
-  }
-  window.addEventListener('scroll', function () {
-    var scrollTop = window.scrollY;
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progressBar.style.width = pct + '%';
   });
 
 });

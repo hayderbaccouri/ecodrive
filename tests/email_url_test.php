@@ -2,6 +2,7 @@
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = '/ecodrive-main/php/inscription.php';
 $_SERVER['HTTPS'] = 'off';
+$_SERVER['SCRIPT_NAME'] = '/ecodrive-main/php/inscription.php';
 
 require __DIR__ . '/../php/bootstrap.php';
 

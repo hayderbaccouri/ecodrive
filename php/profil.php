@@ -113,7 +113,7 @@ $page_url = 'php/profil.php';
       <div class="alert alert-<?= $messageType === 'success' ? 'success' : 'error' ?>"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
-    <div class="client-section">
+    <div class="client-section client-section--wide">
       <div class="form-card">
         <form method="POST" action="profil.php" data-validate class="profile-form-grid">
           <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">

@@ -17,7 +17,7 @@ $attempts->execute();
 $row = $attempts->get_result()->fetch_assoc();
 $attempts->close();
 if (($row['cnt'] ?? 0) >= 3) {
-    $_SESSION['newsletter_info'] = true;
+    $_SESSION['newsletter_flash'] = 'info';
     header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '../index.php'));
     exit;
 }
@@ -30,9 +30,9 @@ if ($check->get_result()->num_rows === 0) {
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->close();
-    $_SESSION['newsletter_success'] = true;
+    $_SESSION['newsletter_flash'] = 'success';
 } else {
-    $_SESSION['newsletter_info'] = true;
+    $_SESSION['newsletter_flash'] = 'info';
 }
 $check->close();
 

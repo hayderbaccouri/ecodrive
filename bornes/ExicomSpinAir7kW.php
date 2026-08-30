@@ -1,8 +1,8 @@
 <?php
 include '../php/bootstrap.php';
 $loggedIn = isset($_SESSION['user']);
-$page_title = 'Exicom Spin Air 7 kW — Borne de recharge résidentielle | EcoDrive';
-$page_desc = 'Borne de recharge murale Exicom Spin Air 7 kW pour véhicules électriques. Recharge rapide et intelligente pour la maison et l\'entreprise.';
+$page_title = 'Exicom Spin Air 7,4 kW — Borne de recharge résidentielle | EcoDrive';
+$page_desc = 'Borne de recharge murale Exicom Spin Air 7,4 kW pour véhicules électriques. Recharge rapide et intelligente pour la maison et l\'entreprise.';
 $page_url = 'bornes/ExicomSpinAir7kW.php';
 $page_image = 'images/bornes/SPIN-AIR-11-2.png';
 ?>
@@ -27,7 +27,7 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
     <span>›</span>
     <a href="../bornes/index.php">Bornes de recharge</a>
     <span>›</span>
-    <span style="color: var(--dark)">Exicom Spin Air 7 kW</span>
+    <span style="color: var(--dark)">Exicom Spin Air 7,4 kW</span>
   </div>
 
   <!-- HERO -->
@@ -38,7 +38,7 @@ $page_image = 'images/bornes/SPIN-AIR-11-2.png';
       <div class="borne-visual-grid"></div>
       <div class="borne-img-frame">
         <div class="borne-img-box">
-          <img src="../images/bornes/SPIN-AIR-11-2.png" alt="Exicom Spin Air 7 kW"
+          <img src="../images/bornes/SPIN-AIR-11-2.png" alt="Exicom Spin Air 7,4 kW"
             decoding="async" fetchpriority="high"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
           <div class="borne-img-fallback" style="display:none;font-size:6rem;color:rgba(60,154,190,0.4);place-items:center">⚡</div>
