@@ -3,6 +3,9 @@
 # Activer la réécriture
 RewriteEngine On
 
+# Les anciens journaux restent bloqués même après leur déplacement hors de htdocs.
+RewriteRule ^private(?:/|$) - [F,L]
+
 # Forcer HTTPS (décommenter en production)
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]

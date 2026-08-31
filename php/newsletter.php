@@ -7,7 +7,7 @@ if (!csrf_verify($_POST['csrf_token'] ?? '')) { header('Location: ../index.php')
 
 $email = trim($_POST['email'] ?? '');
 if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '../index.php'));
+    header('Location: ../index.php');
     exit;
 }
 
@@ -18,7 +18,7 @@ $row = $attempts->get_result()->fetch_assoc();
 $attempts->close();
 if (($row['cnt'] ?? 0) >= 3) {
     $_SESSION['newsletter_flash'] = 'info';
-    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '../index.php'));
+    header('Location: ../index.php');
     exit;
 }
 
@@ -36,5 +36,5 @@ if ($check->get_result()->num_rows === 0) {
 }
 $check->close();
 
-header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '../index.php'));
+header('Location: ../index.php');
 exit;

@@ -144,8 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $bodyHtml = nl2br(htmlspecialchars($messageEmail, ENT_QUOTES, 'UTF-8'));
                 $sent = function_exists('sendEmail') ? @sendEmail($to, $subject, $bodyHtml) : false;
                 if (!$sent) {
-                    $logDir = __DIR__ . '/../private/logs';
-                    if (!is_dir($logDir)) { @mkdir($logDir, 0755, true); }
+                    $logDir = private_storage_path('logs');
+                    if (!is_dir($logDir)) { @mkdir($logDir, 0700, true); }
                     @file_put_contents($logDir . '/mail_log.txt', "To: $to\nSubject: $subject\nBody:\n$messageEmail\n---\n", FILE_APPEND | LOCK_EX);
                 }
             }

@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
 
             include 'email.php';
             emailVerification($email, $vToken);
-            $logDir = __DIR__ . '/../private/logs';
-            if (!is_dir($logDir)) { @mkdir($logDir, 0755, true); }
+            $logDir = private_storage_path('logs');
+            if (!is_dir($logDir)) { @mkdir($logDir, 0700, true); }
             $verificationUrl = app_url('/php/verifier-email.php?token=' . urlencode($vToken));
             @file_put_contents($logDir . '/verification_links.txt', "[" . date('Y-m-d H:i:s') . "] $email -> $verificationUrl\n", FILE_APPEND | LOCK_EX);
             $success = 'Un nouveau lien de vérification a été envoyé.';

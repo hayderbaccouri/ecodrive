@@ -51,8 +51,8 @@ else {
 
     $sent = @mail($to, $subject, $body, $headers);
 
-    $logDir = __DIR__ . '/../private/logs';
-    if (!is_dir($logDir)) { @mkdir($logDir, 0755, true); }
+    $logDir = private_storage_path('logs');
+    if (!is_dir($logDir)) { @mkdir($logDir, 0700, true); }
     $log  = "[" . date('Y-m-d H:i:s') . "]\n";
     $log .= "Nom : $name\nEmail : $email\nTél : $phone\nSujet : $sujet\nMessage : $message\nMail envoyé : " . ($sent ? 'Oui' : 'Non (mail() a échoué)') . "\n---\n";
     @file_put_contents($logDir . '/mail_log.txt', $log, FILE_APPEND | LOCK_EX);

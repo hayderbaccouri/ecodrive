@@ -24,7 +24,7 @@ $pages = [
     ['php/catalogue.php',       'page=2', 'render', ''],
     ['bornes/index.php',               '', 'render', ''],
     ['bornes/ExicomSpinAir7kW.php',    '', 'render', ''],
-    ['bornes/borne-page.php',          '', 'render', 'exicom-spin-air-7kw'],
+    ['bornes/borne-page.php',          '', 'render', 'ExicomSpinAir7kW'],
     ['pages/contact.php',              '', 'render', ''],
     ['pages/cgv.php',                  '', 'render', ''],
     ['pages/cgu.php',                  '', 'render', ''],

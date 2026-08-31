@@ -78,7 +78,7 @@ ecodrive/
 
 ## Fonctionnalites
 
-- **Catalogue** — 14 voitures electriques avec pages detail (prix, specs, autonomie), filtres et pagination (9 par page)
+- **Catalogue** — 14 voitures electriques avec pages detail (prix, specs, autonomie), filtres et pagination (12 par page)
 - **Bornes de recharge** — 4 bornes Exicom (3 kW a 22 kW) avec fiches produit
 - **Reservation d'essais** — prise de rendez-vous en ligne avec creneaux horaires
 - **Compte utilisateur** — inscription, connexion, profil, historique des essais

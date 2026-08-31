@@ -29,10 +29,11 @@ $dbUser = getenv('DB_USER') ?: 'root';
 $dbPass = getenv('DB_PASS') ?: '';
 $dbName = getenv('DB_NAME') ?: 'ecodrive';
 $dbCharset = getenv('DB_CHARSET') ?: 'utf8mb4';
+$dbPort = (int) (getenv('DB_PORT') ?: 3306);
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 try {
-    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName, $dbPort);
     $conn->set_charset($dbCharset);
 } catch (mysqli_sql_exception $e) {
     error_log('DB connection error: ' . $e->getMessage());
@@ -109,6 +110,15 @@ function e($s) {
     return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 }
 
+// Stockage hors de la racine publique : les journaux peuvent contenir des e-mails
+// et des liens de vérification temporaires. APP_PRIVATE_DIR permet de le déplacer
+// encore plus loin en production.
+function private_storage_path($relativePath = '') {
+    $base = getenv('APP_PRIVATE_DIR') ?: dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'ecodrive-private';
+    $base = rtrim($base, DIRECTORY_SEPARATOR);
+    return $relativePath === '' ? $base : $base . DIRECTORY_SEPARATOR . ltrim($relativePath, DIRECTORY_SEPARATOR);
+}
+
 function site_url($path = '') {
     $configured = getenv('APP_URL') ?: getenv('SITE_URL');
     if (!empty($configured)) {
@@ -117,8 +127,10 @@ function site_url($path = '') {
         return $base . ($path !== '' ? '/' . $path : '');
     }
 
+    // En l'absence de configuration, le repli est exclusivement local. Ne jamais
+    // fabriquer d'URL sensible à partir de HTTP_HOST, contrôlable par le client.
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $host = 'localhost';
 
     $script = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
     $basePath = preg_replace('#/[^/]+$#', '', $script);
