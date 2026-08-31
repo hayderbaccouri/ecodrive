@@ -1,20 +1,26 @@
-# RAPPORT DE PROJET DE FIN D'ÉTUDES
+![Logo ISPRI](images/logos/ispri.png)
 
----
+**RÉPUBLIQUE TUNISIENNE**
 
-MINISTÈRE DE L'ENSEIGNEMENT SUPÉRIEUR ET DE LA RECHERCHE SCIENTIFIQUE
+**MINISTÈRE DE L'EMPLOI ET DE LA FORMATION PROFESSIONNELLE**
 
 **Institut des Sciences Privées Internationales (ISPRI)**
 
 ---
 
-## Projet de fin d'études
+# RAPPORT DE PROJET DE FIN D'ÉTUDES
 
 ### Présenté en vue de l'obtention du Diplôme National de BTS en Informatique de Gestion
 
-**Par**
+![Logo EcoDrive](images/logos/ecodrive.png)
 
-## Hayder BACCOURI
+**Sujet :** *EcoDrive — Site web de showroom et de catalogue de véhicules électriques en Tunisie*
+
+---
+
+**Réalisé par :**
+
+# Hayder BACCOURI
 
 ---
 
@@ -22,16 +28,11 @@ MINISTÈRE DE L'ENSEIGNEMENT SUPÉRIEUR ET DE LA RECHERCHE SCIENTIFIQUE
 |---|---|
 | **Encadrant** | Monsieur Nidhal TARHOUNI |
 | **Réalisé au sein de** | Institut ISPRI — Projet personnel à but pédagogique |
+| **Diplôme** | BTS Informatique de Gestion |
 
 ---
 
-**Session : Octobre 2024 / 2026**
-
-**Code : (à compléter)**
-
-**Sujet :** *EcoDrive — Site web de showroom et de catalogue de véhicules électriques en Tunisie*
-
----
+**Session (année universitaire) : Octobre 2024 / Octobre 2026**
 
 ---
 
