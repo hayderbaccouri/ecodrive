@@ -34,7 +34,9 @@
 
 **Session (année universitaire) : Octobre 2024 / Octobre 2026**
 
----
+```{=openxml}
+<w:p><w:r><w:br w:type="page"/></w:r></w:p>
+```
 
 # Table des matières
 
