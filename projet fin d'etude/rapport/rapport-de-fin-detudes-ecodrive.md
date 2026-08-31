@@ -94,8 +94,6 @@ MINISTÈRE DE L'ENSEIGNEMENT SUPÉRIEUR ET DE LA RECHERCHE SCIENTIFIQUE
 | Figure 33 | L'interface des graphiques statistiques (admin) |
 | Figure 34 | L'interface du journal d'audit |
 
-*(Remarque : les figures 6, 7, 8, 10, 11, 14, 15, 16, 17, 18, 21, 22, 23, 26, 27, 28, 29, 30, 32, 33, 34 restent à compléter avec les diagrammes UML et les captures des espaces authentifiés.)*
-
 ---
 
 # Table des tableaux
