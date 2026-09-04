@@ -1,0 +1,72 @@
+@startwbs
+!theme plain
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+skinparam nodeSep 15
+skinparam rankSep 25
+scale 1.5
+
+<style>
+wbsDiagram {
+    arrow {
+        LineColor #2E74B5
+    }
+    .root {
+        BackgroundColor #1F4E79
+        FontColor white
+        FontStyle bold
+    }
+    node {
+        BackgroundColor #DDEBF7
+        FontColor #1F4E79
+        LineColor #2E74B5
+    }
+    leafNode {
+        BackgroundColor white
+        FontColor #2E74B5
+        LineColor #2E74B5
+    }
+}
+</style>
+
+* EcoDrive
+** Accueil et Showroom
+** Catalogue des véhicules
+*** Fiches techniques
+*** Comparateur
+*** Recherche et filtres
+*** Page de chaque modèle
+** Bornes de recharge
+*** Exicom SPIN Air (7/11/22 kW)
+*** Exicom SPIN Free (3 kW)
+*** Fiche technique d'une borne
+** Espace client
+*** Inscription
+*** Connexion et déconnexion
+*** Mot de passe oublié
+*** Vérification de l'email
+*** Profil
+** Réservation d'essais
+*** Choix du véhicule et du créneau
+*** Validation et confirmation
+*** Mes essais
+*** Export .ics (agenda)
+** Contact et Newsletter
+*** Formulaire de contact
+*** Abonnement newsletter
+** Administration
+*** Gestion des réservations
+*** Statistiques
+*** Gestion des voitures
+*** Gestion des bornes
+*** Messages reçus
+*** Abonnés newsletter
+*** Utilisateurs
+*** Journal d'audit
+*** Export des données
+** Pages légales
+*** CGU
+*** CGV
+*** Confidentialité
+*** Mentions légales
+@endwbs

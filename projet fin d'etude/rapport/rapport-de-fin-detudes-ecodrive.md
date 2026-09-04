@@ -245,7 +245,7 @@ La solution retenue est le développement d'une application web complète et aut
 
 La figure suivante présente la **carte conceptuelle** du projet, qui schématise l'idée globale d'EcoDrive et les liens entre ses différents modules.
 
-![Figure 2 : La carte conceptuelle d'EcoDrive](images/carte-conceptuelle.png)
+![Figure 2 : La carte conceptuelle d'EcoDrive](images/diagrams/carte-conceptuelle.png)
 
 ## III. Méthodologie de travail et modélisation
 
@@ -347,11 +347,11 @@ C'est le gestionnaire du site. Il dispose de tous les droits du client et, en pl
 
 Le **diagramme de cas d'utilisation** est le diagramme UML qui représente les fonctionnalités du système vues par les acteurs. Il montre qui fait quoi dans l'application, sans entrer dans le détail technique. Nous présentons ici les trois diagrammes de cas d'utilisation principaux du système :
 
-![Figure 3 : Le diagramme de cas d'utilisation général](images/use-cases-general.jpg)
+![Figure 3 : Le diagramme de cas d'utilisation général](images/diagrams/use-cases-general.jpg)
 
-![Figure 4 : Le diagramme de cas d'utilisation du client](images/use-cases-client.jpg)
+![Figure 4 : Le diagramme de cas d'utilisation du client](images/diagrams/use-cases-client.jpg)
 
-![Figure 5 : Le diagramme de cas d'utilisation de l'administrateur](images/use-case-administrateur.jpg)
+![Figure 5 : Le diagramme de cas d'utilisation de l'administrateur](images/diagrams/use-case-administrateur.jpg)
 
 ## Conclusion
 
@@ -479,7 +479,7 @@ Le schéma relationnel regroupe les entités suivantes (description partielle) :
 
 La figure suivante présente le diagramme de classes du système.
 
-![Figure 9 : Le diagramme de classes](images/diagramme-classes.png)
+![Figure 9 : Le diagramme de classes](images/diagrams/diagramme-classes.png)
 
 ## Conclusion
 
