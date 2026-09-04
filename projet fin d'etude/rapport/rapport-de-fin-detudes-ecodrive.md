@@ -151,14 +151,14 @@ Cependant, la plupart des concessions automobiles ne disposent pas d'une vitrine
 
 C'est dans ce cadre que s'inscrit le présent projet de fin d'études intitulé **« EcoDrive — Site web de showroom et de catalogue de véhicules électriques en Tunisie »**. Il s'agit d'un logiciel personnel conçu à but pédagogique, qui vise à couvrir l'ensemble du parcours client d'un concessionnaire de véhicules électriques : présentation du showroom, catalogue détaillé de 14 véhicules électriques, fiches produits des bornes de recharge, réservation d'essais en ligne, gestion de comptes utilisateurs et un panneau d'administration complet.
 
-Ce document retrace les différentes étapes abordées depuis la conception jusqu'à la réalisation de ce projet. Il est constitué principalement de six chapitres :
+Ce document retrace les différentes étapes que nous avons suivies pour mener à bien ce projet, du besoin jusqu'à la mise en service de l'application. Pour rester simple et structuré, nous avons adopté le **cycle de vie en cascade**, qui consiste à réaliser les étapes du projet l'une après l'autre. Ce rapport est constitué de six chapitres :
 
-- Le **premier chapitre** est une présentation générale du projet : le contexte, l'étude de l'existant et la méthodologie de travail adoptée.
-- Le **deuxième chapitre** est consacré à l'étude des spécifications, des besoins fonctionnels et non fonctionnels, l'identification des acteurs et les diagrammes de cas d'utilisation.
-- Le **troisième chapitre** porte sur le Sprint 0 : les choix techniques de la solution adoptée, les langages et les outils utilisés ainsi que l'architecture générale du système.
-- Le **quatrième chapitre** est dédié à la réalisation de la première release, qui comporte les deux premiers sprints : authentification/inscription et gestion des utilisateurs.
-- Le **cinquième chapitre** décrit la deuxième release : catalogue, gestion des voitures et des bornes, réservation des essais.
-- Le **dernier chapitre** est dédié à la dernière release : contact, newsletter, tableau de bord, audit et exports.
+- Le **premier chapitre** est une présentation générale du projet : le contexte, l'organisme de formation, l'étude de l'existant et la présentation de la solution proposée.
+- Le **deuxième chapitre** est consacré à l'**analyse des besoins** : besoins fonctionnels et non fonctionnels, identification des acteurs et diagrammes de cas d'utilisation.
+- Le **troisième chapitre** porte sur la **conception** de la solution : les choix techniques, l'architecture générale du système et le modèle de données.
+- Le **quatrième chapitre** décrit la **réalisation** de l'application : le développement de l'espace client, de l'espace d'administration et de la sécurité.
+- Le **cinquième chapitre** est consacré aux **tests** : le plan de test et le déroulement des tests fonctionnels des différents modules.
+- Le **dernier chapitre** présente le **déploiement et la maintenance** : installation de l'application, guide d'utilisation et maintenance/ sauvegarde.
 - Finalement, nous clôturons notre rapport par une conclusion générale et les perspectives d'amélioration.
 
 ---
@@ -268,40 +268,40 @@ La figure suivante présente la **carte conceptuelle** du projet, qui schématis
 
 ## III. Méthodologie de travail et modélisation
 
-Pour la conduite du projet, nous avons adopté une méthode agile inspirée de **Scrum**, structurée en sprints et en releases, et nous avons utilisé **UML** (Unified Modeling Language) comme langage de modélisation pour spécifier, visualiser et construire l'architecture du système.
+Pour conduire ce projet de façon simple et organisée, nous avons adopté le **cycle de vie en cascade** comme méthodologie de travail, et **UML** (Unified Modeling Language) comme langage de modélisation.
 
-### 1. Méthodologie agile
+### 1. Le cycle de vie en cascade
 
-Une méthode agile est une approche itérative et incrémentale menée dans un esprit collaboratif. Elle permet de livrer un produit fonctionnel à la fin de chaque itération (sprint). Parmi les méthodes agiles les plus connues : DSDM, Scrum, RAD, Extreme Programming (XP), ASD, Test Driven Development (TDD) et Crystal Clear.
+Le modèle en cascade (ou « waterfall ») est une méthode de conduite de projet **séquentielle** : chaque phase doit être terminée avant de passer à la suivante. Ce modèle est simple à comprendre et très utilisé pour les projets pédagogiques et les projets dont les besoins sont bien définis dès le départ.
 
-### 2. Pourquoi Scrum ?
+Les phases du modèle en cascade sont :
 
-Nous avons opté pour le framework **Scrum** qui consiste à développer le logiciel de manière incrémentale en maintenant une liste totalement transparente des demandes d'évolutions à implémenter. Ses avantages :
+1. **Analyse des besoins** : comprendre ce que doit faire le système (besoins fonctionnels et non fonctionnels, acteurs, cas d'utilisation).
+2. **Conception** : définir comment le système va être réalisé (choix techniques, architecture, modèle de données).
+3. **Réalisation** : développer l'application en écrivant le code (espace client, espace d'administration, sécurité).
+4. **Tests** : vérifier que l'application fonctionne correctement et répond aux besoins.
+5. **Maintenance** : installer, faire évoluer et maintenir l'application une fois qu'elle est en service.
 
-- Gagner plus de contrôle sur le produit final ;
-- Augmenter l'efficacité ;
-- Assurer des livraisons de haute qualité ;
-- Accroître la satisfaction des utilisateurs.
+Le schéma suivant illustre le déroulement en cascade de notre projet.
 
-### 3. Les artefacts de Scrum
+```
+ Analyse des besoins  →  Conception  →  Réalisation  →  Tests  →  Maintenance
+```
 
-- **Backlog produit** : liste priorisée des besoins ;
-- **Sprint backlog** : extrait du backlog produit pour le sprint courant ;
-- **Sprint** : itération de développement (2 à 4 semaines) ;
-- **Mêlée quotidienne** : point de contrôle quotidien ;
-- **Produit livrable** : livré au propriétaire du produit à la fin du sprint.
+Cette approche nous a permis de progresser **étape par étape**, d'obtenir un document de référence à chaque phase et de mieux maîtriser chaque partie du projet avant de passer à la suivante.
 
-### 4. Les acteurs Scrum
+### 2. Pourquoi le modèle en cascade ?
 
-| Acteur | Rôle |
-|---|---|
-| **Product Owner** | Porteur de la vision du projet, gère le backlog, définit les priorités |
-| **Scrum Master** | Veille au bon déroulement, lève les obstacles, facilite le travail |
-| **Équipe de développement** | Autogérée, développe le produit sprint après sprint |
+Nous avons choisi ce modèle pour plusieurs raisons :
 
-*Tableau 1 : Les acteurs Scrum.*
+- Il est **simple** et facile à suivre, ce qui convient parfaitement à un projet de fin d'études ;
+- Les **besoins du projet sont clairs** dès le départ (un site de showroom et de catalogue) et évoluent peu ;
+- Chaque étape produit un **livrable** (analyse, conception, code, tests) qui peut être présenté et évalué ;
+- Il est le plus **utilisé dans les projets scolaires et académiques** en Tunisie, et il est attendu dans un rapport de BTS en Informatique de Gestion.
 
-### 5. Langages de modélisation
+Les étapes correspondantes dans notre rapport sont : l'analyse (chapitre 2), la conception (chapitre 3), la réalisation (chapitre 4), les tests (chapitre 5) et la maintenance / le déploiement (chapitre 6).
+
+### 3. Langages de modélisation
 
 Pour la phase de conception, nous avons utilisé **UML** afin de représenter la structure statique (diagrammes de classes, diagrammes de cas d'utilisation) et la vue dynamique (diagrammes de séquence, diagrammes d'états-transitions) du système.
 
@@ -315,7 +315,7 @@ Dans ce chapitre, nous avons présenté le cadre général du projet, l'organism
 
 ## Introduction
 
-Ce chapitre est consacré à l'étude des besoins fonctionnels et non fonctionnels du système, à l'identification des acteurs et à l'élaboration du backlog produit avec une planification des sprints.
+Ce chapitre est consacré, dans le cadre de la première phase **« Analyse des besoins »** du cycle en cascade, à l'étude des besoins fonctionnels et non fonctionnels du système, à l'identification des acteurs et à l'élaboration des diagrammes de cas d'utilisation.
 
 ## I. Étude des besoins
 
@@ -360,9 +360,11 @@ C'est l'utilisateur authentifié. En plus des droits du visiteur, il peut réser
 
 C'est le gestionnaire du site. Il dispose de tous les droits du client et, en plus, il gère les voitures (CRUD + mise en avant), les bornes (CRUD), les réservations (confirmation, annulation), les messages de contact, la newsletter, les utilisateurs (rôles, suppression) et consulte les statistiques et le journal d'audit.
 
-## III. Diagrammes de cas d'utilisation et backlog du produit
+## III. Les diagrammes de cas d'utilisation
 
-### 1. Diagrammes de cas d'utilisation
+### 1. Présentation des diagrammes de cas d'utilisation
+
+Le **diagramme de cas d'utilisation** est le diagramme UML qui représente les fonctionnalités du système vues par les acteurs. Il montre qui fait quoi dans l'application, sans entrer dans le détail technique. Nous présentons ici les trois diagrammes de cas d'utilisation principaux du système :
 
 ![Figure 3 : Le diagramme de cas d'utilisation général](images/use-cases-general.jpg)
 
@@ -370,39 +372,13 @@ C'est le gestionnaire du site. Il dispose de tous les droits du client et, en pl
 
 ![Figure 5 : Le diagramme de cas d'utilisation de l'administrateur](images/use-case-administrateur.jpg)
 
-### 2. Backlog du produit
-
-| N° | Sprint | User Story | Acteur | Priorité | Dates |
-|---|---|---|---|---|---|
-| 00 | Choix techniques | Installation de l'environnement de développement | — | 01 | Oct – Nov 2025 |
-| 01 | Authentification et inscription | Connexion, inscription, vérification email, mot de passe oublié | Visiteur | 02 | Nov – Déc 2025 |
-| 02 | Gestion des utilisateurs | Créer, consulter, modifier, supprimer utilisateurs ; modifier profil | Admin, Client | 03 | Déc – Jan 2026 |
-| 03 | Catalogue | Consulter le catalogue, filtrer, trier, fiche détail | Visiteur | 04 | Jan – Fév 2026 |
-| 04 | Gestion des voitures et bornes | CRUD voitures, bornes, mise en avant, pages auto-générées | Admin | 05 | Fév – Mar 2026 |
-| 05 | Réservation d'essais | Réserver un essai, mes essais, export calendrier | Client | 06 | Mar – Avr 2026 |
-| 06 | Contact et newsletter | Formulaire de contact, inscription newsletter | Visiteur | 07 | Avr – Mai 2026 |
-| 07 | Tableau de bord, audit et exports | Statistiques, journal d'audit, exports CSV, sauvegarde SQL | Admin | 08 | Mai – Juin 2026 |
-
-*Tableau 2 : Le backlog du produit.*
-
-### 3. Planification des releases
-
-| Release | Chapitre | Sprints |
-|---|---|---|
-| Release 1 (« Sprint 0 ») | Chapitre 3 | Choix techniques et environnement |
-| Release 1 | Chapitre 4 | Sprint 1 : Authentification et inscription • Sprint 2 : Gestion des utilisateurs |
-| Release 2 | Chapitre 5 | Sprint 3 : Catalogue • Sprint 4 : Voitures et bornes • Sprint 5 : Réservation d'essais |
-| Release 3 | Chapitre 6 | Sprint 6 : Contact et newsletter • Sprint 7 : Tableau de bord, audit et exports |
-
-*Tableau 3 : La planification des releases.*
-
 ## Conclusion
 
-Dans ce chapitre, nous avons effectué l'analyse des besoins qui nous a permis de comprendre les fonctionnalités attendues, d'identifier les acteurs et de présenter le backlog du produit ainsi que la planification des sprints.
+Dans ce chapitre, nous avons effectué l'**analyse des besoins** qui nous a permis de comprendre les fonctionnalités attendues du système et d'identifier les différents acteurs (visiteur, client, administrateur) ainsi que leurs droits. Les diagrammes de cas d'utilisation résument l'ensemble des fonctionnalités que le système doit offrir. Le chapitre suivant est consacré à la **conception** de la solution.
 
 ---
 
-# Chapitre 3 : Sprint 0 — Les choix techniques et l'environnement de développement
+# Chapitre 3 : La conception — les choix techniques et l'architecture du système
 
 ## Introduction
 
@@ -526,34 +502,26 @@ La figure suivante présente le diagramme de classes du système.
 
 ## Conclusion
 
-Dans ce chapitre, nous avons présenté les choix techniques, l'environnement de développement et l'architecture générale du système. Le chapitre suivant aborde la réalisation de la première release.
+Dans ce chapitre, nous avons présenté les choix techniques, l'environnement de développement et l'architecture générale du système. Il s'agit de la phase **conception** du cycle en cascade. Le chapitre suivant est consacré à la **réalisation** de l'application.
 
 ---
 
-# Chapitre 4 : Release 1 — Authentification, inscription et gestion des utilisateurs
+# Chapitre 4 : La réalisation — le développement de l'application
 
 ## Introduction
 
-Ce premier release comprend deux sprints :
+Ce chapitre correspond à la phase **« Réalisation »** du cycle en cascade. Il décrit le développement effectif de l'application EcoDrive, organisé en plusieurs modules :
 
-- **Sprint 1 :** « Authentification et inscription » ;
-- **Sprint 2 :** « Gestion des utilisateurs ».
+- la **gestion des comptes** : l'authentification, l'inscription et la gestion des utilisateurs ;
+- le **catalogue** : la consultation des véhicules et la gestion des voitures et des bornes ;
+- la **réservation d'essais** en ligne ;
+- le **contact, la newsletter** et le **tableau de bord d'administration**.
 
-Le développement de chaque sprint passe par quatre étapes : backlog du sprint, analyse, conception et réalisation.
+Pour chaque module, nous suivons les étapes simples : l'**analyse** du besoin, la **conception** (diagrammes) et la **réalisation** (interface et code).
 
-## I. Développement du Sprint 1 « Authentification et inscription »
+## 1. La gestion des comptes : l'authentification et l'inscription
 
-### 1. Backlog du Sprint 1
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues (accueil, connexion, inscription, mot de passe oublié, vérification email) | 2 | 7 jours |
-| Création de la route d'inscription, de connexion, des validations, du rate limiting | 1 | 16 jours |
-| Tests des flux (inscription, connexion, reset, vérification email) et correction des erreurs | 3 | 7 jours |
-
-*Tableau 8 : Le backlog du Sprint 1.*
-
-### 2. Analyse et spécification des besoins
+### 1.1 Analyse du module
 
 Chaque utilisateur doit s'authentifier via un **email et un mot de passe** avant d'accéder aux fonctionnalités privées. Le système vérifie les données contre la base, régénère la session à la connexion et applique un rate limiting pour limiter les tentatives.
 
@@ -585,11 +553,11 @@ Chaque utilisateur doit s'authentifier via un **email et un mot de passe** avant
 
 *Tableau 10 : La description textuelle du cas d'utilisation « Créer un compte ».*
 
-### 3. Conception
+### 1.2 Conception
 
 ![Figure 11 : Le diagramme de séquence d'authentification](images/diagrams/fig11-sequence-authentification.png)
 
-### 4. Réalisation
+### 1.3 Réalisation
 
 ![Figure 12 : L'interface de connexion](images/screens/connexion.png)
 
@@ -597,19 +565,9 @@ Chaque utilisateur doit s'authentifier via un **email et un mot de passe** avant
 
 Le module d'authentification est implémenté dans `php/connexion.php`, `php/inscription.php`, `php/mot-de-passe-oublie.php`, `php/reinitialiser-mot-de-passe.php` et `php/verifier-email.php`, avec les fonctions de sécurité de `php/bootstrap.php` (CSRF, sessions sécurisées, rate limiting).
 
-## II. Développement du Sprint 2 « Gestion des utilisateurs »
+## 2. La gestion des utilisateurs
 
-### 1. Backlog du Sprint 2
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues : lister/ajouter/modifier/supprimer utilisateurs, modifier profil | 2 | 7 jours |
-| Contrôleurs, services et requêtes préparées côté PHP | 1 | 16 jours |
-| Tests et correction des erreurs | 3 | 7 jours |
-
-*Tableau 11 : Le backlog du Sprint 2.*
-
-### 2. Analyse et spécification des besoins
+### 2.1 Analyse du module
 
 L'administrateur peut créer des utilisateurs, changer leur rôle (client / administrateur) et les supprimer (après suppression de leurs réservations). Chaque utilisateur peut modifier son profil. Toutes les actions administratives sont tracées dans `admin_audit`.
 
@@ -641,45 +599,19 @@ L'administrateur peut créer des utilisateurs, changer leur rôle (client / admi
 
 *Tableau 13 : La description textuelle « Modifier profil ».*
 
-### 3. Conception
+### 2.2 Conception
 
 ![Figure 15 : Le diagramme de séquence « Ajouter un utilisateur »](images/diagrams/fig15-sequence-ajouter-utilisateur.png)
 
-### 4. Réalisation
+### 2.3 Réalisation
 
 ![Figure 16 : L'interface de la liste des utilisateurs (admin)](images/screens/admin-users.png)
 
 Le panneau d'administration (`php/admin.php`, onglet « Utilisateurs ») permet la recherche, le changement de rôle et la suppression des comptes, avec journalisation dans `admin_audit` à chaque action.
 
-## Conclusion
+## 3. Le catalogue
 
-À travers ce chapitre, nous avons présenté la première release : l'authentification, l'inscription et la gestion des utilisateurs, avec la partie conception (diagrammes) et la réalisation effective de ces fonctionnalités.
-
----
-
-# Chapitre 5 : Release 2 — Catalogue, gestion des voitures et des bornes, réservation des essais
-
-## Introduction
-
-Cette deuxième release comprend trois sprints :
-
-- **Sprint 3 :** « Catalogue » ;
-- **Sprint 4 :** « Gestion des voitures et des bornes » ;
-- **Sprint 5 :** « Réservation d'essais ».
-
-## I. Développement du Sprint 3 « Catalogue »
-
-### 1. Backlog du Sprint 3
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues : liste du catalogue, filtres, tri, pagination | 2 | 7 jours |
-| Requêtes de filtrage, tri et pagination côté PHP (requêtes préparées) | 1 | 10 jours |
-| Tests et correction des erreurs | 3 | 5 jours |
-
-*Tableau 14 : Le backlog du Sprint 3.*
-
-### 2. Analyse et spécification des besoins
+### 3.1 Analyse du module
 
 Le visiteur consulte le catalogue des 14 véhicules électriques. Il peut rechercher par mot-clé, filtrer par marque, par tranche de prix et par année, trier (popularité, prix, année) et naviguer par pagination (9 véhicules par page). Chaque véhicule dispose d'une fiche technique dédiée.
 
@@ -698,11 +630,11 @@ Le visiteur consulte le catalogue des 14 véhicules électriques. Il peut recher
 
 *Tableau 15 : La description textuelle « Consulter le catalogue ».*
 
-### 3. Conception
+### 3.2 Conception
 
 ![Figure 18 : Le diagramme de séquence « Rechercher et filtrer »](images/diagrams/fig18-sequence-recherche-filtre.png)
 
-### 4. Réalisation
+### 3.3 Réalisation
 
 ![Figure 19 : L'interface du catalogue](images/screens/catalogue.png)
 
@@ -710,19 +642,9 @@ Le visiteur consulte le catalogue des 14 véhicules électriques. Il peut recher
 
 Le catalogue est implémenté dans `php/catalogue.php` (filtres, tri, pagination), complété par les fiches techniques `php/car-page.php` et le jeu de données `voitures/data.php` (14 modèles : Audi A6 e-tron, BMW iX3, BYD Atto 3, BYD Dolphin Surf, Kia EV-3, Mercedes Classe C et EQC, MG4, Peugeot e-208, Porsche Taycan, Tesla Model 3 et Model S Plaid, Toyota bZ4X, Geely EX2).
 
-## II. Développement du Sprint 4 « Gestion des voitures et des bornes »
+## 4. La gestion des voitures et des bornes
 
-### 1. Backlog du Sprint 4
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues : CRUD voitures, CRUD bornes, mise en avant, upload d'images | 2 | 8 jours |
-| Contrôleurs, services, requêtes préparées, génération des pages détail | 1 | 14 jours |
-| Tests et correction des erreurs | 3 | 7 jours |
-
-*Tableau 16 : Le backlog du Sprint 4.*
-
-### 2. Analyse et spécification des besoins
+### 4.1 Analyse du module
 
 L'administrateur gère les **voitures** (marque, modèle, année, prix, batterie kWh, puissance, autonomie, description, image, page détail, mise en avant sur l'accueil) et les **bornes de recharge** (nom, modèle, puissance, prix, description, image). À chaque ajout, une **page détail « stub »** est automatiquement générée (`voitures/<slug>.php` ou `bornes/<slug>.php`). L'upload d'images est sécurisé (5 Mo max, types autorisés).
 
@@ -756,7 +678,7 @@ L'administrateur gère les **voitures** (marque, modèle, année, prix, batterie
 
 *Tableau 18 : La description textuelle « Ajouter une borne » (admin).*
 
-### 3. Réalisation
+### 4.2 Réalisation
 
 ![Figure 22 : L'interface d'ajout d'une voiture (admin)](images/screens/admin-voitures.png)
 
@@ -766,19 +688,9 @@ L'administrateur gère les **voitures** (marque, modèle, année, prix, batterie
 
 Les bornes présentées sont les modèles **Exicom** : Spin Air 7 kW, Spin Air 11 kW, Spin Air 22 kW et Spin Free 3 kW, avec fiche produit (puissance, connecteur Type 2, installation, prix) et boutons « Commander » / « Demander un devis ».
 
-## III. Développement du Sprint 5 « Réservation d'essais »
+## 5. La réservation d'essais
 
-### 1. Backlog du Sprint 5
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues : formulaire de réservation, confirmation, historique « Mes essais » | 2 | 7 jours |
-| Logique de réservation : créneaux, validations, conflits, statuts ; export calendrier | 1 | 12 jours |
-| Tests et correction des erreurs | 3 | 5 jours |
-
-*Tableau 19 : Le backlog du Sprint 5.*
-
-### 2. Analyse et spécification des besoins
+### 5.1 Analyse du module
 
 Le client connecté réserve un **essai** pour un véhicule choisi, sur un créneau horaire d'une heure. Les règles : du lundi au samedi, créneaux de 8 h à 17 h, pas de chevauchement avec un créneau déjà réservé. La réservation passe par les statuts *pending*, *confirmed*, *cancelled*. Le client reçoit un email et peut ajouter le créneau à son calendrier (export `.ics`).
 
@@ -797,11 +709,11 @@ Le client connecté réserve un **essai** pour un véhicule choisi, sur un crén
 
 *Tableau 20 : La description textuelle « Réserver un essai ».*
 
-### 3. Conception
+### 5.2 Conception
 
 ![Figure 27 : Le diagramme de séquence « Réserver un essai »](images/diagrams/fig27-sequence-reservation.png)
 
-### 4. Réalisation
+### 5.3 Réalisation
 
 ![Figure 28 : L'interface de réservation d'un essai](images/screens/reservation.png)
 
