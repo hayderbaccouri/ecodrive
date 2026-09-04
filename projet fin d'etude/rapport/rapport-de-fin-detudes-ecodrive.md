@@ -180,25 +180,16 @@ L'adage de l'institut : « Ispri Formation, votre évolution, notre mission ».
 
 ### 3. Organigramme simplifié
 
-La figure suivante présente un organigramme simplifié de l'institut.
+Le tableau suivant présente un organigramme simplifié de l'institut, sous forme de structure hiérarchique : la direction générale, les départements et les filières qui en dépendent.
 
-```
-                        ┌─────────────────────────┐
-                        │  Direction de l'ISPRI   │
-                        └────────────┬────────────┘
-                                     │
-              ┌──────────────────────┼──────────────────────┐
-              │                      │                      │
-   ┌──────────┴──────────┐ ┌─────────┴─────────┐ ┌──────────┴──────────┐
-   │  Coordination       │ │  Corps formateur  │ │  Administration &   │
-   │  pédagogique        │ │  (certifiés)      │ │  Support (RH, adv.) │
-   └─────────────────────┘ └───────────────────┘ └─────────────────────┘
-              │                      │
-   ┌──────────┴──────────┐ ┌─────────┴─────────┐
-   │ Filières BTS &      │ │ Langues, Bureau-  │
-   │ Informatique        │ │ tique, Management │
-   └─────────────────────┘ └───────────────────┘
-```
+| Niveau | Entité | Composition / Rôle |
+|---|---|---|
+| 1 | **Direction de l'ISPRI** | Direction générale de l'institut |
+| 2 | Coordination pédagogique | Organisation et suivi des formations |
+| 2 | Corps formateur (certifiés) | Enseignants et formateurs qualifiés |
+| 2 | Administration & Support (RH, administratif) | Gestion administrative et ressources humaines |
+| 3 | Filières BTS & Informatique | Formation diplômante (BTS en Informatique de Gestion) |
+| 3 | Langues, Bureautique, Management | Formations complémentaires |
 
 **[Figure 1 : L'organigramme simplifié de l'ISPRI.]**
 
