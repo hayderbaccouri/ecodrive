@@ -47,10 +47,10 @@
 5. Introduction générale
 6. Chapitre 1 : Cadre général du projet
 7. Chapitre 2 : Analyse des besoins
-8. Chapitre 3 : Les choix techniques et l'environnement de développement
-9. Chapitre 4 : Release 1 — Authentification, inscription et gestion des utilisateurs
-10. Chapitre 5 : Release 2 — Catalogue, gestion des voitures et des bornes, réservation des essais
-11. Chapitre 6 : Release 3 — Contact, newsletter, tableau de bord, audit et exports
+8. Chapitre 3 : La conception — les choix techniques et l'architecture du système
+9. Chapitre 4 : La réalisation — le développement de l'application
+10. Chapitre 5 : Les tests
+11. Chapitre 6 : Déploiement et maintenance
 12. Conclusion générale et perspectives
 13. Glossaire
 14. Bibliographie
@@ -71,7 +71,7 @@
 | Figure 7 | Le diagramme de déploiement d'EcoDrive |
 | Figure 8 | Le modèle MVC appliqué à EcoDrive |
 | Figure 9 | Le diagramme de classes |
-| Figure 10 | Le diagramme de cas d'utilisation du Sprint 1 |
+| Figure 10 | Le diagramme de cas d'utilisation du module d'authentification |
 | Figure 11 | Le diagramme de séquence d'authentification |
 | Figure 12 | L'interface de connexion |
 | Figure 13 | L'interface d'inscription |
@@ -103,31 +103,21 @@
 
 | N° | Libellé |
 |---|---|
-| Tableau 1 | Les acteurs Scrum |
-| Tableau 2 | Le backlog du produit |
-| Tableau 3 | La planification des releases |
-| Tableau 4 | Les besoins fonctionnels par module |
-| Tableau 5 | Les caractéristiques techniques de la machine de travail |
-| Tableau 6 | L'environnement logiciel utilisé |
-| Tableau 7 | La description des classes principales (extrait du modèle relationnel) |
-| Tableau 8 | Le backlog du Sprint 1 |
-| Tableau 9 | La description textuelle du cas d'utilisation « S'authentifier » |
-| Tableau 10 | La description textuelle du cas d'utilisation « Créer un compte » |
-| Tableau 11 | Le backlog du Sprint 2 |
-| Tableau 12 | La description textuelle « Créer un utilisateur » (admin) |
-| Tableau 13 | La description textuelle « Modifier profil » |
-| Tableau 14 | Le backlog du Sprint 3 |
-| Tableau 15 | La description textuelle « Consulter le catalogue » |
-| Tableau 16 | Le backlog du Sprint 4 |
-| Tableau 17 | La description textuelle « Ajouter une voiture » (admin) |
-| Tableau 18 | La description textuelle « Ajouter une borne » (admin) |
-| Tableau 19 | Le backlog du Sprint 5 |
-| Tableau 20 | La description textuelle « Réserver un essai » |
-| Tableau 21 | Le backlog du Sprint 6 |
-| Tableau 22 | La description textuelle « Envoyer un message » |
-| Tableau 23 | Le backlog du Sprint 7 |
-| Tableau 24 | La description textuelle « Consulter le tableau de bord » (admin) |
-| Tableau 25 | Les contrastes entre notre solution et les solutions existantes |
+| Tableau 1 | Les contrastes entre notre solution et les solutions existantes |
+| Tableau 2 | Les besoins fonctionnels par module |
+| Tableau 3 | Les caractéristiques techniques de la machine de travail |
+| Tableau 4 | L'environnement logiciel utilisé |
+| Tableau 5 | La description des classes principales (extrait du modèle relationnel) |
+| Tableau 6 | La description textuelle du cas d'utilisation « S'authentifier » |
+| Tableau 7 | La description textuelle du cas d'utilisation « Créer un compte » |
+| Tableau 8 | La description textuelle « Créer un utilisateur » (admin) |
+| Tableau 9 | La description textuelle « Modifier profil » |
+| Tableau 10 | La description textuelle « Consulter le catalogue » |
+| Tableau 11 | La description textuelle « Ajouter une voiture » (admin) |
+| Tableau 12 | La description textuelle « Ajouter une borne » (admin) |
+| Tableau 13 | La description textuelle « Réserver un essai » |
+| Tableau 14 | La description textuelle « Envoyer un message » |
+| Tableau 15 | La description textuelle « Consulter le tableau de bord » (admin) |
 
 ---
 
@@ -245,7 +235,7 @@ Le tableau ci-dessous présente une comparaison rapide des fonctionnalités exis
 | Panneau d'administration | Non | Non | Variable | Oui |
 | Statistiques et export | Non | Non | Non | Oui |
 
-*Tableau 25 : Les contrastes entre notre solution et les solutions existantes.*
+*Tableau 1 : Les contrastes entre notre solution et les solutions existantes.*
 
 ### 3. Solution proposée
 
@@ -334,7 +324,7 @@ Ce chapitre est consacré, dans le cadre de la première phase **« Analyse des 
 | Export | Exporter les données en CSV et réaliser une sauvegarde SQL |
 | SEO | Sitemap dynamique, robots.txt, balises meta, JSON-LD |
 
-*Tableau 4 : Les besoins fonctionnels par module.*
+*Tableau 2 : Les besoins fonctionnels par module.*
 
 ### 2. Besoins non fonctionnels
 
@@ -430,7 +420,7 @@ Le choix du **vanilla** (sans framework) s'explique par la démarche pédagogiqu
 | Stockage | SSD 512 Go |
 | Système d'exploitation | Windows 10/11 |
 
-*Tableau 5 : Les caractéristiques techniques de la machine de travail.*
+*Tableau 3 : Les caractéristiques techniques de la machine de travail.*
 
 ### 2. Environnement logiciel
 
@@ -443,7 +433,7 @@ Le choix du **vanilla** (sans framework) s'explique par la démarche pédagogiqu
 | **Postman** | Tests des API et des flux HTTP |
 | **Draw.io / edraw** | Outils de modélisation UML |
 
-*Tableau 6 : L'environnement logiciel utilisé.*
+*Tableau 2 : L'environnement logiciel utilisé.*
 
 ## III. Architecture générale du système
 
@@ -494,7 +484,7 @@ Le schéma relationnel regroupe les entités suivantes (description partielle) :
 | **login_attempts** | id, ip_address, email, attempted_at, success |
 | **rate_limits** | id, bucket, created_at |
 
-*Tableau 7 : La description des classes principales (extrait du modèle relationnel).*
+*Tableau 3 : La description des classes principales (extrait du modèle relationnel).*
 
 La figure suivante présente le diagramme de classes du système.
 
@@ -525,7 +515,7 @@ Pour chaque module, nous suivons les étapes simples : l'**analyse** du besoin, 
 
 Chaque utilisateur doit s'authentifier via un **email et un mot de passe** avant d'accéder aux fonctionnalités privées. Le système vérifie les données contre la base, régénère la session à la connexion et applique un rate limiting pour limiter les tentatives.
 
-![Figure 10 : Le diagramme de cas d'utilisation du Sprint 1](images/diagrams/fig10-cas-utilisation-sprint1.png)
+![Figure 10 : Le diagramme de cas d'utilisation du module d'authentification](images/diagrams/fig10-cas-utilisation-sprint1.png)
 
 #### Description textuelle « S'authentifier »
 
@@ -538,7 +528,7 @@ Chaque utilisateur doit s'authentifier via un **email et un mot de passe** avant
 | **Scénario nominal** | 1. L'utilisateur demande de s'authentifier ; 2. Le système affiche le formulaire ; 3. L'utilisateur saisit email et mot de passe puis clique « Connexion » ; 4. Le système valide les données (CSRF, format) ; 5. Le système vérifie l'existence de l'utilisateur et le mot de passe (bcrypt) ; 6. Le système régénère la session et affiche l'accueil |
 | **Scénario d'erreur** | Champs vides ; format invalide ; utilisateur introuvable ; mot de passe incorrect ; limite de tentatives atteinte (5/15 min) |
 
-*Tableau 9 : La description textuelle du cas d'utilisation « S'authentifier ».*
+*Tableau 6 : La description textuelle du cas d'utilisation « S'authentifier ».*
 
 #### Description textuelle « Créer un compte »
 
@@ -551,7 +541,7 @@ Chaque utilisateur doit s'authentifier via un **email et un mot de passe** avant
 | **Scénario nominal** | 1. L'utilisateur clique sur « Inscription » ; 2. Le système affiche le formulaire ; 3. L'utilisateur saisit nom, email, téléphone et mot de passe (≥ 8 caractères) ; 4. Le système valide et vérifie l'unicité de l'email ; 5. Le système crée le compte (hash bcrypt, token de vérification 24 h) et envoie l'email ; 6. Le système affiche un message de succès |
 | **Scénario d'erreur** | Champs vides ; mot de passe trop court ; email invalide ou déjà utilisé ; limite d'inscriptions (5/h) |
 
-*Tableau 10 : La description textuelle du cas d'utilisation « Créer un compte ».*
+*Tableau 7 : La description textuelle du cas d'utilisation « Créer un compte ».*
 
 ### 1.2 Conception
 
@@ -584,7 +574,7 @@ L'administrateur peut créer des utilisateurs, changer leur rôle (client / admi
 | **Scénario nominal** | 1. L'admin ouvre « Utilisateurs » ; 2. Le système affiche la liste et le formulaire d'ajout ; 3. L'admin renseigne les données et enregistre ; 4. Le système valide (CSRF, unicité email, mot de passe) ; 5. Le système insère l'utilisateur et journalise l'action |
 | **Scénario d'erreur** | Données invalides ; échec d'insertion ; email existant |
 
-*Tableau 12 : La description textuelle « Créer un utilisateur » (admin).*
+*Tableau 8 : La description textuelle « Créer un utilisateur » (admin).*
 
 #### Description textuelle « Modifier profil »
 
@@ -597,7 +587,7 @@ L'administrateur peut créer des utilisateurs, changer leur rôle (client / admi
 | **Scénario nominal** | 1. L'utilisateur ouvre « Profil » ; 2. Le système affiche ses informations ; 3. L'utilisateur modifie et enregistre ; 4. Le système valide et met à jour en base ; 5. Message de succès |
 | **Scénario d'erreur** | Données invalides ; échec de mise à jour |
 
-*Tableau 13 : La description textuelle « Modifier profil ».*
+*Tableau 6 : La description textuelle « Modifier profil ».*
 
 ### 2.2 Conception
 
@@ -628,7 +618,7 @@ Le visiteur consulte le catalogue des 14 véhicules électriques. Il peut recher
 | **Scénario nominal** | 1. Le visiteur ouvre le catalogue ; 2. Le système affiche la première page (9 véhicules) ; 3. Le visiteur applique filtres/tri ; 4. Le système exécute la requête et affiche les résultats ; 5. Le visiteur clique sur un véhicule ; 6. Le système affiche la fiche technique |
 | **Scénario d'erreur** | Aucun résultat (message dédié) ; page introuvable (404) |
 
-*Tableau 15 : La description textuelle « Consulter le catalogue ».*
+*Tableau 7 : La description textuelle « Consulter le catalogue ».*
 
 ### 3.2 Conception
 
@@ -663,7 +653,7 @@ L'administrateur gère les **voitures** (marque, modèle, année, prix, batterie
 | **Scénario nominal** | 1. L'admin ouvre l'onglet « Voitures » ; 2. Le système affiche le formulaire ; 3. L'admin saisit les caractéristiques, choisit une image et opte pour la mise en avant ; 4. Le système valide et insère ; 5. Le système génère la page détail et trace l'action |
 | **Scénario d'erreur** | Données invalides ; image non conforme ; échec d'insertion |
 
-*Tableau 17 : La description textuelle « Ajouter une voiture » (admin).*
+*Tableau 11 : La description textuelle « Ajouter une voiture » (admin).*
 
 #### Description textuelle « Ajouter une borne » (admin)
 
@@ -676,7 +666,7 @@ L'administrateur gère les **voitures** (marque, modèle, année, prix, batterie
 | **Scénario nominal** | 1. L'admin ouvre l'onglet « Bornes » ; 2. Le système affiche le formulaire ; 3. L'admin saisit la fiche produit ; 4. Le système valide et insère ; 5. Le système génère la page détail et trace l'action |
 | **Scénario d'erreur** | Données invalides ; échec d'insertion |
 
-*Tableau 18 : La description textuelle « Ajouter une borne » (admin).*
+*Tableau 8 : La description textuelle « Ajouter une borne » (admin).*
 
 ### 4.2 Réalisation
 
@@ -707,7 +697,7 @@ Le client connecté réserve un **essai** pour un véhicule choisi, sur un crén
 | **Scénario nominal** | 1. Le client choisit un véhicule puis clique « Réserver un essai » ; 2. Le système affiche le formulaire en deux étapes (véhicule, créneau) ; 3. Le client choisit date et heure ; 4. Le système vérifie les règles (jour, heure, conflit) ; 5. Le système enregistre la réservation, envoie l'email et affiche la confirmation (+ export .ics) |
 | **Scénario d'erreur** | Créneau indisponible ; jour/heure invalide (dimanche, hors 8 h–17 h) ; client non connecté (redirection) |
 
-*Tableau 20 : La description textuelle « Réserver un essai ».*
+*Tableau 13 : La description textuelle « Réserver un essai ».*
 
 ### 5.2 Conception
 
@@ -721,34 +711,9 @@ Le client connecté réserve un **essai** pour un véhicule choisi, sur un crén
 
 Le module est implémenté dans `php/reservation.php`, `php/mes-essais.php`, `php/tableau-de-bord.php` (KPIs et graphiques Chart.js), `php/confirmation-reservation.php` et `php/export-ics.php`.
 
-## Conclusion
+## 6. Le contact et la newsletter
 
-Dans ce chapitre, nous avons réalisé les trois sprints de la deuxième release : le catalogue, la gestion des voitures et des bornes, et la réservation des essais. Le chapitre suivant est consacré à la dernière release.
-
----
-
-# Chapitre 6 : Release 3 — Contact, newsletter, tableau de bord, audit et exports
-
-## Introduction
-
-Cette dernière release comprend deux sprints :
-
-- **Sprint 6 :** « Contact et newsletter » ;
-- **Sprint 7 :** « Tableau de bord, audit et exports ».
-
-## I. Développement du Sprint 6 « Contact et newsletter »
-
-### 1. Backlog du Sprint 6
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues : formulaire de contact, inscription newsletter | 2 | 3 jours |
-| Traitement, persistance, emails, rate limiting et anti-spam | 1 | 5 jours |
-| Tests et correction des erreurs | 3 | 1 jour |
-
-*Tableau 21 : Le backlog du Sprint 6.*
-
-### 2. Analyse et spécification des besoins
+### 6.1 Analyse du module
 
 Le visiteur envoie un **message de contact** (nom, email, téléphone, sujet, message ≥ 10 caractères) qui est persisté dans `contact_message`, notifié par email et consultable dans l'administration. Il peut également **s'abonner à la newsletter** (email unique, anti-spam 3/heure). Une carte **Leaflet/OpenStreetMap** affiche la localisation du showroom.
 
@@ -765,25 +730,15 @@ Le visiteur envoie un **message de contact** (nom, email, téléphone, sujet, me
 | **Scénario nominal** | 1. Le visiteur ouvre « Contact » ; 2. Le système affiche le formulaire et la carte ; 3. Le visiteur remplit et envoie ; 4. Le système valide (CSRF, format, rate limiting) ; 5. Le système persiste le message, envoie l'email et affiche la confirmation |
 | **Scénario d'erreur** | Champs vides ; message trop court ; limite de 3 messages/10 min atteinte |
 
-*Tableau 22 : La description textuelle « Envoyer un message ».*
+*Tableau 14 : La description textuelle « Envoyer un message ».*
 
-### 3. Réalisation
+### 6.2 Réalisation
 
 ![Figure 31 : L'interface du formulaire de contact](images/screens/contact.png)
 
-## II. Développement du Sprint 7 « Tableau de bord, audit et exports »
+## 7. Le tableau de bord, l'audit et les exports
 
-### 1. Backlog du Sprint 7
-
-| Tâche | Priorité | Durée |
-|---|---|---|
-| Création des vues : tableau de bord, statistiques, journal d'audit | 2 | 3 jours |
-| Requêtes statistiques, agrégations, exports CSV, sauvegarde SQL | 1 | 6 jours |
-| Tests et correction des erreurs | 3 | 1 jour |
-
-*Tableau 23 : Le backlog du Sprint 7.*
-
-### 2. Analyse et spécification des besoins
+### 7.1 Analyse du module
 
 L'administrateur consulte un **tableau de bord** avec des indicateurs clés : taux de confirmation des réservations, essais à venir dans les 7 jours, chiffre d'affaires potentiel confirmé, nouveaux clients du mois. Trois **graphiques Chart.js** (réservations par mois, répartition par statut, voitures les plus demandées) ainsi qu'une table des clients les plus actifs et les dernières actions d'administration. Le **journal d'audit** (`admin_audit`) trace chaque action (ajout/modification/suppression de voiture, de borne, confirmation/annulation de réservation, changement de rôle, suppression d'utilisateur). Enfin, des **exports** permettent de télécharger les données en **CSV** (réservations, voitures, bornes, newsletter, audit) et d'effectuer une **sauvegarde SQL** complète du schéma et des données.
 
@@ -800,9 +755,9 @@ L'administrateur consulte un **tableau de bord** avec des indicateurs clés : ta
 | **Scénario nominal** | 1. L'admin ouvre l'onglet « Statistiques » ; 2. Le système calcule les KPIs et génère les graphiques ; 3. Le système affiche le tableau de bord |
 | **Scénario d'erreur** | Page introuvable (404) |
 
-*Tableau 24 : La description textuelle « Consulter le tableau de bord » (admin).*
+*Tableau 15 : La description textuelle « Consulter le tableau de bord » (admin).*
 
-### 3. Réalisation
+### 7.2 Réalisation
 
 ![Figure 33 : L'interface des graphiques statistiques (admin)](images/screens/admin-stats.png)
 
@@ -812,7 +767,105 @@ Le panneau d'administration (`php/admin.php`) intègre huit onglets : Réservati
 
 ## Conclusion
 
-Au cours de ce dernier chapitre, nous avons développé les deux derniers sprints : le contact, la newsletter, le tableau de bord statistique, le journal d'audit et les exports. Nous clôturons ce rapport par une conclusion générale.
+Dans ce chapitre, nous avons réalisé l'ensemble des modules de l'application EcoDrive : la gestion des comptes (authentification, inscription, gestion des utilisateurs), le catalogue et la gestion des voitures et des bornes, la réservation d'essais, le contact et la newsletter, ainsi que le tableau de bord d'administration avec l'audit et les exports. Le chapitre suivant est consacré aux **tests** de l'application.
+
+---
+
+# Chapitre 5 : Les tests
+
+## Introduction
+
+Cette phase correspond à l'étape **« Tests »** du cycle en cascade. Son objectif est de vérifier que l'application fonctionne correctement, que chaque fonctionnalité répond au besoin défini lors de l'analyse et qu'aucune erreur ne perturbe le déroulement normal.
+
+## I. Stratégie de test
+
+Pour tester l'application, nous avons suivi une démarche simple et progressive :
+
+1. **Tester chaque module après sa réalisation** : dès qu'un module (authentification, catalogue, réservation…) était développé, nous vérifions immédiatement son bon fonctionnement ;
+2. **Tester les deux rôles** : le parcours client (espace public et espace client) et le parcours administrateur (back-office) ;
+3. **Corriger et re-tester** : chaque erreur détectée était corrigée puis le module était re-testé, jusqu'à obtenir un fonctionnement conforme ;
+4. **Tester l'ensemble** : à la fin, nous avons vérifié que tous les modules fonctionnent bien ensemble (par exemple, une réservation créée par un client doit apparaître dans le tableau de bord de l'administrateur).
+
+## II. Les types de tests effectués
+
+Les tests que nous avons réalisés se répartissent en trois catégories :
+
+- **Tests fonctionnels** : ils vérifient qu'une fonctionnalité se comporte comme prévu (ex : se connecter avec un mot de passe correct ou erroné) ;
+- **Tests de validation** : ils vérifient que les règles de gestion sont respectées (ex : réservation d'un créneau déjà occupé) ;
+- **Tests de sécurité** : ils vérifient que l'application résiste aux attaques courantes (injection SQL, formulaires non protégés par CSRF, tentatives de connexion répétées).
+
+## III. Déroulement des tests par module
+
+Le tableau suivant présente un extrait des tests fonctionnels effectués et de leurs résultats.
+
+| Module | Action testée | Résultat attendu | Résultat obtenu |
+|---|---|---|---|
+| Authentification | Connexion avec un email et un mot de passe valides | Connexion réussie | Conforme |
+| Authentification | Connexion avec un mot de passe erroné | Refus + annonce d'erreur | Conforme |
+| Inscription | Inscription avec un email déjà utilisé | Refus avec message | Conforme |
+| Utilisateurs | Ajout d'un utilisateur par l'admin | Utilisateur créé + journalisé | Conforme |
+| Catalogue | Filtrage par marque | La liste se réduit aux modèles de la marque | Conforme |
+| Réservation | Réservation d'un créneau déjà occupé | Refus avec message | Conforme |
+| Réservation | Confirmation d'une réservation par l'admin | Statut changé + email au client | Conforme |
+| Contact | Envoi d'un message avec objet vide | Refus (validation) | Conforme |
+| Tableau de bord | Consultation des statistiques | Graphiques et KPIs affichés | Conforme |
+| Sécurité | Injection SQL dans la recherche | Aucune donnée compromise | Conforme |
+
+## IV. Résultats des tests
+
+À l'issue de cette phase, tous les modules ont été testés et **validés**. Les erreurs détectées au cours du développement ont toutes été corrigées. L'application fonctionne conformément aux besoins exprimés lors de l'analyse et peut être déployée pour une mise en service.
+
+## Conclusion
+
+Dans ce chapitre, nous avons présenté la stratégie de test adoptée ainsi que le déroulement des tests fonctionnels, de validation et de sécurité. Les tests ont confirmé le bon fonctionnement de l'application. Le chapitre suivant est consacré au **déploiement et à la maintenance** de l'application.
+
+---
+
+# Chapitre 6 : Déploiement et maintenance
+
+## Introduction
+
+Après avoir développé et testé l'application, la dernière étape du cycle en cascade est la mise en service et le suivi du système. Ce chapitre présente l'installation de l'application, le guide d'utilisation des différents acteurs ainsi que la maintenance et les sauvegardes.
+
+## I. Installation de l'application
+
+L'application EcoDrive fonctionne sur la pile **XAMPP** (Apache, MySQL/MariaDB, PHP). Les étapes d'installation sont les suivantes :
+
+1. **Installer XAMPP** et démarrer les services **Apache** et **MySQL** ;
+2. **Copier le dossier** de l'application dans le répertoire `htdocs` du serveur ;
+3. **Créer la base de données** : importer le fichier `base-de-donnees/ecodrive.sql` via **phpMyAdmin** qui crée les tables et les données initiales ;
+4. **Configurer la connexion** à la base de données dans le fichier de configuration (paramètres du serveur, nom de la base, utilisateur et mot de passe) ;
+5. **Tester l'accès** : ouvrir le site dans le navigateur (`http://localhost/ecodrive`) et vérifier l'affichage des pages.
+
+## II. Guide d'utilisation
+
+Le site s'adresse à trois types d'utilisateurs.
+
+### 1. Le visiteur
+
+Le visiteur peut consulter librement le showroom, le catalogue et les fiches techniques des véhicules et des bornes, lire les pages d'informations (contact, mentions légales, conditions), remplir le formulaire de contact et s'abonner à la newsletter. Pour réserver un essai, il doit d'abord créer un compte.
+
+### 2. Le client connecté
+
+Après connexion, le client peut compléter son profil, réserver un essai pour un véhicule, suivre l'état de ses réservations dans la page « Mes essais » et exporter son créneau au format calendrier (`.ics`).
+
+### 3. L'administrateur
+
+L'administrateur accède au panneau d'administration qui lui permet de gérer les voitures et les bornes, de confirmer ou d'annuler les réservations, de consulter les messages reçus et la newsletter, de gérer les utilisateurs, de suivre les statistiques et de télécharger les exports (CSV et sauvegarde SQL).
+
+## III. Maintenance et sauvegarde
+
+Une application doit être suivie et maintenue après sa mise en service. Les actions de maintenance que nous prévoyons sont les suivantes :
+
+- **Sauvegarde régulière** de la base de données (sauvegarde SQL) et de la configuration ;
+- **Mise à jour** du catalogue (ajout ou retrait de voitures et de bornes) directement depuis le panneau d'administration ;
+- **Surveillance des messages** de contact et des nouvelles réservations ;
+- **Correction des anomalies** signalées par les utilisateurs ;
+- **Évolutions futures** : paiement en ligne, application mobile, notifications en temps réel, site multilingue.
+
+## Conclusion
+
+Dans ce chapitre, nous avons décrit les étapes d'installation de l'application, le guide d'utilisation pour les trois types d'utilisateurs ainsi que les actions de maintenance et de sauvegarde. Nous clôturons ce rapport par une conclusion générale et les perspectives d'amélioration.
 
 ---
 
@@ -841,7 +894,7 @@ Cette application reste ouverte à toute amélioration : elle répond aux besoin
 # Glossaire
 
 - **API** : Application Programming Interface — interface de programmation applicative.
-- **Agile** : approche itérative et incrémentale de gestion de projet.
+- **Cascade (modèle en)** : méthode de gestion de projet où les phases (analyse, conception, réalisation, tests, maintenance) se déroulent les unes après les autres, dans un ordre précis.
 - **Auth** : authentification — vérification de l'identité d'un utilisateur.
 - **bcrypt** : algorithme de hachage de mots de passe.
 - **CSRF** : Cross-Site Request Forgery — attaque visant à exécuter des actions non consenties.
@@ -860,10 +913,10 @@ Cette application reste ouverte à toute amélioration : elle répond aux besoin
 - **Requête préparée** : requête SQL paramétrée, protection contre l'injection SQL.
 - **Responsive** : design adaptatif aux tailles d'écran.
 - **REST** : Representational State Transfer — style architectural d'API web.
-- **Scrum** : framework agile de gestion de projet.
+- **SQL** : Structured Query Language — langage d'interrogation des bases de données relationnelles.
 - **SEO** : Search Engine Optimization — référencement naturel.
 - **SGBD** : Système de Gestion de Base de Données.
-- **Sprint** : itération de développement en Scrum.
+- **XAMPP** : pile logicielle libre (Apache, MariaDB, PHP, Perl) pour faire fonctionner un serveur web local.
 - **UML** : Unified Modeling Language — langage de modélisation unifié.
 
 ---
@@ -888,7 +941,7 @@ Cette application reste ouverte à toute amélioration : elle répond aux besoin
 
 [9] OpenClassrooms — Cours de développement web (PHP/MySQL). https://openclassrooms.com/ [En ligne ; consultée en 2025-2026].
 
-[10] Wikipedia — « Méthode agile », « Scrum », « Modèle-vue-contrôleur ». https://fr.wikipedia.org/ [En ligne ; consultée en 2025-2026].
+[10] Wikipedia — « Cycle de vie en cascade (développement) », « Modèle-vue-contrôleur ». https://fr.wikipedia.org/ [En ligne ; consultée en 2025-2026].
 
 [11] LinkedIn — « Institut des Sciences Privées International (ISPRI) », présentation officielle de l'institut. https://www.linkedin.com/company/institut-des-sciences-priv%C3%A9es-international-ispri/ [En ligne ; consultée en 2025-2026].
 
@@ -896,15 +949,15 @@ Cette application reste ouverte à toute amélioration : elle répond aux besoin
 
 # Résumé
 
-Le présent projet consiste à concevoir et réaliser une application web de showroom et de catalogue de véhicules électriques en Tunisie, baptisée **EcoDrive**. L'application offre un catalogue de 14 véhicules électriques avec fiches techniques, la présentation de bornes de recharge Exicom, la réservation d'essais en ligne, un espace client, un panneau d'administration complet (gestion des voitures, bornes, réservations, messages, newsletter, utilisateurs), un tableau de bord statistique, un journal d'audit et des exports CSV. Le projet est développé avec PHP 8, MySQL (MariaDB), HTML, CSS et JavaScript vanilla, sous la pile XAMPP, en adoptant une méthodologie agile inspirée de Scrum et la modélisation UML.
+Le présent projet consiste à concevoir et réaliser une application web de showroom et de catalogue de véhicules électriques en Tunisie, baptisée **EcoDrive**. L'application offre un catalogue de 14 véhicules électriques avec fiches techniques, la présentation de bornes de recharge Exicom, la réservation d'essais en ligne, un espace client, un panneau d'administration complet (gestion des voitures, bornes, réservations, messages, newsletter, utilisateurs), un tableau de bord statistique, un journal d'audit et des exports CSV. Le projet est développé avec PHP 8, MySQL (MariaDB), HTML, CSS et JavaScript vanilla, sous la pile XAMPP, en adoptant le **cycle de vie en cascade** comme méthodologie de projet et la modélisation UML.
 
-**Mots clés :** Véhicule électrique, Showroom, Catalogue, PHP, MySQL, Réservation, Méthode agile (Scrum), Sécurité web, Tunisie.
+**Mots clés :** Véhicule électrique, Showroom, Catalogue, PHP, MySQL, Réservation, Modèle en cascade, Sécurité web, Tunisie.
 
 # Abstract
 
-This project consists of designing and building a web application — a showroom and catalog of electric vehicles in Tunisia, named **EcoDrive**. The application offers a catalog of 14 electric vehicles with technical sheets, Exicom charging stations products, online test-drive booking, a customer area, a complete administration panel (management of cars, charging stations, bookings, messages, newsletter, users), a statistics dashboard, an audit log and CSV exports. The project is developed with PHP 8, MySQL (MariaDB), HTML, CSS and vanilla JavaScript, on the XAMPP stack, adopting an Agile methodology inspired by Scrum and UML modeling.
+This project consists of designing and building a web application — a showroom and catalog of electric vehicles in Tunisia, named **EcoDrive**. The application offers a catalog of 14 electric vehicles with technical sheets, Exicom charging stations products, online test-drive booking, a customer area, a complete administration panel (management of cars, charging stations, bookings, messages, newsletter, users), a statistics dashboard, an audit log and CSV exports. The project is developed with PHP 8, MySQL (MariaDB), HTML, CSS and vanilla JavaScript, on the XAMPP stack, adopting the **waterfall (cascade) development lifecycle** and UML modeling.
 
-**Keywords :** Electric vehicle, Showroom, Catalogue, PHP, MySQL, Booking, Scrum, Web security, Tunisia.
+**Keywords :** Electric vehicle, Showroom, Catalogue, PHP, MySQL, Booking, Waterfall model, Web security, Tunisia.
 
 ---
 
