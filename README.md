@@ -71,7 +71,7 @@ ecodrive/
   js/                    — scripts cote client
   images/                — photos voitures et bornes
   base-de-donnees/       — script SQL consolidé
-  private/logs/          — journaux applicatifs (non versionné)
+  ecodrive-private/logs/ — journaux applicatifs hors de la racine publique
 ```
 
 ---
@@ -91,3 +91,21 @@ ecodrive/
 - **Mentions legales** — CGV, CGU, politique de confidentialite
 - **SEO** — sitemap.php dynamique, robots.txt, balises meta dynamiques, JSON-LD
 - **Securite** — tokens CSRF, requetes preparees, rate limiting (connexion, inscription, mot de passe, contact, newsletter), session regeneree, deconnexion POST
+
+## Tests
+
+Depuis la racine du projet :
+
+```powershell
+C:\xampp\php\php.exe tests\smoke_test.php
+C:\xampp\php\php.exe tests\db_check.php
+```
+
+Le parcours E2E utilise Apache et MySQL demarres dans XAMPP :
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\tests\e2e_http_test.ps1
+```
+
+Les liens de verification et journaux de test sont stockes dans `C:\xampp\ecodrive-private\logs`.

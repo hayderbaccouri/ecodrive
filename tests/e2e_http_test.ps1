@@ -1,6 +1,7 @@
 # Test E2E EcoDrive - inscription -> verif email -> connexion -> reservation
 $ErrorActionPreference = 'Stop'
-$base = 'http://localhost/ecodrive-main'
+$base = 'http://localhost/ecodrive'
+$verificationLog = 'C:\xampp\ecodrive-private\logs\verification_links.txt'
 $email = "e2e-$(Get-Date -Format 'yyyyMMddHHmmss')@example.com"
 $pass  = 'MotDePasse123'
 $results = @()
@@ -25,7 +26,7 @@ try {
 
 # 3. Token de verification ecrit dans le log
 Start-Sleep -Milliseconds 500
-$logLine = Select-String -Path 'private\logs\verification_links.txt' -Pattern ([regex]::Escape($email)) | Select-Object -Last 1
+$logLine = Select-String -Path $verificationLog -Pattern ([regex]::Escape($email)) | Select-Object -Last 1
 $token = if ($logLine) { ([regex]::Match($logLine.Line, 'token=([a-f0-9]+)')).Groups[1].Value } else { '' }
 Check 'Lien de verification logge' ([bool]$token)
 
