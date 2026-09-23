@@ -20,8 +20,6 @@ if (rate_limit_check($conn, $bucket, 3, 600)) {
     header('Location: contact.php');
     exit;
 }
-rate_limit_hit($conn, $bucket);
-
 $name    = trim($_POST['name'] ?? '');
 $email   = trim($_POST['email'] ?? '');
 $phone   = trim($_POST['phone'] ?? '');
@@ -37,6 +35,7 @@ else {
     $stmt->bind_param("sssss", $name, $email, $phone, $sujet, $message);
     $stmt->execute();
     $stmt->close();
+    rate_limit_hit($conn, $bucket);
 
     $to = 'contact@ecodrive.tn';
     $subject = '[EcoDrive Contact] ' . ($sujet ?: 'Sans sujet');

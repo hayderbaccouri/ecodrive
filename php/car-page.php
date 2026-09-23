@@ -11,6 +11,53 @@ if (!isset($car) || !is_array($car)) {
     header('Location: catalogue.php');
     exit;
 }
+
+// Synchronisation dynamique : fusionner les données à jour de la BDD si modifiées par l'admin
+if (!empty($car['car_id']) && isset($conn)) {
+    $stmtCar = $conn->prepare("SELECT * FROM voiture WHERE id_voiture = ? LIMIT 1");
+    if ($stmtCar) {
+        $stmtCar->bind_param("i", $car['car_id']);
+        $stmtCar->execute();
+        $dbCar = $stmtCar->get_result()->fetch_assoc();
+        $stmtCar->close();
+        if ($dbCar) {
+            $car['price_display'] = number_format((float)$dbCar['prix'], 0, ',', ' ');
+            if (isset($car['jsonld'])) {
+                $car['jsonld']['price'] = (string)$dbCar['prix'];
+            }
+            if (!empty($dbCar['image'])) {
+                $car['page_image'] = $dbCar['image'];
+                $car['slider']['img'] = basename($dbCar['image']);
+                $car['slider']['dir'] = dirname($dbCar['image']) . '/';
+            }
+            if (!empty($dbCar['description'])) {
+                $car['page_desc'] = $dbCar['description'];
+            }
+            if (!empty($dbCar['horsepower']) && isset($car['highlights'])) {
+                foreach ($car['highlights'] as &$hl) {
+                    if ($hl['label'] === 'Puissance') {
+                        $hl['value'] = (string)$dbCar['horsepower'];
+                        $hl['sub'] = round($dbCar['horsepower'] * 0.7355) . ' kW';
+                    }
+                }
+                unset($hl);
+            }
+            if (!empty($dbCar['battery_kwh']) && isset($car['highlights'])) {
+                $kwhFmt = rtrim(rtrim(number_format((float)$dbCar['battery_kwh'], 1, ',', ' '), '0'), ',');
+                foreach ($car['highlights'] as &$hl) {
+                    if ($hl['label'] === 'Batterie') { $hl['value'] = $kwhFmt; }
+                }
+                unset($hl);
+            }
+            if (!empty($dbCar['range_km']) && isset($car['highlights'])) {
+                foreach ($car['highlights'] as &$hl) {
+                    if ($hl['label'] === 'Autonomie') { $hl['value'] = (string)$dbCar['range_km']; }
+                }
+                unset($hl);
+            }
+        }
+    }
+}
 $page_title = $car['page_title'];
 $page_desc  = $car['page_desc'];
 $page_url   = $car['page_url'];

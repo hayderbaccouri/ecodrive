@@ -254,22 +254,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['car_action'])) {
     if ($_POST['car_action'] === 'delete') {
         $idVoiture = (int) ($_POST['id_voiture'] ?? 0);
 
-        // Delete associated image file
-        $stmt = $conn->prepare("SELECT image FROM voiture WHERE id_voiture=?");
-        $stmt->bind_param("i", $idVoiture);
-        $stmt->execute();
-        $old = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-        if ($old && $old['image']) {
-          safe_unlink($old['image'], $uploadDir);
-        }
+        // Vérifier si des réservations actives ou futures existent pour ce véhicule
+        $stmtCheck = $conn->prepare("SELECT COUNT(*) AS cnt FROM reservation WHERE voiture_id = ? AND date_essai >= CURDATE() AND statut != 'cancelled'");
+        $stmtCheck->bind_param("i", $idVoiture);
+        $stmtCheck->execute();
+        $activeRes = (int)($stmtCheck->get_result()->fetch_assoc()['cnt'] ?? 0);
+        $stmtCheck->close();
 
-        $stmt = $conn->prepare("DELETE FROM voiture WHERE id_voiture=?");
-        $stmt->bind_param("i", $idVoiture);
-        $stmt->execute();
-        $stmt->close();
-        logAdminAction($conn, 'car_delete', '#' . $idVoiture);
-        $message = "✅ Voiture supprimée.";
+        if ($activeRes > 0) {
+            $message = "❌ Impossible de supprimer ce véhicule : $activeRes réservation(s) active(s) ou future(s) y sont rattachées.";
+        } else {
+            // Delete associated image file
+            $stmt = $conn->prepare("SELECT image FROM voiture WHERE id_voiture=?");
+            $stmt->bind_param("i", $idVoiture);
+            $stmt->execute();
+            $old = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            if ($old && $old['image']) {
+              safe_unlink($old['image'], $uploadDir);
+            }
+
+            $stmt = $conn->prepare("DELETE FROM voiture WHERE id_voiture=?");
+            $stmt->bind_param("i", $idVoiture);
+            $stmt->execute();
+            $stmt->close();
+            logAdminAction($conn, 'car_delete', '#' . $idVoiture);
+            $message = "✅ Voiture supprimée.";
+        }
     }
   }
 }
@@ -449,7 +460,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_role'])) {
         $message = "Session invalide.";
     } else {
         $userId = (int) ($_POST['user_id'] ?? 0);
-        if ($userId > 0) {
+        if ($userId === (int)($_SESSION['user']['id'] ?? 0)) {
+            $message = "❌ Vous ne pouvez pas modifier votre propre rôle administrateur.";
+        } elseif ($userId > 0) {
             $stmt = $conn->prepare("SELECT role FROM utilisateur WHERE id_utilisateur = ?");
             $stmt->bind_param("i", $userId);
             $stmt->execute();

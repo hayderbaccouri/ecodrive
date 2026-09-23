@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $message = 'Email invalide.';
             $messageType = 'error';
+        } elseif ($password !== '' && strlen($password) < 8) {
+            $message = 'Le mot de passe doit comporter au moins 8 caractères.';
+            $messageType = 'error';
         } elseif ($password !== '' && $password !== $passwordConfirm) {
             $message = 'Les mots de passe ne correspondent pas.';
             $messageType = 'error';

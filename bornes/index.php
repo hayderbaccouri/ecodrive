@@ -8,7 +8,7 @@ $page_title = 'Bornes de recharge | EcoDrive Tunisie';
 $page_desc = 'Découvrez notre gamme de bornes de recharge Exicom pour voitures électriques en Tunisie. Installation à domicile, bureau ou flotte.';
 $page_url = 'bornes/index.php';
 
-$bornes = $conn->query("SELECT * FROM borne ORDER BY puissance DESC")->fetch_all(MYSQLI_ASSOC);
+$bornes = $conn->query("SELECT * FROM borne ORDER BY CAST(REPLACE(REPLACE(puissance, ' kW', ''), ',', '.') AS DECIMAL(5,2)) DESC")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">

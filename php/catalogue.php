@@ -28,9 +28,19 @@ $params = [];
 $types = '';
 
 if ($search !== '') {
-    $conditions[] = '(modele LIKE ? OR marque LIKE ?)';
-    $params[] = "%{$search}%"; $params[] = "%{$search}%";
-    $types .= 'ss';
+    $words = preg_split('/\s+/', $search, -1, PREG_SPLIT_NO_EMPTY);
+    if (!empty($words)) {
+        $wordConditions = [];
+        foreach ($words as $w) {
+            $wordConditions[] = '(modele LIKE ? OR marque LIKE ? OR CONCAT(marque, " ", modele) LIKE ?)';
+            $wWildcard = "%{$w}%";
+            $params[] = $wWildcard;
+            $params[] = $wWildcard;
+            $params[] = $wWildcard;
+            $types .= 'sss';
+        }
+        $conditions[] = '(' . implode(' AND ', $wordConditions) . ')';
+    }
 }
 if ($brand !== '') {
     $conditions[] = 'marque = ?';
